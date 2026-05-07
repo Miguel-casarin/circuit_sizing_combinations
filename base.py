@@ -1,12 +1,18 @@
-from scripts import dir
-from scripts import edTCL
-from scripts import extData
 from scripts import readV
+from scripts import getFeatures
+from scripts import extData
 from scripts import runSTA
 
 
-verilog_file = "./data/verilogs/0_c17.v"
-script_tcl = "./tcl_scripts/t.tcl"
-dir_outputs_sta = "./output/base_line/sta_base"
+dir_circuits = './data/verilogs'
+dir_out = "./output/base_line/sta_base"
+tcl_file = "tcl_scripts/t.tcl"
 
-runSTA.run_sta(verilog_file, script_tcl, dir_outputs_sta)
+cell_library = "./data/cells_library/ed_Nangate.lib"
+circuit = 'c17.v'
+
+gio = readV.Get_IO(f"0_{circuit}", dir_circuits)
+number_paths = len(gio.get_outputs())
+
+# Instanciar corretamente
+circuit_features = getFeatures.Circuits_features(f"{dir_circuits}/0_{circuit}", cell_library)

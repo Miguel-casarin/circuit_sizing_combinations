@@ -1,4 +1,4 @@
-read_liberty circuitLibrays/ed_Nangate.lib
+read_liberty ./data/cells_library/ed_Nangate.lib
 read_verilog ./data/verilogs/0_c17.v
 link_design c17
 

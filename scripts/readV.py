@@ -2,12 +2,14 @@ import re
 import os
 
 class Get_IO:
-    def __init__(self, file):
+    def __init__(self, file, dir_path):
         self.file = file
+        self.dir = dir_path
+        self.path = os.path.join(self.dir, self.file)
 
     def verilog_module(self):
         
-        with open(self.file, "r") as f:
+        with open(self.path, "r") as f:
             content = f.read()
             module_name = re.search(r"^\s*module\s+(\w+)", content, re.MULTILINE)
 
@@ -22,7 +24,7 @@ class Get_IO:
 
         inputs_list = []
 
-        with open(self.file, "r") as f:
+        with open(self.path, "r") as f:
             for line in f:
                 line = line.strip()
                 cat_str = re.match(r'input\s+(\w+);', line)
@@ -38,7 +40,7 @@ class Get_IO:
 
         outputs_list = []
 
-        with open(self.file, "r") as f:
+        with open(self.path, "r") as f:
             for line in f:
                 line = line.strip()
                 cat_str = re.match(r'output\s+(\w+);', line)
@@ -54,7 +56,7 @@ class Get_IO:
         
         gates_id = []
 
-        with open(self.file, "r") as f:
+        with open(self.path, "r") as f:
             for line in f:
                 line = line.strip()
                 
