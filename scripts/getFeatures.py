@@ -1,5 +1,5 @@
 from collections import deque
-
+import os 
 from najaeda import netlist, naja
 
 #netlist.reset()
@@ -14,14 +14,19 @@ from najaeda import netlist, naja
 #explore_design(top)
 
 class Netlist_info:
-    def __init__(self, verilog, libray):
+    def __init__(self, verilog, verilog_path,  libray, libraey_path):
         self.verilog = verilog
+        self.verilog_path = verilog_path
+        self.path_v = os.path.join(self.verilog_path, self.verilog)
+        
         self.libray = libray
+        self.libray_path = libraey_path
+        self.path_lib = os.path.join(self.libray_path, self.libray)
     
     def print_nets(self):
         netlist.reset()
-        netlist.load_liberty([self.libray])
-        top = netlist.load_verilog([self.verilog])
+        netlist.load_liberty([self.path_lib])
+        top = netlist.load_verilog([self.path_v])
 
         for inst in top.get_child_instances():
             print(f"Instance {inst.get_name()}")
@@ -31,14 +36,19 @@ class Netlist_info:
                 
     
 class Circuits_features:
-    def __init__(self, verilog, libray):
+    def __init__(self, verilog, verilog_path,  libray, libraey_path):
         self.verilog = verilog
+        self.verilog_path = verilog_path
+        self.path_v = os.path.join(self.verilog_path, self.verilog)
+        
         self.libray = libray
+        self.libray_path = libraey_path
+        self.path_lib = os.path.join(self.libray_path, self.libray)
 
     def compute_logic_levels(self):
         netlist.reset()
-        netlist.load_liberty([self.libray])
-        netlist.load_verilog([self.verilog])
+        netlist.load_liberty([self.path_lib])
+        netlist.load_verilog([self.path_v])
 
         # Usa a API NL/SNL da versão atual do najaeda
         universe = naja.NLUniverse.get()
@@ -132,8 +142,8 @@ class Circuits_features:
 
     def comput_deep(self):
         netlist.reset()
-        netlist.load_liberty([self.libray])
-        netlist.load_verilog([self.verilog])
+        netlist.load_liberty([self.path_lib])
+        netlist.load_verilog([self.path_v])
 
         universe = naja.NLUniverse.get()
         top = universe.getTopDesign()
@@ -219,8 +229,8 @@ class Circuits_features:
 
     def fan_in(self):
         netlist.reset()
-        netlist.load_liberty([self.libray])
-        netlist.load_verilog([self.verilog])
+        netlist.load_liberty([self.path_lib])
+        netlist.load_verilog([self.path_v])
 
         universe = naja.NLUniverse.get()
         top = universe.getTopDesign()
@@ -241,8 +251,8 @@ class Circuits_features:
 
     def fan_out(self):
         netlist.reset()
-        netlist.load_liberty([self.libray])
-        netlist.load_verilog([self.verilog])
+        netlist.load_liberty([self.path_lib])
+        netlist.load_verilog([self.path_v])
 
         universe = naja.NLUniverse.get()
         top = universe.getTopDesign()
@@ -283,6 +293,7 @@ class Circuits_features:
 
         return fanout_counts
 
+"""
 file = f"c17.v"
 lib = f"ed_Nangate.lib"
   
@@ -301,3 +312,4 @@ def debug(file, lib):
     print(f"DEEP LEVEL: {deep}\n")
 
 debug(file, lib)
+"""
