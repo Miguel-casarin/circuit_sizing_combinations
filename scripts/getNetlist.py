@@ -13,7 +13,7 @@ def get_gates(verilog_file):
             
             if match:
                 gate = match.group(1)
-                print(f"Gate {gate} encontrada")
+                #print(f"Gate {gate} encontrada")
                 gates.append(gate)
 
     return gates

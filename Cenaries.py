@@ -57,11 +57,13 @@ transitions = GatesComb.comb_list(2)
 
 circuito = Transitions(transitions, total)
 
-base = circuito.make_pairs("X2", 1)
-o = circuito.filter_other_gates(1, "X2", 2)
+base = circuito.make_pairs("X4", 1)
+
+# usar quando for dimensionar outro gate mas mantendo gates anteriores ja dimensionados
+o = circuito.filter_other_gates(1, "X4", 2)
 
 for j, k in base:
     print(f"{j}  - {k}")
 
 for j, k in o:
-    print(f"{j}  - {k}")
+    print(f"{j}  - {k} *")
