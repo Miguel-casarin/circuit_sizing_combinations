@@ -47,7 +47,7 @@ colunns_list = [
 cell_library_path = "./data/cells_library"
 cells_library = "ed_Nangate.lib"
 
-dir_circuits = './data/verilogs'
+dir_circuits = './data/verilogs_base'
 dir_out = "./output/base_line/sta_base"
 tcl_file = "tcl_scripts/t.tcl"
 
@@ -143,3 +143,26 @@ for design in files_to_proceces:
     except Exception as error:
         print(error)
 
+    # Preencher o CSV com os dados
+    try:
+        for i, cell_id in enumerate(cells):
+            gate = cell_id  # Usar o ID da célula, não o nome da gate
+            size_val = size
+            # Adicionar underscores para corresponder às chaves dos dicionários
+            cell_key = f"_{cell_id}_"
+            fa_in_val = fa_in.get(cell_key, "")
+            fa_out_val = fa_out.get(cell_key, "")
+            nl_val = logic_level.get(cell_key, "")
+            deep_val = deep.get(cell_key, "")
+            cost_area = areas[i] if i < len(areas) else ""
+            f_path = paths_freq.get(int(cell_id), 0) if paths_freq else 0  # Retorna 0 se não encontrar
+            arrival = mean_arrivals
+            power_val = power
+            
+            data = [gate, size_val, fa_in_val, fa_out_val, nl_val, deep_val, cost_area, f_path, arrival, power_val]
+            
+            edit_csv = makeCSV.Edit_csv(csv_path, data)
+            edit_csv.insert_csv_data()
+            
+    except Exception as error:
+        print(f"ERROR to fill CSV: {error}")
