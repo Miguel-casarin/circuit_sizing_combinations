@@ -11,3 +11,11 @@ def get_files(designs_path):
 
     return circuits_list
     
+def search_file(file_name: str, dir_path):
+    files = os.listdir(dir_path)
+
+    for file in files:
+        if file == file_name:
+            return os.path.join(dir_path, file)
+    
+    raise FileNotFoundError(f"File {file_name} not found in {dir_path}")
