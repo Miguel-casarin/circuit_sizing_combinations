@@ -1,3 +1,16 @@
+import os
+import numpy as np
+
+from scripts import readV
+from scripts import getFeatures
+from scripts import extData
+from scripts import runSTA
+from scripts import getNetlist
+from scripts import makeCSV
+from scripts import dir
+from scripts import getArea
+
+
 class Transitions:
     def __init__(self, combinations_list : list, number_gates : int):
         self.combinations_list = combinations_list
@@ -30,42 +43,69 @@ class Transitions:
 
         return pairs
     
-    # Recebe o gate base a sua transição, retorna demais transições do circuito com o gate base fixo
-    def filter_other_gates(self, base_gate: int, base_gate_size: str, other_gate: int):
-
-        filter = []
-
-        if base_gate and other_gate <= self.number_gates:
-            base_index = -base_gate
-            
-        other_gates_transitions = self.make_pairs(base_gate_size, other_gate)
+   
+    def filter_other_gates(self, already_sized: list, gate_to_find: int, size: str):
+        """
+        Retorna pares de transições para gate_to_find no size especificado,
+        apenas quando os gates em already_sized estão no mesmo size.
         
-        for pair in other_gates_transitions:
+        Args:
+            already_sized: Lista de índices dos gates já dimensionados
+            gate_to_find: Índice do gate que se busca
+            size: Tamanho desejado (ex: 'X2', 'X4')
+        
+        Returns:
+            Lista de pares (sized, previos) que atendem aos critérios
+        """
+        filter_result = []
+        
+        # Validar índice do gate
+        if gate_to_find > self.number_gates:
+            raise ValueError("gate_to_find index out of range")
+        
+        gate_index = -gate_to_find
+        
+        # Obter transições para o gate_to_find no size desejado
+        transitions = self.make_pairs(size, gate_to_find)
+        
+        # Filtrar apenas pares onde os gates em already_sized têm o mesmo size
+        for pair in transitions:
             sized, previos = pair
-            if sized[base_index] == base_gate_size and previos[base_index] == base_gate_size:
-                filter.append(pair)
-
-        return filter
+            
+            # Verificar se todos os already_sized têm o size especificado
+            all_match = all(sized[-gate] == size for gate in already_sized)
+            
+            if all_match:
+                filter_result.append(pair)
+        
+        return filter_result
     
 def transition_stap(gate_step : int, size_step: str) -> list:
     pass 
 
 import GatesComb
 
+
 total = 6
-transitions = GatesComb.comb_list(6)
-print(transitions)
+transitions = GatesComb.comb_list(total)
+
+generate_trasitions = Transitions(transitions, total)
 
 
 
+gate_step = 1
+size_step = "X2"
+sized_memory = []
 
-circuito = Transitions(transitions, total)
+while gate_step <= total:
+    print(f"\nGate dimensionado: {gate_step}")
+    print(f"Gates já dimensionados: {sized_memory}")
+    find = generate_trasitions.filter_other_gates(sized_memory, gate_step, size_step)
+    print(f"Transições encontradas:")
+    for pair in find:
+        print(f"  {pair}")
+    sized_memory.append(gate_step)
+    gate_step += 1
 
-base = circuito.make_pairs("X4", 1)
 
-
-o = circuito.filter_other_gates(1, "X4", 2)
-
-for j, k in base:
-    print(f"{j}  - {k}")
 
