@@ -1,0 +1,25 @@
+
+Gate dimensionado: 1
+Gates já dimensionados: []
+Transições encontradas:
+  (['X1', 'X1', 'X2'], ['X1', 'X1', 'X1'])
+  (['X1', 'X2', 'X2'], ['X1', 'X2', 'X1'])
+  (['X1', 'X4', 'X2'], ['X1', 'X4', 'X1'])
+  (['X2', 'X1', 'X2'], ['X2', 'X1', 'X1'])
+  (['X2', 'X2', 'X2'], ['X2', 'X2', 'X1'])
+  (['X2', 'X4', 'X2'], ['X2', 'X4', 'X1'])
+  (['X4', 'X1', 'X2'], ['X4', 'X1', 'X1'])
+  (['X4', 'X2', 'X2'], ['X4', 'X2', 'X1'])
+  (['X4', 'X4', 'X2'], ['X4', 'X4', 'X1'])
+
+Gate dimensionado: 2
+Gates já dimensionados: [1]
+Transições encontradas:
+  (['X1', 'X2', 'X2'], ['X1', 'X1', 'X2'])
+  (['X2', 'X2', 'X2'], ['X2', 'X1', 'X2'])
+  (['X4', 'X2', 'X2'], ['X4', 'X1', 'X2'])
+
+Gate dimensionado: 3
+Gates já dimensionados: [1, 2]
+Transições encontradas:
+  (['X2', 'X2', 'X2'], ['X1', 'X2', 'X2'])

@@ -28,24 +28,26 @@ class Decoder:
         }
 
         return [mapping[x] for x in string_to_decode]
-    
-def get_sequence(total_gates, name):
-    decoder = Decoder(total_gates, name)
-    list_values = decoder.total_to_size()
 
-    if name < 0 or name >= len(list_values):
-        raise ValueError("Valor a decodificar fora do intervalo permitido")
+class Encoder:
+    def __init__(self, size_list: list, total_gates: int):
+        self.size_list = size_list
+        self.total_gates = total_gates
 
-    final_value = list_values[name]
-    size_values = decoder.decode_size(final_value)
+    def encode_size(self):
+        mapping = {
+            "X1" : 0,
+            "X2" : 1,
+            "X4" : 2
+        }
 
-    return size_values
+        return [mapping[x] for x in self.size_list]
 
-""""
-case = 700
-n_gates = 6
-
-result = get_sequence(n_gates, case)
-print(f"Circuito {case}\n")
-print(result)
-"""
+    def base3_to_decimal(self):
+        """Converte lista em base 3 para número decimal"""
+        base3_list = self.encode_size()
+        decimal = 0
+        for digit in base3_list:
+            decimal = decimal * 3 + digit
+        
+        return decimal
