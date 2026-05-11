@@ -100,6 +100,21 @@ def create_csv(coluns_to_make: str, csv_dir, csv_path):
     table = makeCSV.Create_table(coluns_to_make, csv_dir, csv_path)
     table.make_csv()  
 
+
+def map_gate(gate_to_map: int, verilog) -> str:
+    map_netlist = getNetlist.get_gates(verilog)
+    index = gate_to_map -1
+    return map_netlist[index]
+
+def cost_area(gate_to_map: int, verilog, json) -> float:
+    maped = map_gate(gate_to_map, verilog)
+
+    current_map = getArea.search_area(maped, json)
+    previos_map = getArea.get_previous_area(maped, json)
+
+    cost = getArea.cost_area(current_map, previos_map)
+
+    return cost
                 
 colunns_list = [
     'GATE',
@@ -118,7 +133,7 @@ cell_library_path = "./data/cells_library"
 cells_library = "ed_Nangate.lib"
 
 dir_circuits = './data/verilogs/c17'
-dir_out = "./output/transitions"
+dir_out = "./output/transitions/c17"
 tcl_file = "tcl_scripts/t.tcl"
 
 json_dir = "./data/area_json"
@@ -145,11 +160,11 @@ try:
 
     circuit_features = getFeatures.Circuits_features(f"0_{circuit}.v", base_verilog_path, cells_library, cell_library_path)
 
-    circuit_features.fan_in()
-    circuit_features.fan_out()
-    circuit_features.compute_logic_levels()
-    circuit_features.comput_deep()
-
+    fa_in = circuit_features.fan_in()
+    fa_out = circuit_features.fan_out()
+    ln = circuit_features.compute_logic_levels()
+    deep = circuit_features.comput_deep()
+    
 except Exception as error:
     print(f"Error to get features {error}")
 
@@ -170,11 +185,13 @@ find = generate_trasitions.filter_other_gates(sized_memory, gate_inicial, size_s
 print(f"Transições encontradas:")
 
 
+power_dif = np.array([])
+arrival_dif = np.array([])
+
 for pair in find:
     print(f"{pair}")
 
-    power_dif = np.array([])
-    arrival_dif = np.array([])
+   
 
     sized_transition, previos_transition = pair
     id_file_sized = decoder_file_name(TOTAL, sized_transition)
@@ -186,6 +203,8 @@ for pair in find:
         verilog_previos = dir.search_file(f"{id_file_previos}_{circuit}.v", dir_circuits)
     except Exception as error:
         print("Error to search verilog files:", error)
+        continue
+
         
     # Busca os TXT do STA
     try:
@@ -193,19 +212,22 @@ for pair in find:
         sta_previos = dir.search_file(f"{id_file_previos}_{circuit}.txt", dir_out)
     except Exception as error:
         print("Error to search sta files:", error)
+        continue
 
     try:
         sta_data_sized = extData.Read_timing(sta_sized)
         ocurence_sized = sta_data_sized.count_ocurence_path()
         power_sized = sta_data_sized.get_power()
+        print(f"Power sized: {power_sized}")
 
         arrivals_sized = sta_data_sized.get_arrival_times()
         arrivals_values_sized = np.array(list(arrivals_sized.values()))
         mean_arrivals_sized = mean(arrivals_values_sized)
 
         sta_data_previos = extData.Read_timing(sta_previos)
-        ocurence_previos = sta_data_previos.count_ocurence_path()
+        #ocurence_previos = sta_data_previos.count_ocurence_path()
         power_previos = sta_data_previos.get_power()
+        print(f"Power previos: {power_previos}")
 
         arrivals_previos = sta_data_previos.get_arrival_times()
         arrivals_values_previos = np.array(list(arrivals_previos.values()))
@@ -223,6 +245,10 @@ for pair in find:
         dif_arrival = float(mean_arrivals_sized) - float(mean_arrivals_previos)
         arrival_dif = np.append(arrival_dif, dif_arrival)
 
+
+        
+        
+
     except Exception as error:
         print(f"Error on get mean diferences {error}")
 
@@ -231,18 +257,38 @@ for pair in find:
 try:
     mean_power_dif = mean(power_dif)
     mean_arrival_dif = mean(arrival_dif)
+
+  
+    print(f"    Média Power Diff: {mean_power_dif}")
+    print(f"    Média Arrival Diff: {mean_arrival_dif}")
 except Exception as error:
     print(f"Error to get mean differences {error}")
 
 sized_memory.append(gate_inicial)
 
+
+
+
+
+
+
+
+
+
+
+
+
 # Depois dimensiona todos os demais gates mantendo o inicial fixo
 for gate_step in range(1, TOTAL + 1):
     if gate_step != gate_inicial:  # Pula o gate inicial já processado
-        
+
+        power_dif = np.array([])
+        arrival_dif = np.array([])
+
         # gate do circuito sendo dimensionado
         gate = cells_id[gate_step - 1]  # Ajustar índice (0-based)
         print(f"\nGate dimensionado: {gate_step} ({gate})")
+
         print(f"Gates já dimensionados: {sized_memory}")
         find = generate_trasitions.filter_other_gates(sized_memory, gate_step, size_step)
         print(f"Transições encontradas:")
@@ -251,9 +297,71 @@ for gate_step in range(1, TOTAL + 1):
 
             sized_transition, previos_transition = pair
             id_file_sized = decoder_file_name(TOTAL, sized_transition)
-            id_file_previos = decoder_file_name(TOTAL  , previos_transition)
+            id_file_previos = decoder_file_name(TOTAL, previos_transition)
             print(f"{id_file_sized} - {id_file_previos}")
 
+            # Busca os verilogs
+            try:
+                verilog_sized = dir.search_file(f"{id_file_sized}_{circuit}.v", dir_circuits)
+                verilog_previos = dir.search_file(f"{id_file_previos}_{circuit}.v", dir_circuits)
+            except Exception as error:
+                print("Error to search verilog files:", error)
+                continue
+        
+            # Busca os TXT do STA
+            try:
+                sta_sized = dir.search_file(f"{id_file_sized}_{circuit}.txt", dir_out)
+                sta_previos = dir.search_file(f"{id_file_previos}_{circuit}.txt", dir_out)
+            except Exception as error:
+                print("Error to search sta files:", error)
+                continue
+
+            try:
+                sta_data_sized = extData.Read_timing(sta_sized)
+                ocurence_sized = sta_data_sized.count_ocurence_path()
+                power_sized = sta_data_sized.get_power()
+                print(f"Power sized: {power_sized}")
+
+                arrivals_sized = sta_data_sized.get_arrival_times()
+                arrivals_values_sized = np.array(list(arrivals_sized.values()))
+                mean_arrivals_sized = mean(arrivals_values_sized)
+
+                sta_data_previos = extData.Read_timing(sta_previos)
+                #ocurence_previos = sta_data_previos.count_ocurence_path()
+                power_previos = sta_data_previos.get_power()
+                print(f"Power previos: {power_previos}")
+
+                arrivals_previos = sta_data_previos.get_arrival_times()
+                arrivals_values_previos = np.array(list(arrivals_previos.values()))
+                mean_arrivals_previos = mean(arrivals_values_previos)
+
+            except Exception as error:
+                print(f"Erro to extract STA data {error}")
+                continue
+
+            # media das diferenças 
+            try:
+                dif_power = float(power_sized) - float(power_previos)
+                power_dif = np.append(power_dif, dif_power)
+
+                dif_arrival = float(mean_arrivals_sized) - float(mean_arrivals_previos)
+                arrival_dif = np.append(arrival_dif, dif_arrival)
+                
+            except Exception as error:
+                print(f"Error on get mean diferences {error}")
+
+          
+
+        # Calcular e exibir as médias após processar todos os pares
+        try:
+            mean_power_dif = mean(power_dif)
+            mean_arrival_dif = mean(arrival_dif)
+
+            print(f"    Média Power Diff: {mean_power_dif:.2e}")
+            print(f"    Média Arrival Diff: {mean_arrival_dif:.6f}")
+        except Exception as error:
+            print(f"Error to get mean differences {error}")
+           
         sized_memory.append(gate_step)
 
 
