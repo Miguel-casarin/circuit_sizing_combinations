@@ -104,6 +104,7 @@ def create_csv(coluns_to_make: str, csv_dir, csv_path):
 def map_gate(gate_to_map: int, verilog) -> str:
     map_netlist = getNetlist.get_gates(verilog)
     index = gate_to_map -1
+
     return map_netlist[index]
 
 def cost_area(gate_to_map: int, verilog, json) -> float:
@@ -115,7 +116,15 @@ def cost_area(gate_to_map: int, verilog, json) -> float:
     cost = getArea.cost_area(current_map, previos_map)
 
     return cost
-                
+
+def csv_name(sized_gates: list, circuit_name) -> str:
+    str_gates = "".join(map(str, sized_gates))
+    return f"{str_gates}_{circuit_name}.csv"          
+
+def create_csv(coluns_to_make: str, csv_dir, csv_path):
+    table = makeCSV.Create_table(coluns_to_make, csv_dir, csv_path)
+    table.make_csv()  
+
 colunns_list = [
     'GATE',
     'SIZE',
@@ -141,6 +150,9 @@ json_areas = "areas_nangate.json"
 path_json_areas = os.path.join(json_dir, json_areas)
 
 circuit = "c17"
+
+dir_csv = f"./output/tables/{circuit}"
+
 base_verilog_path = './data/verilogs_base'
 
 if is_dir_empty(dir_out):
@@ -182,21 +194,21 @@ gate = cells_id[gate_inicial - 1]
 print(f"\nGate dimensionado: {gate_inicial}")
 print(f"Gates já dimensionados: {sized_memory}")
 find = generate_trasitions.filter_other_gates(sized_memory, gate_inicial, size_step)
-print(f"Transições encontradas:")
 
 
 power_dif = np.array([])
 arrival_dif = np.array([])
 
-for pair in find:
-    print(f"{pair}")
 
-   
+for pair in find:
+    
 
     sized_transition, previos_transition = pair
     id_file_sized = decoder_file_name(TOTAL, sized_transition)
     id_file_previos = decoder_file_name(TOTAL, previos_transition)
 
+    sz, pv = pair
+    print(f"{sz} {pv}")
     # Busca os verilogs
     try:
         verilog_sized = dir.search_file(f"{id_file_sized}_{circuit}.v", dir_circuits)
@@ -218,7 +230,6 @@ for pair in find:
         sta_data_sized = extData.Read_timing(sta_sized)
         ocurence_sized = sta_data_sized.count_ocurence_path()
         power_sized = sta_data_sized.get_power()
-        print(f"Power sized: {power_sized}")
 
         arrivals_sized = sta_data_sized.get_arrival_times()
         arrivals_values_sized = np.array(list(arrivals_sized.values()))
@@ -227,7 +238,6 @@ for pair in find:
         sta_data_previos = extData.Read_timing(sta_previos)
         #ocurence_previos = sta_data_previos.count_ocurence_path()
         power_previos = sta_data_previos.get_power()
-        print(f"Power previos: {power_previos}")
 
         arrivals_previos = sta_data_previos.get_arrival_times()
         arrivals_values_previos = np.array(list(arrivals_previos.values()))
@@ -246,14 +256,11 @@ for pair in find:
         arrival_dif = np.append(arrival_dif, dif_arrival)
 
 
-        
-        
 
     except Exception as error:
         print(f"Error on get mean diferences {error}")
 
-    print(f"{id_file_sized} - {id_file_previos}")
-
+    
 try:
     mean_power_dif = mean(power_dif)
     mean_arrival_dif = mean(arrival_dif)
@@ -264,18 +271,18 @@ try:
 except Exception as error:
     print(f"Error to get mean differences {error}")
 
+try:
+    area_cost = cost_area(gate_inicial, verilog_sized, path_json_areas)
+    print(f"    Cost Area para Gate {gate_inicial}: {area_cost}")
+except Exception as error:
+    print(f"Error to calculate cost area for gate {gate_inicial}: {error}")
+
+
+
 sized_memory.append(gate_inicial)
 
-
-
-
-
-
-
-
-
-
-
+csv_name = csv_name(sized_memory, circuit)
+csv_path = os.path.join(dir_csv, f'{csv_name}')
 
 
 # Depois dimensiona todos os demais gates mantendo o inicial fixo
@@ -291,14 +298,14 @@ for gate_step in range(1, TOTAL + 1):
 
         print(f"Gates já dimensionados: {sized_memory}")
         find = generate_trasitions.filter_other_gates(sized_memory, gate_step, size_step)
-        print(f"Transições encontradas:")
+        
         for pair in find:
-            print(f"  {pair}")
+            
 
             sized_transition, previos_transition = pair
             id_file_sized = decoder_file_name(TOTAL, sized_transition)
             id_file_previos = decoder_file_name(TOTAL, previos_transition)
-            print(f"{id_file_sized} - {id_file_previos}")
+            
 
             # Busca os verilogs
             try:
@@ -320,7 +327,6 @@ for gate_step in range(1, TOTAL + 1):
                 sta_data_sized = extData.Read_timing(sta_sized)
                 ocurence_sized = sta_data_sized.count_ocurence_path()
                 power_sized = sta_data_sized.get_power()
-                print(f"Power sized: {power_sized}")
 
                 arrivals_sized = sta_data_sized.get_arrival_times()
                 arrivals_values_sized = np.array(list(arrivals_sized.values()))
@@ -329,7 +335,6 @@ for gate_step in range(1, TOTAL + 1):
                 sta_data_previos = extData.Read_timing(sta_previos)
                 #ocurence_previos = sta_data_previos.count_ocurence_path()
                 power_previos = sta_data_previos.get_power()
-                print(f"Power previos: {power_previos}")
 
                 arrivals_previos = sta_data_previos.get_arrival_times()
                 arrivals_values_previos = np.array(list(arrivals_previos.values()))
@@ -357,12 +362,30 @@ for gate_step in range(1, TOTAL + 1):
             mean_power_dif = mean(power_dif)
             mean_arrival_dif = mean(arrival_dif)
 
-            print(f"    Média Power Diff: {mean_power_dif:.2e}")
-            print(f"    Média Arrival Diff: {mean_arrival_dif:.6f}")
+            print(f"Média Power Diff: {mean_power_dif:.2e}")
+            print(f"Média Arrival Diff: {mean_arrival_dif:.6f}")
         except Exception as error:
             print(f"Error to get mean differences {error}")
-           
+        
         sized_memory.append(gate_step)
+        # Chamar cost_area para o gate atual usando o último verilog_sized
+        try:
+            if gate_step in sized_memory:
+
+                area_cost = cost_area(gate_step, verilog_sized, path_json_areas)
+                print(f"    Cost Area para Gate {gate_step}: {area_cost}")
+            else:
+                area_cost = 0
+                print(f"Cost Area para Gate {gate_step}: {area_cost} (não dimensionado)")
+
+        except Exception as error:
+            print(f"Error to calculate cost area for gate {gate_step}: {error}")
+
+
+
+
+
+        
 
 
 

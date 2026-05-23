@@ -1,0 +1,47 @@
+OpenSTA 2.7.0 e872c55bfe Copyright (c) 2025, Parallax Software, Inc.
+License GPLv3: GNU GPL version 3 <http://gnu.org/licenses/gpl.html>
+
+This is free software, and you are free to change and redistribute it
+under certain conditions; type `show_copying' for details. 
+This program comes with ABSOLUTELY NO WARRANTY; for details type `show_warranty'.
+Group                  Internal  Switching    Leakage      Total
+                          Power      Power      Power      Power (Watts)
+----------------------------------------------------------------
+Sequential             0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Combinational          1.37e-06   2.14e-07   2.28e-07   1.81e-06 100.0%
+Clock                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Macro                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Pad                    0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+----------------------------------------------------------------
+Total                  1.37e-06   2.14e-07   2.28e-07   1.81e-06 100.0%
+                          75.6%      11.8%      12.6%
+Warning: t.tcl line 1, report_checks -group_count is deprecated. Use -group_path_count instead.
+Startpoint: N2 (input port clocked by virt_clk)
+Endpoint: N22 (output port clocked by virt_clk)
+Path Group: virt_clk
+Path Type: max
+
+     Delay       Time   Description
+---------------------------------------------------------------
+   0.00000    0.00000   clock virt_clk (rise edge)
+   0.00000    0.00000   clock network delay (ideal)
+   0.00000    0.00000 ^ input external delay
+   0.00246    0.00246 ^ N2 (in)
+   0.02394    0.02640 ^ _2_/ZN (AND2_X4)
+   0.03301    0.05941 ^ _3_/ZN (AND2_X1)
+   0.02536    0.08477 ^ _4_/ZN (AND2_X4)
+   0.00000    0.08477 ^ N22 (out)
+              0.08477   data arrival time
+
+   1.10000    1.10000   clock virt_clk (rise edge)
+   0.00000    1.10000   clock network delay (ideal)
+   0.00000    1.10000   clock reconvergence pessimism
+  -1.00000    0.10000   output external delay
+              0.10000   data required time
+---------------------------------------------------------------
+              0.10000   data required time
+             -0.08477   data arrival time
+---------------------------------------------------------------
+              0.01523   slack (MET)
+
+
