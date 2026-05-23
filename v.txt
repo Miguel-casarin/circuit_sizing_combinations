@@ -1,0 +1,774 @@
+
+Dados1
+Debug
+sized 1 previos 0
+0 -> (['X1', 'X1', 'X2'], ['X1', 'X1', 'X1'])
+./output/transitions/c3/1_c3.txt - ./output/transitions/c3/0_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d2288830>
+{2: 1, 3: 1, 4: 1}
+9.04e-07
+{1: 0.0801}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d2d29950>
+{2: 1, 3: 1, 4: 1}
+6.8e-07
+{1: 0.08219}
+Debug
+sized 4 previos 3
+1 -> (['X1', 'X2', 'X2'], ['X1', 'X2', 'X1'])
+./output/transitions/c3/4_c3.txt - ./output/transitions/c3/3_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d2d29a90>
+{2: 1, 3: 1, 4: 1}
+1.12e-06
+{1: 0.07885}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d2d3a650>
+{2: 1, 3: 1, 4: 1}
+9.01e-07
+{1: 0.08246}
+Debug
+sized 7 previos 6
+2 -> (['X1', 'X4', 'X2'], ['X1', 'X4', 'X1'])
+./output/transitions/c3/7_c3.txt - ./output/transitions/c3/6_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d2d3a520>
+{2: 1, 3: 1, 4: 1}
+1.56e-06
+{1: 0.08054}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d2279b50>
+{2: 1, 3: 1, 4: 1}
+1.33e-06
+{1: 0.0867}
+Debug
+sized 10 previos 9
+3 -> (['X2', 'X1', 'X2'], ['X2', 'X1', 'X1'])
+./output/transitions/c3/10_c3.txt - ./output/transitions/c3/9_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d2d41370>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08039}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d2d416a0>
+{2: 1, 3: 1, 4: 1}
+8.39e-07
+{1: 0.08247}
+Debug
+sized 13 previos 12
+4 -> (['X2', 'X2', 'X2'], ['X2', 'X2', 'X1'])
+./output/transitions/c3/13_c3.txt - ./output/transitions/c3/12_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d2cab950>
+{2: 1, 3: 1, 4: 1}
+1.28e-06
+{1: 0.07761}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d2caba50>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08122}
+Debug
+sized 16 previos 15
+5 -> (['X2', 'X4', 'X2'], ['X2', 'X4', 'X1'])
+./output/transitions/c3/16_c3.txt - ./output/transitions/c3/15_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22557c0>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07856}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22558b0>
+{2: 1, 3: 1, 4: 1}
+1.49e-06
+{1: 0.08473}
+Debug
+sized 19 previos 18
+6 -> (['X4', 'X1', 'X2'], ['X4', 'X1', 'X1'])
+./output/transitions/c3/19_c3.txt - ./output/transitions/c3/18_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d2d16a50>
+{2: 1, 3: 1, 4: 1}
+1.37e-06
+{1: 0.08468}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d2d16f90>
+{2: 1, 3: 1, 4: 1}
+1.15e-06
+{1: 0.08676}
+Debug
+sized 22 previos 21
+7 -> (['X4', 'X2', 'X2'], ['X4', 'X2', 'X1'])
+./output/transitions/c3/22_c3.txt - ./output/transitions/c3/21_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d2295640>
+{2: 1, 3: 1, 4: 1}
+1.6e-06
+{1: 0.07935}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d2c92bd0>
+{2: 1, 3: 1, 4: 1}
+1.37e-06
+{1: 0.08295}
+Debug
+sized 25 previos 24
+8 -> (['X4', 'X4', 'X2'], ['X4', 'X4', 'X1'])
+./output/transitions/c3/25_c3.txt - ./output/transitions/c3/24_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d2c92b10>
+{2: 1, 3: 1, 4: 1}
+2.03e-06
+{1: 0.07875}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22ad650>
+{2: 1, 3: 1, 4: 1}
+1.81e-06
+{1: 0.08491}
+Debug
+sized 2 previos 1
+9 -> (['X1', 'X1', 'X4'], ['X1', 'X1', 'X2'])
+./output/transitions/c3/2_c3.txt - ./output/transitions/c3/1_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22ad700>
+{2: 1, 3: 1, 4: 1}
+1.34e-06
+{1: 0.08019}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d2d577f0>
+{2: 1, 3: 1, 4: 1}
+9.04e-07
+{1: 0.0801}
+Debug
+sized 5 previos 4
+10 -> (['X1', 'X2', 'X4'], ['X1', 'X2', 'X2'])
+./output/transitions/c3/5_c3.txt - ./output/transitions/c3/4_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d2d57a70>
+{2: 1, 3: 1, 4: 1}
+1.56e-06
+{1: 0.0782}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d225d9a0>
+{2: 1, 3: 1, 4: 1}
+1.12e-06
+{1: 0.07885}
+Debug
+sized 8 previos 7
+11 -> (['X1', 'X4', 'X4'], ['X1', 'X4', 'X2'])
+./output/transitions/c3/8_c3.txt - ./output/transitions/c3/7_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22912d0>
+{2: 1, 3: 1, 4: 1}
+2e-06
+{1: 0.07834}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d2291550>
+{2: 1, 3: 1, 4: 1}
+1.56e-06
+{1: 0.08054}
+Debug
+sized 11 previos 10
+12 -> (['X2', 'X1', 'X4'], ['X2', 'X1', 'X2'])
+./output/transitions/c3/11_c3.txt - ./output/transitions/c3/10_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22a8ad0>
+{2: 1, 3: 1, 4: 1}
+1.5e-06
+{1: 0.08048}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22a8b40>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08039}
+Debug
+sized 14 previos 13
+13 -> (['X2', 'X2', 'X4'], ['X2', 'X2', 'X2'])
+./output/transitions/c3/14_c3.txt - ./output/transitions/c3/13_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d3d43d10>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07696}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22869f0>
+{2: 1, 3: 1, 4: 1}
+1.28e-06
+{1: 0.07761}
+Debug
+sized 17 previos 16
+14 -> (['X2', 'X4', 'X4'], ['X2', 'X4', 'X2'])
+./output/transitions/c3/17_c3.txt - ./output/transitions/c3/16_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5590>
+{2: 1, 3: 1, 4: 1}
+2.16e-06
+{1: 0.07636}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b55e0>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07856}
+Debug
+sized 20 previos 19
+15 -> (['X4', 'X1', 'X4'], ['X4', 'X1', 'X2'])
+./output/transitions/c3/20_c3.txt - ./output/transitions/c3/19_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5540>
+{2: 1, 3: 1, 4: 1}
+1.81e-06
+{1: 0.08477}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5630>
+{2: 1, 3: 1, 4: 1}
+1.37e-06
+{1: 0.08468}
+Debug
+sized 23 previos 22
+16 -> (['X4', 'X2', 'X4'], ['X4', 'X2', 'X2'])
+./output/transitions/c3/23_c3.txt - ./output/transitions/c3/22_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5310>
+{2: 1, 3: 1, 4: 1}
+2.03e-06
+{1: 0.0787}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b51d0>
+{2: 1, 3: 1, 4: 1}
+1.6e-06
+{1: 0.07935}
+Debug
+sized 26 previos 25
+17 -> (['X4', 'X4', 'X4'], ['X4', 'X4', 'X2'])
+./output/transitions/c3/26_c3.txt - ./output/transitions/c3/25_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54a0>
+{2: 1, 3: 1, 4: 1}
+2.47e-06
+{1: 0.07656}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54f0>
+{2: 1, 3: 1, 4: 1}
+2.03e-06
+{1: 0.07875}
+GATES 1:
+
+Media delay = -0.0024349999999999997
+Media Power = 3.3111111111111115e-07
+
+Dados2
+Debug
+sized 3 previos 0
+18 -> (['X1', 'X2', 'X1'], ['X1', 'X1', 'X1'])
+./output/transitions/c3/3_c3.txt - ./output/transitions/c3/0_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5680>
+{2: 1, 3: 1, 4: 1}
+9.01e-07
+{1: 0.08246}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b56d0>
+{2: 1, 3: 1, 4: 1}
+6.8e-07
+{1: 0.08219}
+Debug
+sized 4 previos 1
+19 -> (['X1', 'X2', 'X2'], ['X1', 'X1', 'X2'])
+./output/transitions/c3/4_c3.txt - ./output/transitions/c3/1_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5630>
+{2: 1, 3: 1, 4: 1}
+1.12e-06
+{1: 0.07885}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5540>
+{2: 1, 3: 1, 4: 1}
+9.04e-07
+{1: 0.0801}
+Debug
+sized 5 previos 2
+20 -> (['X1', 'X2', 'X4'], ['X1', 'X1', 'X4'])
+./output/transitions/c3/5_c3.txt - ./output/transitions/c3/2_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5590>
+{2: 1, 3: 1, 4: 1}
+1.56e-06
+{1: 0.0782}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b55e0>
+{2: 1, 3: 1, 4: 1}
+1.34e-06
+{1: 0.08019}
+Debug
+sized 12 previos 9
+21 -> (['X2', 'X2', 'X1'], ['X2', 'X1', 'X1'])
+./output/transitions/c3/12_c3.txt - ./output/transitions/c3/9_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54f0>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08122}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54a0>
+{2: 1, 3: 1, 4: 1}
+8.39e-07
+{1: 0.08247}
+Debug
+sized 13 previos 10
+22 -> (['X2', 'X2', 'X2'], ['X2', 'X1', 'X2'])
+./output/transitions/c3/13_c3.txt - ./output/transitions/c3/10_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b56d0>
+{2: 1, 3: 1, 4: 1}
+1.28e-06
+{1: 0.07761}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5680>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08039}
+Debug
+sized 14 previos 11
+23 -> (['X2', 'X2', 'X4'], ['X2', 'X1', 'X4'])
+./output/transitions/c3/14_c3.txt - ./output/transitions/c3/11_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54f0>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07696}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54a0>
+{2: 1, 3: 1, 4: 1}
+1.5e-06
+{1: 0.08048}
+Debug
+sized 21 previos 18
+24 -> (['X4', 'X2', 'X1'], ['X4', 'X1', 'X1'])
+./output/transitions/c3/21_c3.txt - ./output/transitions/c3/18_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b55e0>
+{2: 1, 3: 1, 4: 1}
+1.37e-06
+{1: 0.08295}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5590>
+{2: 1, 3: 1, 4: 1}
+1.15e-06
+{1: 0.08676}
+Debug
+sized 22 previos 19
+25 -> (['X4', 'X2', 'X2'], ['X4', 'X1', 'X2'])
+./output/transitions/c3/22_c3.txt - ./output/transitions/c3/19_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b51d0>
+{2: 1, 3: 1, 4: 1}
+1.6e-06
+{1: 0.07935}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5310>
+{2: 1, 3: 1, 4: 1}
+1.37e-06
+{1: 0.08468}
+Debug
+sized 23 previos 20
+26 -> (['X4', 'X2', 'X4'], ['X4', 'X1', 'X4'])
+./output/transitions/c3/23_c3.txt - ./output/transitions/c3/20_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5680>
+{2: 1, 3: 1, 4: 1}
+2.03e-06
+{1: 0.0787}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b56d0>
+{2: 1, 3: 1, 4: 1}
+1.81e-06
+{1: 0.08477}
+Debug
+sized 6 previos 3
+27 -> (['X1', 'X4', 'X1'], ['X1', 'X2', 'X1'])
+./output/transitions/c3/6_c3.txt - ./output/transitions/c3/3_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54a0>
+{2: 1, 3: 1, 4: 1}
+1.33e-06
+{1: 0.0867}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54f0>
+{2: 1, 3: 1, 4: 1}
+9.01e-07
+{1: 0.08246}
+Debug
+sized 7 previos 4
+28 -> (['X1', 'X4', 'X2'], ['X1', 'X2', 'X2'])
+./output/transitions/c3/7_c3.txt - ./output/transitions/c3/4_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5590>
+{2: 1, 3: 1, 4: 1}
+1.56e-06
+{1: 0.08054}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b55e0>
+{2: 1, 3: 1, 4: 1}
+1.12e-06
+{1: 0.07885}
+Debug
+sized 8 previos 5
+29 -> (['X1', 'X4', 'X4'], ['X1', 'X2', 'X4'])
+./output/transitions/c3/8_c3.txt - ./output/transitions/c3/5_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5310>
+{2: 1, 3: 1, 4: 1}
+2e-06
+{1: 0.07834}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b51d0>
+{2: 1, 3: 1, 4: 1}
+1.56e-06
+{1: 0.0782}
+Debug
+sized 15 previos 12
+30 -> (['X2', 'X4', 'X1'], ['X2', 'X2', 'X1'])
+./output/transitions/c3/15_c3.txt - ./output/transitions/c3/12_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b56d0>
+{2: 1, 3: 1, 4: 1}
+1.49e-06
+{1: 0.08473}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5680>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08122}
+Debug
+sized 16 previos 13
+31 -> (['X2', 'X4', 'X2'], ['X2', 'X2', 'X2'])
+./output/transitions/c3/16_c3.txt - ./output/transitions/c3/13_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54f0>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07856}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54a0>
+{2: 1, 3: 1, 4: 1}
+1.28e-06
+{1: 0.07761}
+Debug
+sized 17 previos 14
+32 -> (['X2', 'X4', 'X4'], ['X2', 'X2', 'X4'])
+./output/transitions/c3/17_c3.txt - ./output/transitions/c3/14_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b55e0>
+{2: 1, 3: 1, 4: 1}
+2.16e-06
+{1: 0.07636}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5590>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07696}
+Debug
+sized 24 previos 21
+33 -> (['X4', 'X4', 'X1'], ['X4', 'X2', 'X1'])
+./output/transitions/c3/24_c3.txt - ./output/transitions/c3/21_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b51d0>
+{2: 1, 3: 1, 4: 1}
+1.81e-06
+{1: 0.08491}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5310>
+{2: 1, 3: 1, 4: 1}
+1.37e-06
+{1: 0.08295}
+Debug
+sized 25 previos 22
+34 -> (['X4', 'X4', 'X2'], ['X4', 'X2', 'X2'])
+./output/transitions/c3/25_c3.txt - ./output/transitions/c3/22_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5680>
+{2: 1, 3: 1, 4: 1}
+2.03e-06
+{1: 0.07875}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b56d0>
+{2: 1, 3: 1, 4: 1}
+1.6e-06
+{1: 0.07935}
+Debug
+sized 26 previos 23
+35 -> (['X4', 'X4', 'X4'], ['X4', 'X2', 'X4'])
+./output/transitions/c3/26_c3.txt - ./output/transitions/c3/23_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54a0>
+{2: 1, 3: 1, 4: 1}
+2.47e-06
+{1: 0.07656}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54f0>
+{2: 1, 3: 1, 4: 1}
+2.03e-06
+{1: 0.0787}
+GATES 2:
+
+Media delay = -0.0009211111111111109
+Media Power = 3.287222222222222e-07
+
+Dados3
+Debug
+sized 9 previos 0
+36 -> (['X2', 'X1', 'X1'], ['X1', 'X1', 'X1'])
+./output/transitions/c3/9_c3.txt - ./output/transitions/c3/0_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5540>
+{2: 1, 3: 1, 4: 1}
+8.39e-07
+{1: 0.08247}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5630>
+{2: 1, 3: 1, 4: 1}
+6.8e-07
+{1: 0.08219}
+Debug
+sized 10 previos 1
+37 -> (['X2', 'X1', 'X2'], ['X1', 'X1', 'X2'])
+./output/transitions/c3/10_c3.txt - ./output/transitions/c3/1_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5310>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08039}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b51d0>
+{2: 1, 3: 1, 4: 1}
+9.04e-07
+{1: 0.0801}
+Debug
+sized 11 previos 2
+38 -> (['X2', 'X1', 'X4'], ['X1', 'X1', 'X4'])
+./output/transitions/c3/11_c3.txt - ./output/transitions/c3/2_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b55e0>
+{2: 1, 3: 1, 4: 1}
+1.5e-06
+{1: 0.08048}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5590>
+{2: 1, 3: 1, 4: 1}
+1.34e-06
+{1: 0.08019}
+Debug
+sized 12 previos 3
+39 -> (['X2', 'X2', 'X1'], ['X1', 'X2', 'X1'])
+./output/transitions/c3/12_c3.txt - ./output/transitions/c3/3_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54f0>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08122}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54a0>
+{2: 1, 3: 1, 4: 1}
+9.01e-07
+{1: 0.08246}
+Debug
+sized 13 previos 4
+40 -> (['X2', 'X2', 'X2'], ['X1', 'X2', 'X2'])
+./output/transitions/c3/13_c3.txt - ./output/transitions/c3/4_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5630>
+{2: 1, 3: 1, 4: 1}
+1.28e-06
+{1: 0.07761}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5540>
+{2: 1, 3: 1, 4: 1}
+1.12e-06
+{1: 0.07885}
+Debug
+sized 14 previos 5
+41 -> (['X2', 'X2', 'X4'], ['X1', 'X2', 'X4'])
+./output/transitions/c3/14_c3.txt - ./output/transitions/c3/5_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b51d0>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07696}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5310>
+{2: 1, 3: 1, 4: 1}
+1.56e-06
+{1: 0.0782}
+Debug
+sized 15 previos 6
+42 -> (['X2', 'X4', 'X1'], ['X1', 'X4', 'X1'])
+./output/transitions/c3/15_c3.txt - ./output/transitions/c3/6_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5590>
+{2: 1, 3: 1, 4: 1}
+1.49e-06
+{1: 0.08473}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b55e0>
+{2: 1, 3: 1, 4: 1}
+1.33e-06
+{1: 0.0867}
+Debug
+sized 16 previos 7
+43 -> (['X2', 'X4', 'X2'], ['X1', 'X4', 'X2'])
+./output/transitions/c3/16_c3.txt - ./output/transitions/c3/7_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54a0>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07856}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54f0>
+{2: 1, 3: 1, 4: 1}
+1.56e-06
+{1: 0.08054}
+Debug
+sized 17 previos 8
+44 -> (['X2', 'X4', 'X4'], ['X1', 'X4', 'X4'])
+./output/transitions/c3/17_c3.txt - ./output/transitions/c3/8_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5540>
+{2: 1, 3: 1, 4: 1}
+2.16e-06
+{1: 0.07636}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5630>
+{2: 1, 3: 1, 4: 1}
+2e-06
+{1: 0.07834}
+Debug
+sized 18 previos 9
+45 -> (['X4', 'X1', 'X1'], ['X2', 'X1', 'X1'])
+./output/transitions/c3/18_c3.txt - ./output/transitions/c3/9_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5310>
+{2: 1, 3: 1, 4: 1}
+1.15e-06
+{1: 0.08676}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b51d0>
+{2: 1, 3: 1, 4: 1}
+8.39e-07
+{1: 0.08247}
+Debug
+sized 19 previos 10
+46 -> (['X4', 'X1', 'X2'], ['X2', 'X1', 'X2'])
+./output/transitions/c3/19_c3.txt - ./output/transitions/c3/10_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5540>
+{2: 1, 3: 1, 4: 1}
+1.37e-06
+{1: 0.08468}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5630>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08039}
+Debug
+sized 20 previos 11
+47 -> (['X4', 'X1', 'X4'], ['X2', 'X1', 'X4'])
+./output/transitions/c3/20_c3.txt - ./output/transitions/c3/11_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54f0>
+{2: 1, 3: 1, 4: 1}
+1.81e-06
+{1: 0.08477}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54a0>
+{2: 1, 3: 1, 4: 1}
+1.5e-06
+{1: 0.08048}
+Debug
+sized 21 previos 12
+48 -> (['X4', 'X2', 'X1'], ['X2', 'X2', 'X1'])
+./output/transitions/c3/21_c3.txt - ./output/transitions/c3/12_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b56d0>
+{2: 1, 3: 1, 4: 1}
+1.37e-06
+{1: 0.08295}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5680>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08122}
+Debug
+sized 22 previos 13
+49 -> (['X4', 'X2', 'X2'], ['X2', 'X2', 'X2'])
+./output/transitions/c3/22_c3.txt - ./output/transitions/c3/13_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b51d0>
+{2: 1, 3: 1, 4: 1}
+1.6e-06
+{1: 0.07935}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5310>
+{2: 1, 3: 1, 4: 1}
+1.28e-06
+{1: 0.07761}
+Debug
+sized 23 previos 14
+50 -> (['X4', 'X2', 'X4'], ['X2', 'X2', 'X4'])
+./output/transitions/c3/23_c3.txt - ./output/transitions/c3/14_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5630>
+{2: 1, 3: 1, 4: 1}
+2.03e-06
+{1: 0.0787}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5540>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07696}
+Debug
+sized 24 previos 15
+51 -> (['X4', 'X4', 'X1'], ['X2', 'X4', 'X1'])
+./output/transitions/c3/24_c3.txt - ./output/transitions/c3/15_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54a0>
+{2: 1, 3: 1, 4: 1}
+1.81e-06
+{1: 0.08491}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b54f0>
+{2: 1, 3: 1, 4: 1}
+1.49e-06
+{1: 0.08473}
+Debug
+sized 25 previos 16
+52 -> (['X4', 'X4', 'X2'], ['X2', 'X4', 'X2'])
+./output/transitions/c3/25_c3.txt - ./output/transitions/c3/16_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5680>
+{2: 1, 3: 1, 4: 1}
+2.03e-06
+{1: 0.07875}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b56d0>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07856}
+Debug
+sized 26 previos 17
+53 -> (['X4', 'X4', 'X4'], ['X2', 'X4', 'X4'])
+./output/transitions/c3/26_c3.txt - ./output/transitions/c3/17_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b5310>
+{2: 1, 3: 1, 4: 1}
+2.47e-06
+{1: 0.07656}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f25d22b51d0>
+{2: 1, 3: 1, 4: 1}
+2.16e-06
+{1: 0.07636}
+GATES 3:
+
+Media delay = 0.0005477777777777775
+Media Power = 2.358333333333334e-07

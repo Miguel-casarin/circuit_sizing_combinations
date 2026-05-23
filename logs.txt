@@ -1,0 +1,828 @@
+
+Dados1
+Debug
+sized 1 previos 0
+0 -> (['X1', 'X1', 'X2'], ['X1', 'X1', 'X1'])
+./output/transitions/c3/1_c3.txt - ./output/transitions/c3/0_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b48830>
+{2: 1, 3: 1, 4: 1}
+9.04e-07
+{1: 0.0801}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b153c1950>
+{2: 1, 3: 1, 4: 1}
+6.8e-07
+{1: 0.08219}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 4 previos 3
+1 -> (['X1', 'X2', 'X2'], ['X1', 'X2', 'X1'])
+./output/transitions/c3/4_c3.txt - ./output/transitions/c3/3_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b153c1a90>
+{2: 1, 3: 1, 4: 1}
+1.12e-06
+{1: 0.07885}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b153d2650>
+{2: 1, 3: 1, 4: 1}
+9.01e-07
+{1: 0.08246}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 7 previos 6
+2 -> (['X1', 'X4', 'X2'], ['X1', 'X4', 'X1'])
+./output/transitions/c3/7_c3.txt - ./output/transitions/c3/6_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b153d2520>
+{2: 1, 3: 1, 4: 1}
+1.56e-06
+{1: 0.08054}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b39b50>
+{2: 1, 3: 1, 4: 1}
+1.33e-06
+{1: 0.0867}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 10 previos 9
+3 -> (['X2', 'X1', 'X2'], ['X2', 'X1', 'X1'])
+./output/transitions/c3/10_c3.txt - ./output/transitions/c3/9_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b153d96a0>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08039}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b153d98c0>
+{2: 1, 3: 1, 4: 1}
+8.39e-07
+{1: 0.08247}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 13 previos 12
+4 -> (['X2', 'X2', 'X2'], ['X2', 'X2', 'X1'])
+./output/transitions/c3/13_c3.txt - ./output/transitions/c3/12_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b15343950>
+{2: 1, 3: 1, 4: 1}
+1.28e-06
+{1: 0.07761}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b15343a50>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08122}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 16 previos 15
+5 -> (['X2', 'X4', 'X2'], ['X2', 'X4', 'X1'])
+./output/transitions/c3/16_c3.txt - ./output/transitions/c3/15_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b117c0>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07856}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b118b0>
+{2: 1, 3: 1, 4: 1}
+1.49e-06
+{1: 0.08473}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 19 previos 18
+6 -> (['X4', 'X1', 'X2'], ['X4', 'X1', 'X1'])
+./output/transitions/c3/19_c3.txt - ./output/transitions/c3/18_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b153aea50>
+{2: 1, 3: 1, 4: 1}
+1.37e-06
+{1: 0.08468}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b153aef90>
+{2: 1, 3: 1, 4: 1}
+1.15e-06
+{1: 0.08676}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 22 previos 21
+7 -> (['X4', 'X2', 'X2'], ['X4', 'X2', 'X1'])
+./output/transitions/c3/22_c3.txt - ./output/transitions/c3/21_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b51640>
+{2: 1, 3: 1, 4: 1}
+1.6e-06
+{1: 0.07935}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b1532abd0>
+{2: 1, 3: 1, 4: 1}
+1.37e-06
+{1: 0.08295}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 25 previos 24
+8 -> (['X4', 'X4', 'X2'], ['X4', 'X4', 'X1'])
+./output/transitions/c3/25_c3.txt - ./output/transitions/c3/24_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b1532ab10>
+{2: 1, 3: 1, 4: 1}
+2.03e-06
+{1: 0.07875}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b6d650>
+{2: 1, 3: 1, 4: 1}
+1.81e-06
+{1: 0.08491}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 2 previos 1
+9 -> (['X1', 'X1', 'X4'], ['X1', 'X1', 'X2'])
+./output/transitions/c3/2_c3.txt - ./output/transitions/c3/1_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b6d700>
+{2: 1, 3: 1, 4: 1}
+1.34e-06
+{1: 0.08019}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b153ef7f0>
+{2: 1, 3: 1, 4: 1}
+9.04e-07
+{1: 0.0801}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 5 previos 4
+10 -> (['X1', 'X2', 'X4'], ['X1', 'X2', 'X2'])
+./output/transitions/c3/5_c3.txt - ./output/transitions/c3/4_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b153efa70>
+{2: 1, 3: 1, 4: 1}
+1.56e-06
+{1: 0.0782}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b1d9a0>
+{2: 1, 3: 1, 4: 1}
+1.12e-06
+{1: 0.07885}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 8 previos 7
+11 -> (['X1', 'X4', 'X4'], ['X1', 'X4', 'X2'])
+./output/transitions/c3/8_c3.txt - ./output/transitions/c3/7_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b4da50>
+{2: 1, 3: 1, 4: 1}
+2e-06
+{1: 0.07834}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b4dad0>
+{2: 1, 3: 1, 4: 1}
+1.56e-06
+{1: 0.08054}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 11 previos 10
+12 -> (['X2', 'X1', 'X4'], ['X2', 'X1', 'X2'])
+./output/transitions/c3/11_c3.txt - ./output/transitions/c3/10_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b68ad0>
+{2: 1, 3: 1, 4: 1}
+1.5e-06
+{1: 0.08048}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b68b40>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08039}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 14 previos 13
+13 -> (['X2', 'X2', 'X4'], ['X2', 'X2', 'X2'])
+./output/transitions/c3/14_c3.txt - ./output/transitions/c3/13_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b46930>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07696}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b469f0>
+{2: 1, 3: 1, 4: 1}
+1.28e-06
+{1: 0.07761}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 17 previos 16
+14 -> (['X2', 'X4', 'X4'], ['X2', 'X4', 'X2'])
+./output/transitions/c3/17_c3.txt - ./output/transitions/c3/16_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b755e0>
+{2: 1, 3: 1, 4: 1}
+2.16e-06
+{1: 0.07636}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75630>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07856}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 20 previos 19
+15 -> (['X4', 'X1', 'X4'], ['X4', 'X1', 'X2'])
+./output/transitions/c3/20_c3.txt - ./output/transitions/c3/19_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75590>
+{2: 1, 3: 1, 4: 1}
+1.81e-06
+{1: 0.08477}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75680>
+{2: 1, 3: 1, 4: 1}
+1.37e-06
+{1: 0.08468}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 23 previos 22
+16 -> (['X4', 'X2', 'X4'], ['X4', 'X2', 'X2'])
+./output/transitions/c3/23_c3.txt - ./output/transitions/c3/22_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75360>
+{2: 1, 3: 1, 4: 1}
+2.03e-06
+{1: 0.0787}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75220>
+{2: 1, 3: 1, 4: 1}
+1.6e-06
+{1: 0.07935}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 26 previos 25
+17 -> (['X4', 'X4', 'X4'], ['X4', 'X4', 'X2'])
+./output/transitions/c3/26_c3.txt - ./output/transitions/c3/25_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b754f0>
+{2: 1, 3: 1, 4: 1}
+2.47e-06
+{1: 0.07656}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75540>
+{2: 1, 3: 1, 4: 1}
+2.03e-06
+{1: 0.07875}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+GATES 0:
+
+Media delay = nan
+Media Power = nan
+
+Dados2
+Debug
+sized 3 previos 0
+18 -> (['X1', 'X2', 'X1'], ['X1', 'X1', 'X1'])
+./output/transitions/c3/3_c3.txt - ./output/transitions/c3/0_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4c30>
+{2: 1, 3: 1, 4: 1}
+9.01e-07
+{1: 0.08246}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75590>
+{2: 1, 3: 1, 4: 1}
+6.8e-07
+{1: 0.08219}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 4 previos 1
+19 -> (['X1', 'X2', 'X2'], ['X1', 'X1', 'X2'])
+./output/transitions/c3/4_c3.txt - ./output/transitions/c3/1_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4cd0>
+{2: 1, 3: 1, 4: 1}
+1.12e-06
+{1: 0.07885}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4c80>
+{2: 1, 3: 1, 4: 1}
+9.04e-07
+{1: 0.0801}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 5 previos 2
+20 -> (['X1', 'X2', 'X4'], ['X1', 'X1', 'X4'])
+./output/transitions/c3/5_c3.txt - ./output/transitions/c3/2_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4be0>
+{2: 1, 3: 1, 4: 1}
+1.56e-06
+{1: 0.0782}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75540>
+{2: 1, 3: 1, 4: 1}
+1.34e-06
+{1: 0.08019}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 12 previos 9
+21 -> (['X2', 'X2', 'X1'], ['X2', 'X1', 'X1'])
+./output/transitions/c3/12_c3.txt - ./output/transitions/c3/9_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4c80>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08122}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75590>
+{2: 1, 3: 1, 4: 1}
+8.39e-07
+{1: 0.08247}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 13 previos 10
+22 -> (['X2', 'X2', 'X2'], ['X2', 'X1', 'X2'])
+./output/transitions/c3/13_c3.txt - ./output/transitions/c3/10_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4c30>
+{2: 1, 3: 1, 4: 1}
+1.28e-06
+{1: 0.07761}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75680>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08039}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 14 previos 11
+23 -> (['X2', 'X2', 'X4'], ['X2', 'X1', 'X4'])
+./output/transitions/c3/14_c3.txt - ./output/transitions/c3/11_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4b90>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07696}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75540>
+{2: 1, 3: 1, 4: 1}
+1.5e-06
+{1: 0.08048}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 21 previos 18
+24 -> (['X4', 'X2', 'X1'], ['X4', 'X1', 'X1'])
+./output/transitions/c3/21_c3.txt - ./output/transitions/c3/18_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4cd0>
+{2: 1, 3: 1, 4: 1}
+1.37e-06
+{1: 0.08295}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75590>
+{2: 1, 3: 1, 4: 1}
+1.15e-06
+{1: 0.08676}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 22 previos 19
+25 -> (['X4', 'X2', 'X2'], ['X4', 'X1', 'X2'])
+./output/transitions/c3/22_c3.txt - ./output/transitions/c3/19_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4be0>
+{2: 1, 3: 1, 4: 1}
+1.6e-06
+{1: 0.07935}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75680>
+{2: 1, 3: 1, 4: 1}
+1.37e-06
+{1: 0.08468}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 23 previos 20
+26 -> (['X4', 'X2', 'X4'], ['X4', 'X1', 'X4'])
+./output/transitions/c3/23_c3.txt - ./output/transitions/c3/20_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4c80>
+{2: 1, 3: 1, 4: 1}
+2.03e-06
+{1: 0.0787}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75540>
+{2: 1, 3: 1, 4: 1}
+1.81e-06
+{1: 0.08477}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 6 previos 3
+27 -> (['X1', 'X4', 'X1'], ['X1', 'X2', 'X1'])
+./output/transitions/c3/6_c3.txt - ./output/transitions/c3/3_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4c30>
+{2: 1, 3: 1, 4: 1}
+1.33e-06
+{1: 0.0867}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75590>
+{2: 1, 3: 1, 4: 1}
+9.01e-07
+{1: 0.08246}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 7 previos 4
+28 -> (['X1', 'X4', 'X2'], ['X1', 'X2', 'X2'])
+./output/transitions/c3/7_c3.txt - ./output/transitions/c3/4_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4b90>
+{2: 1, 3: 1, 4: 1}
+1.56e-06
+{1: 0.08054}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75680>
+{2: 1, 3: 1, 4: 1}
+1.12e-06
+{1: 0.07885}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 8 previos 5
+29 -> (['X1', 'X4', 'X4'], ['X1', 'X2', 'X4'])
+./output/transitions/c3/8_c3.txt - ./output/transitions/c3/5_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4cd0>
+{2: 1, 3: 1, 4: 1}
+2e-06
+{1: 0.07834}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75540>
+{2: 1, 3: 1, 4: 1}
+1.56e-06
+{1: 0.0782}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 15 previos 12
+30 -> (['X2', 'X4', 'X1'], ['X2', 'X2', 'X1'])
+./output/transitions/c3/15_c3.txt - ./output/transitions/c3/12_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4be0>
+{2: 1, 3: 1, 4: 1}
+1.49e-06
+{1: 0.08473}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75590>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08122}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 16 previos 13
+31 -> (['X2', 'X4', 'X2'], ['X2', 'X2', 'X2'])
+./output/transitions/c3/16_c3.txt - ./output/transitions/c3/13_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4c80>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07856}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75680>
+{2: 1, 3: 1, 4: 1}
+1.28e-06
+{1: 0.07761}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 17 previos 14
+32 -> (['X2', 'X4', 'X4'], ['X2', 'X2', 'X4'])
+./output/transitions/c3/17_c3.txt - ./output/transitions/c3/14_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4c30>
+{2: 1, 3: 1, 4: 1}
+2.16e-06
+{1: 0.07636}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75540>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07696}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 24 previos 21
+33 -> (['X4', 'X4', 'X1'], ['X4', 'X2', 'X1'])
+./output/transitions/c3/24_c3.txt - ./output/transitions/c3/21_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4b90>
+{2: 1, 3: 1, 4: 1}
+1.81e-06
+{1: 0.08491}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75590>
+{2: 1, 3: 1, 4: 1}
+1.37e-06
+{1: 0.08295}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 25 previos 22
+34 -> (['X4', 'X4', 'X2'], ['X4', 'X2', 'X2'])
+./output/transitions/c3/25_c3.txt - ./output/transitions/c3/22_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4cd0>
+{2: 1, 3: 1, 4: 1}
+2.03e-06
+{1: 0.07875}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75680>
+{2: 1, 3: 1, 4: 1}
+1.6e-06
+{1: 0.07935}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 26 previos 23
+35 -> (['X4', 'X4', 'X4'], ['X4', 'X2', 'X4'])
+./output/transitions/c3/26_c3.txt - ./output/transitions/c3/23_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4be0>
+{2: 1, 3: 1, 4: 1}
+2.47e-06
+{1: 0.07656}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75540>
+{2: 1, 3: 1, 4: 1}
+2.03e-06
+{1: 0.0787}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+GATES 1:
+
+Media delay = nan
+Media Power = nan
+
+Dados3
+Debug
+sized 9 previos 0
+36 -> (['X2', 'X1', 'X1'], ['X1', 'X1', 'X1'])
+./output/transitions/c3/9_c3.txt - ./output/transitions/c3/0_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4c80>
+{2: 1, 3: 1, 4: 1}
+8.39e-07
+{1: 0.08247}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75590>
+{2: 1, 3: 1, 4: 1}
+6.8e-07
+{1: 0.08219}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 10 previos 1
+37 -> (['X2', 'X1', 'X2'], ['X1', 'X1', 'X2'])
+./output/transitions/c3/10_c3.txt - ./output/transitions/c3/1_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4c30>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08039}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75680>
+{2: 1, 3: 1, 4: 1}
+9.04e-07
+{1: 0.0801}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 11 previos 2
+38 -> (['X2', 'X1', 'X4'], ['X1', 'X1', 'X4'])
+./output/transitions/c3/11_c3.txt - ./output/transitions/c3/2_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4b90>
+{2: 1, 3: 1, 4: 1}
+1.5e-06
+{1: 0.08048}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75540>
+{2: 1, 3: 1, 4: 1}
+1.34e-06
+{1: 0.08019}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 12 previos 3
+39 -> (['X2', 'X2', 'X1'], ['X1', 'X2', 'X1'])
+./output/transitions/c3/12_c3.txt - ./output/transitions/c3/3_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4cd0>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08122}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75590>
+{2: 1, 3: 1, 4: 1}
+9.01e-07
+{1: 0.08246}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 13 previos 4
+40 -> (['X2', 'X2', 'X2'], ['X1', 'X2', 'X2'])
+./output/transitions/c3/13_c3.txt - ./output/transitions/c3/4_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4be0>
+{2: 1, 3: 1, 4: 1}
+1.28e-06
+{1: 0.07761}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75680>
+{2: 1, 3: 1, 4: 1}
+1.12e-06
+{1: 0.07885}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 14 previos 5
+41 -> (['X2', 'X2', 'X4'], ['X1', 'X2', 'X4'])
+./output/transitions/c3/14_c3.txt - ./output/transitions/c3/5_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4c80>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07696}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75540>
+{2: 1, 3: 1, 4: 1}
+1.56e-06
+{1: 0.0782}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 15 previos 6
+42 -> (['X2', 'X4', 'X1'], ['X1', 'X4', 'X1'])
+./output/transitions/c3/15_c3.txt - ./output/transitions/c3/6_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4c30>
+{2: 1, 3: 1, 4: 1}
+1.49e-06
+{1: 0.08473}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75590>
+{2: 1, 3: 1, 4: 1}
+1.33e-06
+{1: 0.0867}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 16 previos 7
+43 -> (['X2', 'X4', 'X2'], ['X1', 'X4', 'X2'])
+./output/transitions/c3/16_c3.txt - ./output/transitions/c3/7_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4b90>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07856}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75680>
+{2: 1, 3: 1, 4: 1}
+1.56e-06
+{1: 0.08054}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 17 previos 8
+44 -> (['X2', 'X4', 'X4'], ['X1', 'X4', 'X4'])
+./output/transitions/c3/17_c3.txt - ./output/transitions/c3/8_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4cd0>
+{2: 1, 3: 1, 4: 1}
+2.16e-06
+{1: 0.07636}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75540>
+{2: 1, 3: 1, 4: 1}
+2e-06
+{1: 0.07834}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 18 previos 9
+45 -> (['X4', 'X1', 'X1'], ['X2', 'X1', 'X1'])
+./output/transitions/c3/18_c3.txt - ./output/transitions/c3/9_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4be0>
+{2: 1, 3: 1, 4: 1}
+1.15e-06
+{1: 0.08676}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75590>
+{2: 1, 3: 1, 4: 1}
+8.39e-07
+{1: 0.08247}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 19 previos 10
+46 -> (['X4', 'X1', 'X2'], ['X2', 'X1', 'X2'])
+./output/transitions/c3/19_c3.txt - ./output/transitions/c3/10_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4c80>
+{2: 1, 3: 1, 4: 1}
+1.37e-06
+{1: 0.08468}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75680>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08039}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 20 previos 11
+47 -> (['X4', 'X1', 'X4'], ['X2', 'X1', 'X4'])
+./output/transitions/c3/20_c3.txt - ./output/transitions/c3/11_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4c30>
+{2: 1, 3: 1, 4: 1}
+1.81e-06
+{1: 0.08477}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75540>
+{2: 1, 3: 1, 4: 1}
+1.5e-06
+{1: 0.08048}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 21 previos 12
+48 -> (['X4', 'X2', 'X1'], ['X2', 'X2', 'X1'])
+./output/transitions/c3/21_c3.txt - ./output/transitions/c3/12_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4b90>
+{2: 1, 3: 1, 4: 1}
+1.37e-06
+{1: 0.08295}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75590>
+{2: 1, 3: 1, 4: 1}
+1.06e-06
+{1: 0.08122}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 22 previos 13
+49 -> (['X4', 'X2', 'X2'], ['X2', 'X2', 'X2'])
+./output/transitions/c3/22_c3.txt - ./output/transitions/c3/13_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4cd0>
+{2: 1, 3: 1, 4: 1}
+1.6e-06
+{1: 0.07935}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75680>
+{2: 1, 3: 1, 4: 1}
+1.28e-06
+{1: 0.07761}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 23 previos 14
+50 -> (['X4', 'X2', 'X4'], ['X2', 'X2', 'X4'])
+./output/transitions/c3/23_c3.txt - ./output/transitions/c3/14_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4be0>
+{2: 1, 3: 1, 4: 1}
+2.03e-06
+{1: 0.0787}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75540>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07696}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 24 previos 15
+51 -> (['X4', 'X4', 'X1'], ['X2', 'X4', 'X1'])
+./output/transitions/c3/24_c3.txt - ./output/transitions/c3/15_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4c80>
+{2: 1, 3: 1, 4: 1}
+1.81e-06
+{1: 0.08491}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75590>
+{2: 1, 3: 1, 4: 1}
+1.49e-06
+{1: 0.08473}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 25 previos 16
+52 -> (['X4', 'X4', 'X2'], ['X2', 'X4', 'X2'])
+./output/transitions/c3/25_c3.txt - ./output/transitions/c3/16_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4c30>
+{2: 1, 3: 1, 4: 1}
+2.03e-06
+{1: 0.07875}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75680>
+{2: 1, 3: 1, 4: 1}
+1.72e-06
+{1: 0.07856}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+Debug
+sized 26 previos 17
+53 -> (['X4', 'X4', 'X4'], ['X2', 'X4', 'X4'])
+./output/transitions/c3/26_c3.txt - ./output/transitions/c3/17_c3.txt
+SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14bc4b90>
+{2: 1, 3: 1, 4: 1}
+2.47e-06
+{1: 0.07656}
+PREVIOS SIZED:
+<scripts.extData.Read_timing object at 0x7f9b14b75540>
+{2: 1, 3: 1, 4: 1}
+2.16e-06
+{1: 0.07636}
+ERROR get diference unsupported operand type(s) for -: 'dict' and 'dict'
+GATES 2:
+
+Media delay = nan
+Media Power = nan
