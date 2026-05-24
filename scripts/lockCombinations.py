@@ -25,11 +25,9 @@ def generate_comb(transitions_list, locked: dict):
 
 
 """
-n = 6
+n = 3
 groups = [None] * n
-locks = {2: "X2",
-         3: "X2",
-         6: "X4"}  # 1 = última posição
+locks = {3: "X4"}  # 1 = última posição
 
 linha = 0
 for combo in generate_comb(groups, locks):

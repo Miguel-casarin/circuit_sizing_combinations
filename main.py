@@ -22,26 +22,52 @@ def decoder_file_name(total_gates: int, size_list: list) -> int:
     encoder = Decoder.Encoder(size_list, total_gates)
     return encoder.base3_to_decimal()
 
+def create_csv(coluns_to_make: str, csv_dir, csv_path):
+    table = makeCSV.Create_table(coluns_to_make, csv_dir, csv_path)
+    table.make_csv()  
+
+def insert_csv(csv_path, data):
+    row = makeCSV.Edit_csv(csv_path, data)
+    row.insert_csv_data()
+
 def mean(values: list) -> float:
     return np.mean(values)
+
+colunns_list = [
+    'GATE',
+    'MEAN ARRIVAL',
+    'MEAN POWER'
+]
 
 # Diretórios de busca e save
 dir_out = "./output/transitions/c3"
 
 circuit = "c3"
+circuit2 = "c3.v"
+
+csv_name = f"{runSTA.rename(circuit2)}.v"
+dir_csv = "./output/base_line/tables"
+csv_path = os.path.join(dir_csv, f'{csv_name}.csv') 
 
 # Registro dos gates ja dimensionados
-already_sized = {1: "X2"}
+already_sized = {}
 
 TOTAL_GATES = 3
 alocated_list = [None] * TOTAL_GATES
 
 v = 0
+
+# Cria a tabela com os valores de media
+try:
+    create_csv(colunns_list, dir_csv, csv_path)
+except Exception as error:
+    print(error)
+
 # Percorre todo o netlist
 for indice in range(TOTAL_GATES):
     # Posição no dicionário: indice+1 (1=G1, 2=G2, 3=G3)
     gate_key = indice + 1
-    print(f"\nDados{gate_key}")
+    #print(f"\nDados{gate_key}")
 
     # guarda as diferenças das transições por gate  
     data_arrival = np.array([])
@@ -66,18 +92,18 @@ for indice in range(TOTAL_GATES):
             id_file_sized = decoder_file_name(TOTAL_GATES, sized_transition)
             id_file_previos = decoder_file_name(TOTAL_GATES, previos_transition)
 
-            print("Debug")
-            print(f"sized {id_file_sized} previos {id_file_previos}")
+            #print("Debug")
+            #print(f"sized {id_file_sized} previos {id_file_previos}")
 
-            print(f"{v} -> {pair}")
-            v += 1
+            #print(f"{v} -> {pair}")
+            #v += 1
 
             # Busca os TXT do STA
             try:
                 sta_sized = dir.search_file(f"{id_file_sized}_{circuit}.txt", dir_out)
                 sta_previos = dir.search_file(f"{id_file_previos}_{circuit}.txt", dir_out)
 
-                print(f"{sta_sized} - {sta_previos}")
+                #print(f"{sta_sized} - {sta_previos}")
 
             except Exception as error:
                 print("Error to search sta files:", error)
@@ -94,6 +120,7 @@ for indice in range(TOTAL_GATES):
                 power_previos = sta_data_previos.get_power()
                 arrivals_previos = sta_data_previos.get_arrival_times()
 
+                """
                 print(
                         f"SIZED:\n"
                         f"{sta_data_sized}\n"
@@ -109,6 +136,7 @@ for indice in range(TOTAL_GATES):
                         f"{power_previos}\n"
                         f"{arrivals_previos}"
                     )
+                """
 
             except Exception as error:
                 print(f"Erro to extract STA data {error}")
@@ -134,3 +162,7 @@ for indice in range(TOTAL_GATES):
     print(f"GATES {gate_key}:\n")
     print(f"Media delay = {mean_arrival}")
     print(f"Media Power = {mean_power}")
+
+    # insere na tabela 
+    insert_csv(csv_path, [f"G{gate_key}", mean_arrival, mean_power])
+    
