@@ -1,11 +1,11 @@
 ################################################################################
-# Sun May 24 15:29:41 2026
+# Sun May 24 20:50:29 2026
 # Naja Performance Report
 # naja version: 0.6.6
 # Git hash: 6d7199d
 ################################################################################
 
-<naja_python>                    total:   0.000s rss:   31.75Mb peak:  571.14Mb
-</naja_python>                   total:   0.043s scope:   0.043s rss:   38.34Mb peak:  579.72Mb drss:   +6.59Mb dpeak:   +8.58Mb
+<naja_python>                    total:   0.001s rss:   33.42Mb peak:  571.50Mb
+</naja_python>                   total:   0.053s scope:   0.052s rss:   39.50Mb peak:  579.75Mb drss:   +6.08Mb dpeak:   +8.25Mb
 --------------------------------------------------------------------------------
-Summary total:   0.043s max rss:   38.34Mb max peak:  579.72Mb
+Summary total:   0.053s max rss:   39.50Mb max peak:  579.75Mb

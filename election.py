@@ -1,6 +1,7 @@
 import os
 import numpy as np
-import time # Temp de execução
+import shutil
+import time
 
 from scripts import readV
 from scripts import getFeatures
@@ -13,6 +14,8 @@ from scripts import getArea
 from scripts import Decoder
 from scripts import lockCombinations
 from scripts import edSizeList
+from scripts import ReadCSV
+
 
 # retorna o id do arquivo dado a transição   
 def decoder_file_name(total_gates: int, size_list: list) -> int:
@@ -22,79 +25,74 @@ def decoder_file_name(total_gates: int, size_list: list) -> int:
     encoder = Decoder.Encoder(size_list, total_gates)
     return encoder.base3_to_decimal()
 
-def create_csv(coluns_to_make: str, csv_dir, csv_path):
-    table = makeCSV.Create_table(coluns_to_make, csv_dir, csv_path)
-    table.make_csv()  
+SIZE_ORDER = ["X2", "X4"]
 
-def insert_csv(csv_path, data):
-    row = makeCSV.Edit_csv(csv_path, data)
-    row.insert_csv_data()
+def next_size(current):
+    if current not in SIZE_ORDER:
+        return "X2"
+    idx = SIZE_ORDER.index(current)
+    if idx + 1 < len(SIZE_ORDER):
+        return SIZE_ORDER[idx + 1]
+    return None
 
-def mean(values: list) -> float:
-    return np.mean(values)
 
-colunns_list = [
-    'GATE',
-    'MEAN ARRIVAL',
-    'MEAN POWER'
-]
-
-# Diretórios de busca e save
-dir_out = "./output/transitions/c3"
-
+# carrega a base de dados
 circuit = "c3"
+input_table = f"data_{circuit}.csv"
+data_base = f"./output/base_line/tables/{input_table}"
 
+edited_table_name = f"edit_{input_table}"
+output_hank = f"./output/rank/{edited_table_name}"
 
-csv_name = f"data_{circuit}"
-dir_csv = "./output/base_line/tables"
-csv_path = os.path.join(dir_csv, f'{csv_name}.csv') 
+# verifica se já existe
+if not os.path.exists(output_hank):
+    shutil.copy(data_base, output_hank)
+else:
+    print("Arquivo já existe")
+
+dir_out = "./output/transitions/c3"
 
 # Registro dos gates ja dimensionados
 already_sized = {}
 
 TOTAL_GATES = 3
 alocated_list = [None] * TOTAL_GATES
-
 v = 0
 
-# Cria a tabela com os valores de media
-try:
-    create_csv(colunns_list, dir_csv, csv_path)
-except Exception as error:
-    print(error)
 
-# Percorre todo o netlist
-for indice in range(TOTAL_GATES):
-    # Posição no dicionário: indice+1 (1=G1, 2=G2, 3=G3)
-    gate_key = indice + 1
-    #print(f"\nDados{gate_key}")
 
-    # guarda as diferenças das transições por gate  
-    data_arrival = np.array([])
-    data_power = np.array([])
+while True:
 
-    for size in ["X2", "X4"]:
-        # Atualiza o gate atual para o size correto
-        already_sized[gate_key] = size
+    indice_lower_delay = ReadCSV.seach_lower(output_hank, "MEAN ARRIVAL")
+    print(f"indice -> {indice_lower_delay}")
 
-        # Coleta todas as combinações com esse lock
+    lower_delay = ReadCSV.return_value(output_hank, "MEAN ARRIVAL", indice_lower_delay)
+
+    current_size = already_sized.get(indice_lower_delay, "X1")
+
+    if lower_delay < 0 and current_size != "X4":
+        size = next_size(current_size)
+        already_sized[indice_lower_delay] = size
+
+        print(f"Dimensionando gate {indice_lower_delay} para {size}")
+
+        data_arrival = np.array([])
+        data_power = np.array([])
+
         try:
             all_combs = list(lockCombinations.generate_comb(alocated_list, already_sized))
             enven_sizes = edSizeList.Transitions(all_combs, TOTAL_GATES)
-            pairs = enven_sizes.make_pairs(size, indice)
+            pairs = enven_sizes.make_pairs(size, indice_lower_delay - 1)  # indice_lower_delay começa em 1
         except Exception as error:
             print(f"ERROR to search combinations {error}")
             continue
 
         for pair in pairs:
             sized_transition, previos_transition = pair
-
             id_file_sized = decoder_file_name(TOTAL_GATES, sized_transition)
             id_file_previos = decoder_file_name(TOTAL_GATES, previos_transition)
 
-            #print("Debug")
             #print(f"sized {id_file_sized} previos {id_file_previos}")
-
             #print(f"{v} -> {pair}")
             #v += 1
 
@@ -120,28 +118,13 @@ for indice in range(TOTAL_GATES):
                 power_previos = sta_data_previos.get_power()
                 arrivals_previos = sta_data_previos.get_arrival_times()
 
-                """
-                print(
-                        f"SIZED:\n"
-                        f"{sta_data_sized}\n"
-                        f"{ocurence_sized}\n"
-                        f"{power_sized}\n"
-                        f"{arrivals_sized}"
-                    )
-
-                print(
-                        f"PREVIOS SIZED:\n"
-                        f"{sta_data_previos}\n"
-                        f"{ocurence_previos}\n"
-                        f"{power_previos}\n"
-                        f"{arrivals_previos}"
-                    )
-                """
+         
+               
 
             except Exception as error:
                 print(f"Erro to extract STA data {error}")
                 continue
-
+            
             # atualiza as diferenças
             try:
                 dif_arrival = float(list(arrivals_sized.values())[0] - list(arrivals_previos.values())[0])
@@ -153,16 +136,22 @@ for indice in range(TOTAL_GATES):
             except Exception as error:
                 print(f"ERROR get diference {error}")
 
-    # Remove o lock do gate atual antes de passar para o próximo
-    del already_sized[gate_key]
+            
+        # Após processar todos os pares, calcula a média e atualiza o CSV
+        if len(data_arrival) > 0:
+            mean_arrival = np.mean(data_arrival)
+            mean_power = np.mean(data_power)
 
-    mean_arrival = np.mean(data_arrival)
-    mean_power = np.mean(data_power)
+            print(f"Novo MEAN ARRIVAL gate {indice_lower_delay}: {mean_arrival}")
 
-    print(f"GATES {gate_key}:\n")
-    print(f"Media delay = {mean_arrival}")
-    print(f"Media Power = {mean_power}")
+            try:
+                ReadCSV.change_value(output_hank, "MEAN ARRIVAL", indice_lower_delay, mean_arrival)
+                ReadCSV.change_value(output_hank, "MEAN POWER", indice_lower_delay, mean_power)
+            except Exception as error:
+                print(f"ERROR to edit CSV {error}")
+        else:
+            print(f"Nenhum dado coletado para gate {indice_lower_delay}")
 
-    # insere na tabela 
-    insert_csv(csv_path, [f"G{gate_key}", mean_arrival, mean_power])
-    
+        continue
+    else:
+        break
