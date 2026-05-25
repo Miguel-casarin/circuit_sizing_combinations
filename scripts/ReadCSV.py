@@ -1,6 +1,6 @@
 import csv
 
-def seach_lower(csv_file, colunn: str) -> int:
+def seach_lower_available(csv_file, colunn: str, blocked_indices: list) -> int:
     lower_value = float("inf")
     lower_indice = None
 
@@ -8,12 +8,13 @@ def seach_lower(csv_file, colunn: str) -> int:
         read = csv.DictReader(f)
 
         for indice, row in enumerate(read, start=1):
+            if indice in blocked_indices:
+                continue
             value = float(row[colunn])
-
             if value < lower_value:
                 lower_value = value
                 lower_indice = indice
-                
+
     return lower_indice
 
 
