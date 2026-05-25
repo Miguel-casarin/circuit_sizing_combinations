@@ -1,4 +1,4 @@
-# Data Analysis of Delay, Area, and Power in Circuit Netlists
+# Data Analysis of Delay, Area and Power in Circuit Netlists
 
 This project analyzes size combinations for gates in a circuit using the NanGate45 cell library. It evaluates how different sizing choices affect delay, area, and power by exploring possible transitions among cell sizes (X1, X2, X4).
 
