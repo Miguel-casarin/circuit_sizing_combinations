@@ -1,0 +1,13 @@
+indice -> 1
+Dimensionando gate 1 para X2
+Novo MEAN ARRIVAL gate 1: -0.003951111111111109
+indice -> 1
+Dimensionando gate 1 para X4
+Novo MEAN ARRIVAL gate 1: -0.0009188888888888904
+indice -> 2
+Dimensionando gate 2 para X2
+Novo MEAN ARRIVAL gate 2: -0.003859999999999993
+indice -> 2
+Dimensionando gate 2 para X4
+Novo MEAN ARRIVAL gate 2: -0.0008666666666666684
+indice -> 1

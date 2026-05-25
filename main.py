@@ -40,9 +40,9 @@ colunns_list = [
 ]
 
 # Diretórios de busca e save
-dir_out = "./output/transitions/c3"
+dir_out = "./output/transitions/c17"
 
-circuit = "c3"
+circuit = "c17"
 
 
 csv_name = f"data_{circuit}"
@@ -52,7 +52,7 @@ csv_path = os.path.join(dir_csv, f'{csv_name}.csv')
 # Registro dos gates ja dimensionados
 already_sized = {}
 
-TOTAL_GATES = 3
+TOTAL_GATES = 6
 alocated_list = [None] * TOTAL_GATES
 
 v = 0
@@ -113,12 +113,18 @@ for indice in range(TOTAL_GATES):
                 sta_data_sized = extData.Read_timing(sta_sized)
                 ocurence_sized = sta_data_sized.count_ocurence_path()
                 power_sized = sta_data_sized.get_power()
+
                 arrivals_sized = sta_data_sized.get_arrival_times()
+                arrivals_values_sized = np.array(list(arrivals_sized.values()))
+                mean_arrivals_sized = mean(arrivals_values_sized)
 
                 sta_data_previos = extData.Read_timing(sta_previos)
-                ocurence_previos = sta_data_previos.count_ocurence_path()
+                #ocurence_previos = sta_data_previos.count_ocurence_path()
                 power_previos = sta_data_previos.get_power()
+
                 arrivals_previos = sta_data_previos.get_arrival_times()
+                arrivals_values_previos = np.array(list(arrivals_previos.values()))
+                mean_arrivals_previos = mean(arrivals_values_previos)
 
                 """
                 print(
@@ -144,7 +150,8 @@ for indice in range(TOTAL_GATES):
 
             # atualiza as diferenças
             try:
-                dif_arrival = float(list(arrivals_sized.values())[0] - list(arrivals_previos.values())[0])
+                dif_arrival = float(mean_arrivals_sized) - float(mean_arrivals_previos)
+
                 dif_power = float(power_sized - power_previos)
 
                 data_arrival = np.append(data_arrival, dif_arrival)
