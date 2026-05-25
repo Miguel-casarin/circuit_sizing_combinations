@@ -1,0 +1,50 @@
+Combinacoes: 
+['X1', 'X1', 'X2']
+['X1', 'X2', 'X1']
+['X2', 'X1', 'X1']
+Previos lower = inf <-> Current lower = 0.0801
+#------------------------------#
+transicao escolhida -> ['X1', 'X1', 'X2']
+Delay -> 0.0801
+#------------------------------#
+Combinacoes: 
+['X2', 'X1', 'X2']
+['X1', 'X2', 'X2']
+['X1', 'X1', 'X4']
+Previos lower = 0.0801 <-> Current lower = 0.07885
+#------------------------------#
+transicao escolhida -> ['X1', 'X2', 'X2']
+Delay -> 0.07885
+#------------------------------#
+Combinacoes: 
+['X2', 'X2', 'X2']
+['X1', 'X4', 'X2']
+['X1', 'X2', 'X4']
+Previos lower = 0.07885 <-> Current lower = 0.07761
+#------------------------------#
+transicao escolhida -> ['X2', 'X2', 'X2']
+Delay -> 0.07761
+#------------------------------#
+Combinacoes: 
+['X4', 'X2', 'X2']
+['X2', 'X4', 'X2']
+['X2', 'X2', 'X4']
+Previos lower = 0.07761 <-> Current lower = 0.07696
+#------------------------------#
+transicao escolhida -> ['X2', 'X2', 'X4']
+Delay -> 0.07696
+#------------------------------#
+Combinacoes: 
+['X4', 'X2', 'X4']
+['X2', 'X4', 'X4']
+Previos lower = 0.07696 <-> Current lower = 0.07636
+#------------------------------#
+transicao escolhida -> ['X2', 'X4', 'X4']
+Delay -> 0.07636
+#------------------------------#
+Combinacoes: 
+['X4', 'X4', 'X4']
+Previos lower = 0.07636 <-> Current lower = 0.07656
+FIM
+
+Current Lower 0.07656 maior que o anterior 0.07636
