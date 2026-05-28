@@ -1,5 +1,5 @@
 read_liberty ./data/cells_library/ed_Nangate.lib
-read_verilog ./output/graph/c17/0_c17.v
+read_verilog ./output/graph/c17/8_c17.v
 link_design c17
 
 create_clock -name virt_clk -period 1.1

@@ -117,4 +117,58 @@ except Exception as error:
 
 while True:
     current_values = []
-    
+
+    print(f"RODADA {count}\n")
+    print(f"ESTADO ATUAL........-........ARRIVAL\n{curente_stage}........-........{previos_lower}\n")
+    print("Combinacoes possíveis")
+
+    for comb in current_transitions:
+        id_file_sized = decoder_file_name(TOTAL_GATES, comb)
+        name_to_save = f"{id_file_sized}_{circuit}.v"
+
+        # gera o verilog para a combinação
+        try:
+            setCombination.apply_combination(circuit_to_start, dir_graph, comb, name_to_save)
+        except Exception as error:
+            print(f"ERRO to run single {error}")
+
+        # executa o STA para a combinação
+        try:
+            singleSTA.run_single(tcl_file, name_to_save, dir_graph, dir_sta)
+        except Exception as error:
+            print(f"ERROR to run sta {error}")
+
+        # lê e processa o resultado do STA
+        try:
+            sta_sized = dir.search_file(f"{id_file_sized}_{circuit}.txt", dir_sta)
+            sta_data_sized = extData.Read_timing(sta_sized)
+
+            arrivals_sized = sta_data_sized.get_arrival_times()
+            arrivals_values_sized = np.array(list(arrivals_sized.values()))
+            mean_arrivals_sized = mean(arrivals_values_sized)
+
+            print(f"{comb}...........-...........{mean_arrivals_sized}")
+            current_values.append(mean_arrivals_sized)
+        except Exception as error:
+            print(f"ERROR to read sta files for {comb}: {error}")
+
+    if not current_values:
+        print("Nenhum valor coletado nesta rodada. Encerrando.")
+        break
+
+    current_lower = min(current_values)
+    current_combination = current_transitions[current_values.index(current_lower)]
+
+    if current_lower > previos_lower or all(value == "X4" for value in current_combination):
+        print("FIM\n")
+        print(f"Current Lower {current_lower} maior que o anterior {previos_lower}")
+        break
+    else:
+        print(f"#{'-'*30}#")
+        print(f"Transicao escolhida -> {current_combination}\nDelay -> {current_lower}")
+        print(f"#{'-'*30}#\n")
+
+        previos_lower = current_lower
+        current_transitions = transitions(current_combination, SIZE_ORDER)
+        curente_stage = current_combination
+        count += 1

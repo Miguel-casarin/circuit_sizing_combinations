@@ -155,9 +155,12 @@ def apply_combination(verilog_file, output_dir, combination, output_name):
 
     size_values = decode_size(combination)
 
-    ids_x1 = [gid for gid, sx in zip(ids, size_values) if sx == 1]
-    ids_x2 = [gid for gid, sx in zip(ids, size_values) if sx == 2]
-    ids_x4 = [gid for gid, sx in zip(ids, size_values) if sx == 4]
+    ids_reversed = list(reversed(ids))
+ 
+    ids_x1 = [gid for gid, sx in zip(ids_reversed, size_values) if sx == 1]
+    ids_x2 = [gid for gid, sx in zip(ids_reversed, size_values) if sx == 2]
+    ids_x4 = [gid for gid, sx in zip(ids_reversed, size_values) if sx == 4]
+
 
     editor.upsize_selected_gates(new_file, ids_x1, 1)
     editor.upsize_selected_gates(new_file, ids_x2, 2)
