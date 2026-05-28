@@ -59,8 +59,13 @@ circuit = "c17"
 
 base_verilog_path = f'./data/verilogs_base'
 
+# edita e salva os verilogs
 dir_graph = f'./output/graph/{circuit}'
 circuit_to_start = f'./data/verilogs_base/{circuit}.v'
+
+# edita e salva as saidas do STA
+dir_sta = f'./output/sta_graphs/{circuit}'
+tcl_file = "tcl_scripts/t.tcl"
 
 # iformações basicas do netlist
 try:
@@ -79,6 +84,9 @@ curente_stage = ["X1"] * TOTAL_GATES
 id_file_sized = decoder_file_name(TOTAL_GATES, curente_stage)
 name_to_save = f"{id_file_sized}_{circuit}.v"
 
+# primeiras trasições
+current_transitions = base_transitions(TOTAL_GATES)
+
 print(f"{curente_stage} - {name_to_save}")
 print(TOTAL_GATES)
 if is_dir_empty(dir_graph):
@@ -88,3 +96,25 @@ if is_dir_empty(dir_graph):
     except Exception as error:
         print(f"ERRO to run single {error}")
 
+    try:
+        singleSTA.run_single(tcl_file, name_to_save, dir_graph, dir_sta)
+    except Exception as error:
+        print(f"ERROR to run sta {error}")
+
+try:
+
+    sta_start = dir.search_file(f"{id_file_sized}_{circuit}.txt", dir_sta)
+    sta_data_sized = extData.Read_timing(sta_start)
+
+    arrivals_start = sta_data_sized.get_arrival_times()
+    arrivals_start_sized = np.array(list(arrivals_start.values()))
+    start_arrival = mean(arrivals_start_sized)
+
+    previos_lower = start_arrival
+    
+except Exception as error:
+    print(f"ERROR to read sta files {error}")
+
+while True:
+    current_values = []
+    

@@ -25,7 +25,7 @@ def open_sta(tcl_script, name_to_save: str, out_dir):
 
 def run_single(file_tcl, circuit_process, dir_circuits, dir_to_save):
 
-    verilog_reader = readV.Get_IO(circuit_process)
+    verilog_reader = readV.Get_IO(circuit_process, dir_circuits)
 
     module_design = verilog_reader.verilog_module()
     inputs_sinals = verilog_reader.get_inputs()
