@@ -54,7 +54,7 @@ def transitions(current_combination: list, size_order: list) -> list:
     return result
 
 
-circuit = "c17"
+circuit = "c3"
 
 
 base_verilog_path = f'./data/verilogs_base'
@@ -165,7 +165,8 @@ while True:
         break
     else:
         print(f"#{'-'*30}#")
-        print(f"Transicao escolhida -> {current_combination}\nDelay -> {current_lower}")
+        id_chosen = decoder_file_name(TOTAL_GATES, current_combination)
+        print(f"Transicao escolhida -> {current_combination}\nDelay -> {current_lower}\nID -> {id_chosen}")
         print(f"#{'-'*30}#\n")
 
         previos_lower = current_lower
