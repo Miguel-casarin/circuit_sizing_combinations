@@ -219,4 +219,3 @@ thread_1.join()
 thread_2.join()
 thread_3.join()
 
-print("Todas as threads completaram!")
