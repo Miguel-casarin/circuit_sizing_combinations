@@ -115,12 +115,20 @@ try:
 except Exception as error:
     print(f"ERROR to read sta files {error}")
 
+# abre o arquivo de log na raiz do projeto
+log_path = f"./{circuit}_search_log.txt"
+log_file = open(log_path, "w", encoding="utf-8")
+
+def log(msg):
+    print(msg)
+    log_file.write(msg + "\n")
+
 while True:
     current_values = []
 
-    print(f"RODADA {count}\n")
-    print(f"ESTADO ATUAL........-........ARRIVAL\n{curente_stage}........-........{previos_lower}\n")
-    print("Combinacoes possíveis")
+    log(f"RODADA {count}\n")
+    log(f"ESTADO ATUAL........-........ARRIVAL\n{curente_stage}........-........{previos_lower}\n")
+    log("Combinacoes possíveis")
 
     for comb in current_transitions:
         id_file_sized = decoder_file_name(TOTAL_GATES, comb)
@@ -147,29 +155,31 @@ while True:
             arrivals_values_sized = np.array(list(arrivals_sized.values()))
             mean_arrivals_sized = mean(arrivals_values_sized)
 
-            print(f"{comb}...........-...........{mean_arrivals_sized}")
+            log(f"{comb}...........-...........{mean_arrivals_sized}")
             current_values.append(mean_arrivals_sized)
         except Exception as error:
             print(f"ERROR to read sta files for {comb}: {error}")
 
     if not current_values:
-        print("Nenhum valor coletado nesta rodada. Encerrando.")
+        log("Nenhum valor coletado nesta rodada. Encerrando.")
         break
 
     current_lower = min(current_values)
     current_combination = current_transitions[current_values.index(current_lower)]
 
     if current_lower > previos_lower or all(value == "X4" for value in current_combination):
-        print("FIM\n")
-        print(f"Current Lower {current_lower} maior que o anterior {previos_lower}")
+        log("FIM\n")
+        log(f"Current Lower {current_lower} maior que o anterior {previos_lower}")
         break
     else:
-        print(f"#{'-'*30}#")
+        log(f"#{'-'*30}#")
         id_chosen = decoder_file_name(TOTAL_GATES, current_combination)
-        print(f"Transicao escolhida -> {current_combination}\nDelay -> {current_lower}\nID -> {id_chosen}")
-        print(f"#{'-'*30}#\n")
+        log(f"Transicao escolhida -> {current_combination}\nDelay -> {current_lower}\nID -> {id_chosen}")
+        log(f"#{'-'*30}#\n")
 
         previos_lower = current_lower
         current_transitions = transitions(current_combination, SIZE_ORDER)
         curente_stage = current_combination
         count += 1
+
+log_file.close()
