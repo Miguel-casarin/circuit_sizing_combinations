@@ -13,10 +13,3 @@ def return_drive_cells(cell_name: str, json_path) -> list:
 
     return sizes
 
-json_area = "../data/area_json/areas_nangate.json"
-
-try:
-    drive = return_drive_cells("BUF", json_area)
-    print(drive)
-except Exception as error:
-    print(error)
