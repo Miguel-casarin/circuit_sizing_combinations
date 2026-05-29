@@ -67,6 +67,32 @@ class Get_IO:
             
             return gates_id
 
+class Find_Drive_cells:
+    
+    def __init__(self, file, dir_path):
+        self.file = file
+        self.dir_path = dir_path
+        self.path = os.path.join(self.dir, self.file)
+
+
+    def parse_drives(self) -> list:
+
+        cells_list = []
+
+        regex = re.compile(r"\b([A-Z0-9]+)_X\d+\b")
+
+        with open(self.path, "r") as f:
+            for line in f:
+                line = line.strip()
+
+                match = regex.search(line)
+
+                if match:
+                    cells_list.append(match.group(1))
+
+        return cells_list
+
+        
 def debug_Get_IO(file):
     debug = Get_IO(file)
 
