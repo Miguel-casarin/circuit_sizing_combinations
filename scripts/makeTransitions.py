@@ -32,3 +32,26 @@ class Make_transitions:
                     result.append(new_combination)
 
         return result
+    
+    def valid_transitions(self, candidates: list, cells_drive: list, libray) -> list:
+        valid = []
+        reversed_drives = cells_drive[::-1]
+        for comb in candidates:
+            comb_valid = True
+            for cell, size in zip(reversed_drives, comb):
+                key = cell + "_" + size
+                if key not in libray:
+                    comb_valid = False
+                    break
+                if comb_valid:
+                    valid.append(comb)
+        
+        return valid
+    
+    def get_base_transitions(self, number_gates: int, cells_drive: list, libray):
+        candidates = self.base_transitions(number_gates)
+        return self.valid_transitions(candidates, cells_drive, libray)
+
+    def get_transitions(self, current_combination: list, cells_drive: list, libray):
+        candidates = self.transitions(current_combination)
+        return self.valid_transitions(candidates, cells_drive, libray)
