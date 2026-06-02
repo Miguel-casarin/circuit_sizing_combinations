@@ -72,7 +72,7 @@ class Find_Drive_cells:
     def __init__(self, file, dir_path):
         self.file = file
         self.dir_path = dir_path
-        self.path = os.path.join(self.dir, self.file)
+        self.path = os.path.join(self.dir_path, self.file)
 
 
     def parse_drives(self) -> list:
@@ -92,7 +92,7 @@ class Find_Drive_cells:
 
         return cells_list
 
-        
+       
 def debug_Get_IO(file):
     debug = Get_IO(file)
 
@@ -115,3 +115,4 @@ def debug_Get_IO(file):
 def number_gates(circuit_file, dir_files):
     design = Get_IO(circuit_file, dir_files)
     return len(design.get_cells_ids())  
+
