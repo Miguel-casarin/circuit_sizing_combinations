@@ -15,7 +15,7 @@ def decoder_file_name(total_gates: int, size_list: list) -> int:
         raise ValueError("total_gates range dont match size_list")
         
     encoder = Decoder.Encoder(size_list, total_gates)
-    return encoder.base3_to_decimal()
+    return encoder.base5_to_decimal()
 
 def is_dir_empty(path):
     return not any(os.scandir(path))

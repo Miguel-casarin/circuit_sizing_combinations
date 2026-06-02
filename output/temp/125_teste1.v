@@ -28,7 +28,7 @@ module teste1(N1, N2, N3, N4, N22);
         .Z(_2_)
     );
 
-    INV_X1 _5_ (
+    INV_X2 _5_ (
         .A(_2_),
         .ZN(N22)
     );

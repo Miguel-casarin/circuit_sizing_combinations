@@ -62,7 +62,6 @@ class Edit_verilog:
         with open(new_file, "r", encoding="utf-8") as f:
             lines = f.readlines()
 
-        # Ex.: "NAND2_X1 _4_ (" -> replaces "X1" with "X<size>" only if id is selected
         inst_re = re.compile(r"^(?P<lead>\s*\S+_X)(?P<x>\d+)(?P<tail>\s+_(?P<id>\d+)_\s*\()")
         edited = 0
         for i, line in enumerate(lines):
@@ -84,12 +83,11 @@ class Edit_verilog:
 
 
 def decode_size(string_comb):
-    """Maps size strings like 'X1', 'X2', 'X4' to their integer values."""
     mapping = {
-        "X1": 1,
-        "X2": 2,
-        "X4": 4,
-        "X8": 8,
+        "X1":  1,
+        "X2":  2,
+        "X4":  4,
+        "X8":  8,
         "X16": 16,
         "X32": 32
     }
@@ -143,7 +141,7 @@ def gates_from_file(verilog_file):
 
 
 def apply_combination(verilog_file, output_dir, combination, output_name):
-   
+
     ids = gates_from_file(verilog_file)
 
     if len(ids) != len(combination):
@@ -154,30 +152,20 @@ def apply_combination(verilog_file, output_dir, combination, output_name):
 
     editor = Edit_verilog(verilog_file, output_dir)
     new_file = editor.duplicated_and_rename(output_name)
-    
 
     size_values = decode_size(combination)
-
     ids_reversed = list(reversed(ids))
- 
-    ids_x1 = [gid for gid, sx in zip(ids_reversed, size_values) if sx == 1]
-    ids_x2 = [gid for gid, sx in zip(ids_reversed, size_values) if sx == 2]
-    ids_x4 = [gid for gid, sx in zip(ids_reversed, size_values) if sx == 4]
 
+    # agrupa os ids por tamanho dinamicamente
+    size_groups = {}
+    for gid, sx in zip(ids_reversed, size_values):
+        if sx not in size_groups:
+            size_groups[sx] = []
+        size_groups[sx].append(gid)
 
-    editor.upsize_selected_gates(new_file, ids_x1, 1)
-    editor.upsize_selected_gates(new_file, ids_x2, 2)
-    editor.upsize_selected_gates(new_file, ids_x4, 4)
+    for size, gids in size_groups.items():
+        editor.upsize_selected_gates(new_file, gids, size)
 
     print(f"Combination applied: {combination}")
     print(f"Output: {new_file}")
     return new_file
-
-
-"""
-v = "c17.v"
-dir_to_save = "./testes"
-combination = ['X1', 'X1', 'X1', 'X1', 'X1', 'X1']
-apply_combination(v, dir_to_save, combination, "0_c17.v")
-"""
-
