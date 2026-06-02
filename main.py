@@ -12,7 +12,7 @@ from scripts import makeTransitions
 
 def decoder_file_name(total_gates: int, size_list: list) -> int:
     if len(size_list) != total_gates:
-        raise ValueError("total_gates rabge dont match size_list")
+        raise ValueError("total_gates range dont match size_list")
         
     encoder = Decoder.Encoder(size_list, total_gates)
     return encoder.base3_to_decimal()
@@ -30,13 +30,13 @@ SIZE_ORDER = ["X1", "X2", "X4", "X8", "X16"]
 with open(json_file) as f:
     library = json.load(f)
 
-circuit = "c3"
+circuit = "teste1"
 circuit_to_start = f'./data/verilogs_base/{circuit}.v'
 base_verilog_path = "./data/verilogs_base"
 
 tcl_file = "tcl_scripts/t.tcl"
 
-# diretorio temporario os arquivos seram apagados depois 
+# diretorio temporario, os arquivos serao apagados depois
 temp = "./output/temp"
 
 try:
@@ -66,7 +66,7 @@ try:
 except Exception as error:
     print(f"ERROR to set base transitions {error}")
 
-# cria os arquivos
+# cria o verilog e roda STA para o estado inicial
 try:
     setCombination.apply_combination(circuit_to_start, temp, curente_stage, name_to_save)
 except Exception as error:
@@ -77,22 +77,19 @@ try:
 except Exception as error:
     print(f"ERROR to make single STA {error}")
 
-# pega os dados base
+# pega os dados do estado inicial
 try:
-
     sta_start = dir.search_file(f"{id_file_sized}_{circuit}.txt", temp)
     sta_data_sized = extData.Read_timing(sta_start)
 
     arrivals_start = sta_data_sized.get_arrival_times()
     arrivals_start_sized = np.array(list(arrivals_start.values()))
-    start_arrival = mean(arrivals_start_sized)
+    previos_lower = mean(arrivals_start_sized)
 
-    previos_lower = start_arrival
-    
 except Exception as error:
     print(f"ERROR to read sta files {error}")
 
-# Roda as combinações subsequentes
+# roda as combinacoes subsequentes
 while True:
     current_values = []
 
@@ -100,31 +97,30 @@ while True:
         id_file_sized = decoder_file_name(TOTAL_GATES, comb)
         name_to_save = f"{id_file_sized}_{circuit}.v"
 
-    # cria os arquivos
-    try:
-        setCombination.apply_combination(circuit_to_start, temp, curente_stage, name_to_save)
-    except Exception as error:
-        print(f"ERROR to make single verilog {error}")
+        try:
+            setCombination.apply_combination(circuit_to_start, temp, comb, name_to_save)
+        except Exception as error:
+            print(f"ERROR to make single verilog {error}")
 
-    try:
-        singleSTA.run_single(tcl_file, name_to_save, temp, temp)
-    except Exception as error:
-        print(f"ERROR to make single STA {error}")
+        try:
+            singleSTA.run_single(tcl_file, name_to_save, temp, temp)
+        except Exception as error:
+            print(f"ERROR to make single STA {error}")
 
-    # pega os dados base
-    try:
+        try:
+            sta_file = dir.search_file(f"{id_file_sized}_{circuit}.txt", temp)
+            sta_data = extData.Read_timing(sta_file)
 
-        sta_start = dir.search_file(f"{id_file_sized}_{circuit}.txt", temp)
-        sta_data_sized = extData.Read_timing(sta_start)
+            arrivals = sta_data.get_arrival_times()
+            arrivals_array = np.array(list(arrivals.values()))
+            current_values.append(mean(arrivals_array))
 
-        arrivals_start = sta_data_sized.get_arrival_times()
-        arrivals_start_sized = np.array(list(arrivals_start.values()))
-        start_arrival = mean(arrivals_start_sized)
+        except Exception as error:
+            print(f"ERROR to read sta files {error}")
 
-        previos_lower = start_arrival
-        
-    except Exception as error:
-        print(f"ERROR to read sta files {error}") 
+    if not current_values:
+        print("Nenhum valor coletado. Encerrando.")
+        break
 
     current_lower = min(current_values)
     current_combination = current_transitions[current_values.index(current_lower)]
@@ -133,10 +129,7 @@ while True:
         break
 
     else:
-        id_chosen = decoder_file_name(TOTAL_GATES, current_combination)
-        
-
         previos_lower = current_lower
-        current_transitions = mt.base_transitions(current_combination, drives, library)
+        current_transitions = mt.get_transitions(current_combination, drives, library)
         curente_stage = current_combination
         count += 1

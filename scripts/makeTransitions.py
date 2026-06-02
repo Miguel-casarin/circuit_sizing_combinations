@@ -43,8 +43,8 @@ class Make_transitions:
                 if key not in libray:
                     comb_valid = False
                     break
-                if comb_valid:
-                    valid.append(comb)
+            if comb_valid:
+                valid.append(comb)
         
         return valid
     

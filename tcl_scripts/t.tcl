@@ -1,6 +1,6 @@
 read_liberty ./data/cells_library/ed_Nangate.lib
-read_verilog ./output/temp/9_c3.v
-link_design c3
+read_verilog ./output/temp/29_teste1.v
+link_design teste1
 
 create_clock -name virt_clk -period 1.1
 #set_load 1.140290 [all_inputs]
