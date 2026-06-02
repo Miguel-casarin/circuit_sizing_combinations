@@ -24,6 +24,8 @@ def base_transitions(number_gates: int) -> list:
         temp[-(i + 1)] = "X2"   # começa pelo final
         result.append(temp)
 
+    
+
     return result
 
 def transitions(current_combination: list, size_order: list) -> list:
@@ -47,7 +49,7 @@ def transitions(current_combination: list, size_order: list) -> list:
 
 base_verilog_path = './data/verilogs_base'
 
-circuit = "c17"
+circuit = "c3"
 dir_out = f"./output/transitions/{circuit}"
 
 gio = readV.Get_IO(f"0_{circuit}.v", base_verilog_path)
@@ -59,6 +61,7 @@ count = 1
 
 # Inicializa com as transições base ANTES do while
 current_transitions = base_transitions(TOTAL_GATES)
+print(f"###### {current_transitions}")
 curente_stage = ["X1"] * TOTAL_GATES
 
 id_file_sized = decoder_file_name(TOTAL_GATES, curente_stage)

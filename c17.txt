@@ -13,6 +13,7 @@ Combinacoes possíveis
 #------------------------------#
 Transicao escolhida -> ['X1', 'X1', 'X1', 'X1', 'X1', 'X2']
 Delay -> 0.04672
+ID -> ex
 #------------------------------#
 
 RODADA 2

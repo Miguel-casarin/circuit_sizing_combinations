@@ -89,6 +89,9 @@ def decode_size(string_comb):
         "X1": 1,
         "X2": 2,
         "X4": 4,
+        "X8": 8,
+        "X16": 16,
+        "X32": 32
     }
     return [mapping[x] for x in string_comb]
 
