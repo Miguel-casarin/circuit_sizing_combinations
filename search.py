@@ -16,7 +16,7 @@ def decoder_file_name(total_gates: int, size_list: list) -> int:
         raise ValueError("total_gates rabge dont match size_list")
         
     encoder = Decoder.Encoder(size_list, total_gates)
-    return encoder.base3_to_decimal()
+    return encoder.base5_to_decimal()
 
 def is_dir_empty(path):
     return not any(os.scandir(path))
@@ -54,7 +54,7 @@ def transitions(current_combination: list, size_order: list) -> list:
     return result
 
 
-circuit = "c3"
+circuit = "c17"
 
 
 base_verilog_path = f'./data/verilogs_base'
