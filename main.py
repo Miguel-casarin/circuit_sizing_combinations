@@ -33,7 +33,7 @@ SIZE_ORDER = ["X1", "X2", "X4", "X8", "X16"]
 with open(json_file) as f:
     library = json.load(f)
 
-circuit = "teste2"
+circuit = "teste3"
 circuit_to_start = f'./data/verilogs_base/{circuit}.v'
 base_verilog_path = "./data/verilogs_base"
 
