@@ -11,6 +11,9 @@ from scripts import dir
 from scripts import setCombination
 from scripts import makeTransitions
 from scripts import getArea
+from scripts import makeCSV
+
+
 
 def decoder_file_name(total_gates: int, size_list: list) -> int:
     if len(size_list) != total_gates:
@@ -29,6 +32,14 @@ def merge_size_id(drives_list: list, comb_list: list) -> list:
         print(f"ERROR to merge drives {error}")
 
     return merge_list
+
+def find_changed_index(original: list, modified: list) -> int:
+    for offset, (old, new) in enumerate(
+        zip(reversed(original), reversed(modified))
+    ):
+        if old != new:
+            return offset + 1
+    return -1
 
 def is_dir_empty(path):
     return not any(os.scandir(path))
@@ -158,6 +169,8 @@ while True:
         except Exception as error:
             print(f"ERROR to read sta files for {comb}: {error}")
 
+
+
         # calcula a direfença da area
         try:
             previos_comb = merge_size_id(drives, curente_stage)
@@ -167,9 +180,11 @@ while True:
             comb_area = fa.return_total_area(comb_drives)
 
             area_cost = fa.cost(comb_area, previos_area)
+            dim_gate = find_changed_index(curente_stage, comb)
             log(f"Combinacao anterior {previos_comb}")
             log(f"combinacoes {comb_drives}")
             log(f"area anterior {previos_area} area comb {comb_area} custo {area_cost}")
+            log(f"gate dimensionado {dim_gate}")
         except Exception as error:
             print(f"ERROR to get area {error}")
 

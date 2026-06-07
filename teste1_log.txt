@@ -2,8 +2,10 @@ Power: 1.43e-06
 Total de gates: 4
 RODADA 1
 
-ESTADO ATUAL........-........ARRIVAL
-['X1', 'X1', 'X1', 'X1']........-........0.10997
+ESTADO ATUAL:
+['X1', 'X1', 'X1', 'X1']
+ARRIVAL:
+0.10997
 
 Combinacoes possíveis
 ['X1', 'X1', 'X1', 'X2']...........-...........0.1077
@@ -11,21 +13,25 @@ Power: 1.57e-06
 Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X1']
 combinacoes ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X2']
 area anterior 3.99 area comb 4.522 custo 0.532
+gate dimensionado 1
 ['X1', 'X1', 'X2', 'X1']...........-...........0.11015
 Power: 1.65e-06
 Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X1']
 combinacoes ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X1']
 area anterior 3.99 area comb 4.256 custo 0.266
+gate dimensionado 2
 ['X1', 'X2', 'X1', 'X1']...........-...........0.1138
 Power: 2.05e-06
 Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X1']
 combinacoes ['INV_X1', 'XOR2_X2', 'AND2_X1', 'NOR2_X1']
 area anterior 3.99 area comb 4.788 custo 0.798
+gate dimensionado 3
 ['X2', 'X1', 'X1', 'X1']...........-...........0.11614
 Power: 1.76e-06
 Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X1']
 combinacoes ['INV_X2', 'XOR2_X1', 'AND2_X1', 'NOR2_X1']
 area anterior 3.99 area comb 4.256 custo 0.266
+gate dimensionado 4
 #------------------------------#
 Transicao escolhida -> ['X1', 'X1', 'X1', 'X2']
 Delay -> 0.1077
@@ -34,8 +40,10 @@ ID -> 1
 
 RODADA 2
 
-ESTADO ATUAL........-........ARRIVAL
-['X1', 'X1', 'X1', 'X2']........-........0.1077
+ESTADO ATUAL:
+['X1', 'X1', 'X1', 'X2']
+ARRIVAL:
+0.1077
 
 Combinacoes possíveis
 ['X2', 'X1', 'X1', 'X2']...........-...........0.11387
@@ -43,21 +51,25 @@ Power: 1.9e-06
 Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X2']
 combinacoes ['INV_X2', 'XOR2_X1', 'AND2_X1', 'NOR2_X2']
 area anterior 4.522 area comb 4.788 custo 0.266
+gate dimensionado 4
 ['X1', 'X2', 'X1', 'X2']...........-...........0.11154
 Power: 2.19e-06
 Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X2']
 combinacoes ['INV_X1', 'XOR2_X2', 'AND2_X1', 'NOR2_X2']
 area anterior 4.522 area comb 5.32 custo 0.798
+gate dimensionado 3
 ['X1', 'X1', 'X2', 'X2']...........-...........0.10528
 Power: 1.78e-06
 Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X2']
 combinacoes ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X2']
 area anterior 4.522 area comb 4.788 custo 0.266
+gate dimensionado 2
 ['X1', 'X1', 'X1', 'X4']...........-...........0.1079
 Power: 1.84e-06
 Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X2']
 combinacoes ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X4']
 area anterior 4.522 area comb 5.586 custo 1.064
+gate dimensionado 1
 #------------------------------#
 Transicao escolhida -> ['X1', 'X1', 'X2', 'X2']
 Delay -> 0.10528
@@ -66,8 +78,10 @@ ID -> 6
 
 RODADA 3
 
-ESTADO ATUAL........-........ARRIVAL
-['X1', 'X1', 'X2', 'X2']........-........0.10528
+ESTADO ATUAL:
+['X1', 'X1', 'X2', 'X2']
+ARRIVAL:
+0.10528
 
 Combinacoes possíveis
 ['X2', 'X1', 'X2', 'X2']...........-...........0.11141
@@ -75,21 +89,25 @@ Power: 2.12e-06
 Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X2']
 combinacoes ['INV_X2', 'XOR2_X1', 'AND2_X2', 'NOR2_X2']
 area anterior 4.788 area comb 5.054 custo 0.266
+gate dimensionado 4
 ['X1', 'X2', 'X2', 'X2']...........-...........0.10599
 Power: 2.41e-06
 Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X2']
 combinacoes ['INV_X1', 'XOR2_X2', 'AND2_X2', 'NOR2_X2']
 area anterior 4.788 area comb 5.586 custo 0.798
+gate dimensionado 3
 ['X1', 'X1', 'X4', 'X2']...........-...........0.10813
 Power: 2.21e-06
 Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X2']
 combinacoes ['INV_X1', 'XOR2_X1', 'AND2_X4', 'NOR2_X2']
 area anterior 4.788 area comb 5.852 custo 1.064
+gate dimensionado 2
 ['X1', 'X1', 'X2', 'X4']...........-...........0.10416
 Power: 2.05e-06
 Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X2']
 combinacoes ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X4']
 area anterior 4.788 area comb 5.852 custo 1.064
+gate dimensionado 1
 #------------------------------#
 Transicao escolhida -> ['X1', 'X1', 'X2', 'X4']
 Delay -> 0.10416
@@ -98,8 +116,10 @@ ID -> 7
 
 RODADA 4
 
-ESTADO ATUAL........-........ARRIVAL
-['X1', 'X1', 'X2', 'X4']........-........0.10416
+ESTADO ATUAL:
+['X1', 'X1', 'X2', 'X4']
+ARRIVAL:
+0.10416
 
 Combinacoes possíveis
 ['X2', 'X1', 'X2', 'X4']...........-...........0.11029
@@ -107,17 +127,20 @@ Power: 2.39e-06
 Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X4']
 combinacoes ['INV_X2', 'XOR2_X1', 'AND2_X2', 'NOR2_X4']
 area anterior 5.852 area comb 6.118 custo 0.266
+gate dimensionado 4
 ['X1', 'X2', 'X2', 'X4']...........-...........0.10488
 Power: 2.68e-06
 Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X4']
 combinacoes ['INV_X1', 'XOR2_X2', 'AND2_X2', 'NOR2_X4']
 area anterior 5.852 area comb 6.65 custo 0.798
+gate dimensionado 3
 ['X1', 'X1', 'X4', 'X4']...........-...........0.1043
 Power: 2.48e-06
 Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X4']
 combinacoes ['INV_X1', 'XOR2_X1', 'AND2_X4', 'NOR2_X4']
 area anterior 5.852 area comb 6.916 custo 1.064
+gate dimensionado 2
 FIM
 
 Current Lower 0.1043 maior que o anterior 0.10416
-TEMPO TOTAL 0.027259441216786702
+TEMPO TOTAL 0.028030447165171304
