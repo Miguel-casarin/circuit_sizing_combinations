@@ -1,0 +1,76 @@
+OpenSTA 3.1.0 b0869d521c Copyright (c) 2026, Parallax Software, Inc.
+License GPLv3: GNU GPL version 3 <http://gnu.org/licenses/gpl.html>
+
+This is free software, and you are free to change and redistribute it
+under certain conditions; type `show_copying' for details. 
+This program comes with ABSOLUTELY NO WARRANTY; for details type `show_warranty'.
+Group                  Internal  Switching    Leakage      Total
+                          Power      Power      Power      Power (Watts)
+----------------------------------------------------------------
+Sequential             0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Combinational          1.25e-06   8.05e-07   1.83e-07   2.24e-06 100.0%
+Clock                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Macro                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Pad                    0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+----------------------------------------------------------------
+Total                  1.25e-06   8.05e-07   1.83e-07   2.24e-06 100.0%
+                          55.9%      35.9%       8.2%
+Warning 503: t.tcl line 1, report_checks -group_count is deprecated. Use -group_path_count instead.
+Startpoint: N3 (input port clocked by virt_clk)
+Endpoint: N22 (output port clocked by virt_clk)
+Path Group: virt_clk
+Path Type: max
+
+     Delay       Time   Description
+---------------------------------------------------------------
+   0.00000    0.00000   clock virt_clk (rise edge)
+   0.00000    0.00000   clock network delay (ideal)
+   0.00000    0.00000 ^ input external delay
+   0.00541    0.00541 ^ N3 (in)
+   0.01103    0.01644 v _4_/ZN (NAND2_X4)
+   0.01819    0.03463 ^ _5_/ZN (NAND2_X1)
+   0.01204    0.04667 v _9_/ZN (NAND2_X1)
+   0.00000    0.04667 v N22 (out)
+              0.04667   data arrival time
+
+   1.10000    1.10000   clock virt_clk (rise edge)
+   0.00000    1.10000   clock network delay (ideal)
+   0.00000    1.10000   clock reconvergence pessimism
+  -1.00000    0.10000   output external delay
+              0.10000   data required time
+---------------------------------------------------------------
+              0.10000   data required time
+             -0.04667   data arrival time
+---------------------------------------------------------------
+              0.05333   slack (MET)
+
+
+Startpoint: N3 (input port clocked by virt_clk)
+Endpoint: N23 (output port clocked by virt_clk)
+Path Group: virt_clk
+Path Type: max
+
+     Delay       Time   Description
+---------------------------------------------------------------
+   0.00000    0.00000   clock virt_clk (rise edge)
+   0.00000    0.00000   clock network delay (ideal)
+   0.00000    0.00000 ^ input external delay
+   0.00541    0.00541 ^ N3 (in)
+   0.01103    0.01644 v _4_/ZN (NAND2_X4)
+   0.01819    0.03463 ^ _5_/ZN (NAND2_X1)
+   0.01204    0.04667 v _7_/ZN (NAND2_X1)
+   0.00000    0.04667 v N23 (out)
+              0.04667   data arrival time
+
+   1.10000    1.10000   clock virt_clk (rise edge)
+   0.00000    1.10000   clock network delay (ideal)
+   0.00000    1.10000   clock reconvergence pessimism
+  -1.00000    0.10000   output external delay
+              0.10000   data required time
+---------------------------------------------------------------
+              0.10000   data required time
+             -0.04667   data arrival time
+---------------------------------------------------------------
+              0.05333   slack (MET)
+
+

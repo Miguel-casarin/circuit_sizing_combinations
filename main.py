@@ -54,6 +54,7 @@ def create_csv(coluns_to_make, csv_dir, csv_path):
 
 colunns_list = [
     'COMBINATION',
+    'CHOSEN',
     'SIZED GATE',
     'COST AREA',
     'ARRIVAL',
@@ -69,7 +70,7 @@ SIZE_ORDER = ["X1", "X2", "X4", "X8", "X16", "X32"]
 with open(json_file) as f:
     library = json.load(f)
 
-circuit = "teste1"
+circuit = "c17"
 circuit_to_start = f'./data/verilogs_base/{circuit}.v'
 base_verilog_path = "./data/verilogs_base"
 
@@ -79,7 +80,7 @@ tcl_file = "tcl_scripts/t.tcl"
 temp = "./output/temp"
 
 # diretorios dos csvs
-csv_name = circuit
+csv_name = f"{circuit}"
 dir_csv = "./output/base_line/tables"
 csv_path = os.path.join(dir_csv, f'{csv_name}.csv')  
 
@@ -160,12 +161,14 @@ try:
     initial_area = fa.return_total_area(initial_comb)
 
     initial_row = [
-        str(curente_stage),  # COMBINATIO
+        str(curente_stage),
+        1,  
         0,                   # SIZED GATE (estado inicial, nenhum gate dimensionado)
         0.0,                 # COST AREA (referência, custo zero)
         previos_lower,       # ARRIVAL
-        power                # POWER
+        power               # POWER                         
     ]
+
     edit = makeCSV.Edit_csv(csv_path, initial_row)
     edit.insert_csv_data()
 except Exception as error:
@@ -174,6 +177,7 @@ except Exception as error:
 # roda as combinacoes subsequentes
 while True:
     current_values = []
+    rows_buffer = []  # guarda os dados de cada combinacao antes de inserir no CSV
 
     log(f"RODADA {count}\n")
     log(f"ESTADO ATUAL:\n{curente_stage}\nARRIVAL:\n{previos_lower}\n")
@@ -182,6 +186,11 @@ while True:
     for comb in current_transitions:
         id_file_sized = decoder_file_name(TOTAL_GATES, comb)
         name_to_save = f"{id_file_sized}_{circuit}.v"
+
+        mean_arrivals_sized = None
+        power = None
+        area_cost = None
+        dim_gate = None
 
         try:
             setCombination.apply_combination(circuit_to_start, temp, comb, name_to_save)
@@ -209,8 +218,6 @@ while True:
         except Exception as error:
             print(f"ERROR to read sta files for {comb}: {error}")
 
-
-
         # calcula a direfença da area
         try:
             previos_comb = merge_size_id(drives, curente_stage)
@@ -228,20 +235,15 @@ while True:
         except Exception as error:
             print(f"ERROR to get area {error}")
 
-        try:
-            row_data = [
-                str(comb),
-                int(dim_gate),
-                area_cost,
-                mean_arrivals_sized,
-                power
-            ]
-
-            edit = makeCSV.Edit_csv(csv_path, row_data)
-            edit.insert_csv_data()
-            
-        except Exception as error:
-            print(f"ERROR to insert CSV data {error}")
+        # guarda os dados da combinacao no buffer para inserir depois com CHOSEN correto
+        if all(v is not None for v in [mean_arrivals_sized, power, area_cost, dim_gate]):
+            rows_buffer.append({
+                'comb': str(comb),
+                'dim_gate': int(dim_gate),
+                'area_cost': area_cost,
+                'mean_arrivals_sized': mean_arrivals_sized,
+                'power': power
+            })
 
     if not current_values:
         print("Nenhum valor coletado. Encerrando.")
@@ -251,6 +253,23 @@ while True:
     current_combination = current_transitions[current_values.index(current_lower)]
 
     if current_lower > previos_lower or not current_transitions:
+
+        # nenhuma combinacao foi escolhida, insere todas com CHOSEN=0
+        for row in rows_buffer:
+            try:
+                row_data = [
+                    row['comb'],
+                    0,
+                    row['dim_gate'],
+                    row['area_cost'],
+                    row['mean_arrivals_sized'],
+                    row['power']
+                    
+                ]
+                edit = makeCSV.Edit_csv(csv_path, row_data)
+                edit.insert_csv_data()
+            except Exception as error:
+                print(f"ERROR to insert CSV data {error}")
 
         log("FIM\n")
         log(f"Current Lower {current_lower} maior que o anterior {previos_lower}")
@@ -263,6 +282,23 @@ while True:
         id_chosen = decoder_file_name(TOTAL_GATES, current_combination)
         log(f"Transicao escolhida -> {current_combination}\nDelay -> {current_lower}\nID -> {id_chosen}")
         log(f"#{'-'*30}#\n")
+
+        # insere todas as combinacoes com CHOSEN=1 apenas para a escolhida
+        for row in rows_buffer:
+            try:
+                chosen = 1 if row['comb'] == str(current_combination) else 0
+                row_data = [
+                    row['comb'],
+                    chosen,
+                    row['dim_gate'],
+                    row['area_cost'],
+                    row['mean_arrivals_sized'],
+                    row['power']
+                ]
+                edit = makeCSV.Edit_csv(csv_path, row_data)
+                edit.insert_csv_data()
+            except Exception as error:
+                print(f"ERROR to insert CSV data {error}")
 
         previos_lower = current_lower
         current_transitions = mt.get_transitions(current_combination, drives, library)
