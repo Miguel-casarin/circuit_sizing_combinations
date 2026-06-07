@@ -47,6 +47,19 @@ def is_dir_empty(path):
 def mean(values: list) -> float:
     return np.mean(values)
 
+def create_csv(coluns_to_make, csv_dir, csv_path):
+    table = makeCSV.Create_table(coluns_to_make, csv_dir, csv_path)
+    table.make_csv()
+
+
+colunns_list = [
+    'COMBINATION',
+    'SIZED GATE',
+    'COST AREA',
+    'ARRIVAL',
+    'POWER'
+]
+
 start_timer = time.time()
 
 json_file = "./data/area_json/areas_nangate.json"
@@ -64,6 +77,11 @@ tcl_file = "tcl_scripts/t.tcl"
 
 # diretorio temporario, os arquivos serao apagados depois
 temp = "./output/temp"
+
+# diretorios dos csvs
+csv_name = circuit
+dir_csv = "./output/base_line/tables"
+csv_path = os.path.join(dir_csv, f'{csv_name}.csv')  
 
 # Escreve as saidas
 log_path = f"./{circuit}_log.txt"
@@ -131,6 +149,28 @@ except Exception as error:
 
 log(f"Total de gates: {TOTAL_GATES}")
 
+try:
+    create_csv(colunns_list, dir_csv, csv_path)
+except Exception as error:
+    print(f"ERRPR to make CSV {error}")
+
+# Insere o estado inicial no CSV
+try:
+    initial_comb = merge_size_id(drives, curente_stage)
+    initial_area = fa.return_total_area(initial_comb)
+
+    initial_row = [
+        str(curente_stage),  # COMBINATIO
+        0,                   # SIZED GATE (estado inicial, nenhum gate dimensionado)
+        0.0,                 # COST AREA (referência, custo zero)
+        previos_lower,       # ARRIVAL
+        power                # POWER
+    ]
+    edit = makeCSV.Edit_csv(csv_path, initial_row)
+    edit.insert_csv_data()
+except Exception as error:
+    print(f"ERROR to insert initial state in CSV {error}")
+
 # roda as combinacoes subsequentes
 while True:
     current_values = []
@@ -187,6 +227,21 @@ while True:
             log(f"gate dimensionado {dim_gate}")
         except Exception as error:
             print(f"ERROR to get area {error}")
+
+        try:
+            row_data = [
+                str(comb),
+                int(dim_gate),
+                area_cost,
+                mean_arrivals_sized,
+                power
+            ]
+
+            edit = makeCSV.Edit_csv(csv_path, row_data)
+            edit.insert_csv_data()
+            
+        except Exception as error:
+            print(f"ERROR to insert CSV data {error}")
 
     if not current_values:
         print("Nenhum valor coletado. Encerrando.")
