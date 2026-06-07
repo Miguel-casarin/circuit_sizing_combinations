@@ -1,0 +1,48 @@
+OpenSTA 3.1.0 b0869d521c Copyright (c) 2026, Parallax Software, Inc.
+License GPLv3: GNU GPL version 3 <http://gnu.org/licenses/gpl.html>
+
+This is free software, and you are free to change and redistribute it
+under certain conditions; type `show_copying' for details. 
+This program comes with ABSOLUTELY NO WARRANTY; for details type `show_warranty'.
+Group                  Internal  Switching    Leakage      Total
+                          Power      Power      Power      Power (Watts)
+----------------------------------------------------------------
+Sequential             0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Combinational          1.18e-06   4.57e-07   1.43e-07   1.78e-06 100.0%
+Clock                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Macro                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Pad                    0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+----------------------------------------------------------------
+Total                  1.18e-06   4.57e-07   1.43e-07   1.78e-06 100.0%
+                          66.4%      25.6%       8.0%
+Warning 503: t.tcl line 1, report_checks -group_count is deprecated. Use -group_path_count instead.
+Startpoint: N2 (input port clocked by virt_clk)
+Endpoint: N22 (output port clocked by virt_clk)
+Path Group: virt_clk
+Path Type: max
+
+     Delay       Time   Description
+---------------------------------------------------------------
+   0.00000    0.00000   clock virt_clk (rise edge)
+   0.00000    0.00000   clock network delay (ideal)
+   0.00000    0.00000 v input external delay
+   0.00171    0.00171 v N2 (in)
+   0.02156    0.02327 ^ _2_/ZN (NOR2_X2)
+   0.02841    0.05167 ^ _3_/ZN (AND2_X2)
+   0.04590    0.09757 ^ _4_/Z (XOR2_X1)
+   0.00771    0.10528 v _5_/ZN (INV_X1)
+   0.00000    0.10528 v N22 (out)
+              0.10528   data arrival time
+
+   1.10000    1.10000   clock virt_clk (rise edge)
+   0.00000    1.10000   clock network delay (ideal)
+   0.00000    1.10000   clock reconvergence pessimism
+  -1.00000    0.10000   output external delay
+              0.10000   data required time
+---------------------------------------------------------------
+              0.10000   data required time
+             -0.10528   data arrival time
+---------------------------------------------------------------
+             -0.00528   slack (VIOLATED)
+
+

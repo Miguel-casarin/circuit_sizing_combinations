@@ -75,3 +75,4 @@ Power: 2.48e-06
 FIM
 
 Current Lower 0.1043 maior que o anterior 0.10416
+TEMPO TOTAL 0.028536585966746013

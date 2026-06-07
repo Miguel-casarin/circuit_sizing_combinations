@@ -1,22 +1,30 @@
 import json
 
-def search_area(cell: str, data_json) -> float:
-    with open(data_json, "r") as f:
-        areas = json.load(f)
-    return areas.get(cell, None)
+class Get_Area:
 
-def get_previous_area(cell: str, data_json: str) -> float:
-    size_map = {"X4": "X2", "X2": "X1", "X1": None}
-    
-    for size, prev_size in size_map.items():
-        if cell.endswith(size):
-            if prev_size is None:
-                return 0.0
-            previous_cell = cell.replace(size, prev_size)
-            area = search_area(previous_cell, data_json)
-            return area if area is not None else 0.0
-    
-    return 0.0
+    def __init__(self, json_library):
+        self.json_library = json_library
 
-def cost_area(new_area: float, previos_area: float) -> float:
-    return (new_area - previos_area)
+    def search_area(self, cell: str) -> float:
+        with open(self.json_library, "r") as f:
+            areas = json.load(f)
+        return areas.get(cell, None)
+
+    def return_previos_drive(self, drive: str) -> str:
+        size_map = {"X32": "X16", "X16": "X8", "X8": "X4", "X4": "X2", "X2": "X1", "X1": None}
+
+        for size, prev_size in size_map.items():
+            if drive.endswith(size):
+                if prev_size is None:
+                    return "X1"
+                return prev_size
+
+    def return_total_area(self, gates_list) -> float:
+        total_area = 0.0
+        for cell in gates_list:
+            total_area += self.search_area(cell)
+        return total_area
+            
+
+    def cost(self, current_value: float, previos_value: float) -> float:
+        return current_value - previos_value
