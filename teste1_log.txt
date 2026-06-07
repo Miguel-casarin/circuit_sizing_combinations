@@ -8,12 +8,24 @@ ESTADO ATUAL........-........ARRIVAL
 Combinacoes possíveis
 ['X1', 'X1', 'X1', 'X2']...........-...........0.1077
 Power: 1.57e-06
+Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X1']
+combinacoes ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X2']
+area anterior 3.99 area comb 4.522 custo 0.532
 ['X1', 'X1', 'X2', 'X1']...........-...........0.11015
 Power: 1.65e-06
+Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X1']
+combinacoes ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X1']
+area anterior 3.99 area comb 4.256 custo 0.266
 ['X1', 'X2', 'X1', 'X1']...........-...........0.1138
 Power: 2.05e-06
+Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X1']
+combinacoes ['INV_X1', 'XOR2_X2', 'AND2_X1', 'NOR2_X1']
+area anterior 3.99 area comb 4.788 custo 0.798
 ['X2', 'X1', 'X1', 'X1']...........-...........0.11614
 Power: 1.76e-06
+Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X1']
+combinacoes ['INV_X2', 'XOR2_X1', 'AND2_X1', 'NOR2_X1']
+area anterior 3.99 area comb 4.256 custo 0.266
 #------------------------------#
 Transicao escolhida -> ['X1', 'X1', 'X1', 'X2']
 Delay -> 0.1077
@@ -28,12 +40,24 @@ ESTADO ATUAL........-........ARRIVAL
 Combinacoes possíveis
 ['X2', 'X1', 'X1', 'X2']...........-...........0.11387
 Power: 1.9e-06
+Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X2']
+combinacoes ['INV_X2', 'XOR2_X1', 'AND2_X1', 'NOR2_X2']
+area anterior 4.522 area comb 4.788 custo 0.266
 ['X1', 'X2', 'X1', 'X2']...........-...........0.11154
 Power: 2.19e-06
+Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X2']
+combinacoes ['INV_X1', 'XOR2_X2', 'AND2_X1', 'NOR2_X2']
+area anterior 4.522 area comb 5.32 custo 0.798
 ['X1', 'X1', 'X2', 'X2']...........-...........0.10528
 Power: 1.78e-06
+Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X2']
+combinacoes ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X2']
+area anterior 4.522 area comb 4.788 custo 0.266
 ['X1', 'X1', 'X1', 'X4']...........-...........0.1079
 Power: 1.84e-06
+Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X2']
+combinacoes ['INV_X1', 'XOR2_X1', 'AND2_X1', 'NOR2_X4']
+area anterior 4.522 area comb 5.586 custo 1.064
 #------------------------------#
 Transicao escolhida -> ['X1', 'X1', 'X2', 'X2']
 Delay -> 0.10528
@@ -48,12 +72,24 @@ ESTADO ATUAL........-........ARRIVAL
 Combinacoes possíveis
 ['X2', 'X1', 'X2', 'X2']...........-...........0.11141
 Power: 2.12e-06
+Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X2']
+combinacoes ['INV_X2', 'XOR2_X1', 'AND2_X2', 'NOR2_X2']
+area anterior 4.788 area comb 5.054 custo 0.266
 ['X1', 'X2', 'X2', 'X2']...........-...........0.10599
 Power: 2.41e-06
+Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X2']
+combinacoes ['INV_X1', 'XOR2_X2', 'AND2_X2', 'NOR2_X2']
+area anterior 4.788 area comb 5.586 custo 0.798
 ['X1', 'X1', 'X4', 'X2']...........-...........0.10813
 Power: 2.21e-06
+Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X2']
+combinacoes ['INV_X1', 'XOR2_X1', 'AND2_X4', 'NOR2_X2']
+area anterior 4.788 area comb 5.852 custo 1.064
 ['X1', 'X1', 'X2', 'X4']...........-...........0.10416
 Power: 2.05e-06
+Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X2']
+combinacoes ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X4']
+area anterior 4.788 area comb 5.852 custo 1.064
 #------------------------------#
 Transicao escolhida -> ['X1', 'X1', 'X2', 'X4']
 Delay -> 0.10416
@@ -68,11 +104,20 @@ ESTADO ATUAL........-........ARRIVAL
 Combinacoes possíveis
 ['X2', 'X1', 'X2', 'X4']...........-...........0.11029
 Power: 2.39e-06
+Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X4']
+combinacoes ['INV_X2', 'XOR2_X1', 'AND2_X2', 'NOR2_X4']
+area anterior 5.852 area comb 6.118 custo 0.266
 ['X1', 'X2', 'X2', 'X4']...........-...........0.10488
 Power: 2.68e-06
+Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X4']
+combinacoes ['INV_X1', 'XOR2_X2', 'AND2_X2', 'NOR2_X4']
+area anterior 5.852 area comb 6.65 custo 0.798
 ['X1', 'X1', 'X4', 'X4']...........-...........0.1043
 Power: 2.48e-06
+Combinacao anterior ['INV_X1', 'XOR2_X1', 'AND2_X2', 'NOR2_X4']
+combinacoes ['INV_X1', 'XOR2_X1', 'AND2_X4', 'NOR2_X4']
+area anterior 5.852 area comb 6.916 custo 1.064
 FIM
 
 Current Lower 0.1043 maior que o anterior 0.10416
-TEMPO TOTAL 0.028536585966746013
+TEMPO TOTAL 0.027259441216786702

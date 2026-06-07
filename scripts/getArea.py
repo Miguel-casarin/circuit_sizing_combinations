@@ -24,7 +24,13 @@ class Get_Area:
         for cell in gates_list:
             total_area += self.search_area(cell)
         return total_area
-            
+
+    def previos_list(self, current_comb_list: list) -> list:
+        previos = []
+        for i in current_comb_list:
+            p = self.return_previos_drive(i)
+            previos.append(p)
+        return previos
 
     def cost(self, current_value: float, previos_value: float) -> float:
         return current_value - previos_value

@@ -10,6 +10,7 @@ from scripts import singleSTA
 from scripts import dir
 from scripts import setCombination
 from scripts import makeTransitions
+from scripts import getArea
 
 def decoder_file_name(total_gates: int, size_list: list) -> int:
     if len(size_list) != total_gates:
@@ -17,6 +18,17 @@ def decoder_file_name(total_gates: int, size_list: list) -> int:
         
     encoder = Decoder.Encoder(size_list, total_gates)
     return encoder.base5_to_decimal()
+
+def merge_size_id(drives_list: list, comb_list: list) -> list:
+    merge_list = []
+    try:
+        for drive, comb in zip(reversed(drives_list), comb_list):
+            d = f"{drive}_{comb}"
+            merge_list.append(d)
+    except Exception as error:
+        print(f"ERROR to merge drives {error}")
+
+    return merge_list
 
 def is_dir_empty(path):
     return not any(os.scandir(path))
@@ -28,7 +40,7 @@ start_timer = time.time()
 
 json_file = "./data/area_json/areas_nangate.json"
 
-SIZE_ORDER = ["X1", "X2", "X4", "X8", "X16"]
+SIZE_ORDER = ["X1", "X2", "X4", "X8", "X16", "X32"]
 
 with open(json_file) as f:
     library = json.load(f)
@@ -53,6 +65,7 @@ def log(msg):
 try:
     cells_drives = readV.Find_Drive_cells(f"{circuit}.v", base_verilog_path)
     drives = cells_drives.parse_drives()
+    print(f"---------> {drives}")
 except Exception as error:
     print(f"ERROR to find drive cells {error}")
 
@@ -62,6 +75,8 @@ try:
     print(cells_id)
 except Exception as error:
     print(f"ERROR to get number cells {error}")
+
+fa = getArea.Get_Area(json_file)
 
 TOTAL_GATES = len(cells_id)
 count = 1
@@ -110,7 +125,7 @@ while True:
     current_values = []
 
     log(f"RODADA {count}\n")
-    log(f"ESTADO ATUAL........-........ARRIVAL\n{curente_stage}........-........{previos_lower}\n")
+    log(f"ESTADO ATUAL:\n{curente_stage}\nARRIVAL:\n{previos_lower}\n")
     log("Combinacoes possíveis")
 
     for comb in current_transitions:
@@ -143,6 +158,21 @@ while True:
         except Exception as error:
             print(f"ERROR to read sta files for {comb}: {error}")
 
+        # calcula a direfença da area
+        try:
+            previos_comb = merge_size_id(drives, curente_stage)
+            previos_area = fa.return_total_area(previos_comb)
+
+            comb_drives = merge_size_id(drives, comb)
+            comb_area = fa.return_total_area(comb_drives)
+
+            area_cost = fa.cost(comb_area, previos_area)
+            log(f"Combinacao anterior {previos_comb}")
+            log(f"combinacoes {comb_drives}")
+            log(f"area anterior {previos_area} area comb {comb_area} custo {area_cost}")
+        except Exception as error:
+            print(f"ERROR to get area {error}")
+
     if not current_values:
         print("Nenhum valor coletado. Encerrando.")
         break
@@ -168,6 +198,7 @@ while True:
         current_transitions = mt.get_transitions(current_combination, drives, library)
         curente_stage = current_combination
         count += 1
+
 end_timer = time.time()
 total_time = (end_timer - start_timer) / 60
 log(f"TEMPO TOTAL {total_time}")
