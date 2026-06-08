@@ -8,13 +8,13 @@ Group                  Internal  Switching    Leakage      Total
                           Power      Power      Power      Power (Watts)
 ----------------------------------------------------------------
 Sequential             0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
-Combinational          1.41e-06   4.57e-07   1.85e-07   2.05e-06 100.0%
+Combinational          1.18e-06   4.57e-07   1.43e-07   1.78e-06 100.0%
 Clock                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
 Macro                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
 Pad                    0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
 ----------------------------------------------------------------
-Total                  1.41e-06   4.57e-07   1.85e-07   2.05e-06 100.0%
-                          68.8%      22.2%       9.0%
+Total                  1.18e-06   4.57e-07   1.43e-07   1.78e-06 100.0%
+                          66.4%      25.6%       8.0%
 Warning 503: t.tcl line 1, report_checks -group_count is deprecated. Use -group_path_count instead.
 Startpoint: N2 (input port clocked by virt_clk)
 Endpoint: N22 (output port clocked by virt_clk)
@@ -26,13 +26,13 @@ Path Type: max
    0.00000    0.00000   clock virt_clk (rise edge)
    0.00000    0.00000   clock network delay (ideal)
    0.00000    0.00000 v input external delay
-   0.00341    0.00341 v N2 (in)
-   0.01957    0.02298 ^ _2_/ZN (NOR2_X4)
-   0.02758    0.05056 ^ _3_/ZN (AND2_X2)
-   0.04589    0.09645 ^ _4_/Z (XOR2_X1)
-   0.00771    0.10416 v _5_/ZN (INV_X1)
-   0.00000    0.10416 v N22 (out)
-              0.10416   data arrival time
+   0.00171    0.00171 v N2 (in)
+   0.02156    0.02327 ^ _2_/ZN (NOR2_X2)
+   0.02841    0.05167 ^ _3_/ZN (AND2_X2)
+   0.04590    0.09757 ^ _4_/Z (XOR2_X1)
+   0.00771    0.10528 v _5_/ZN (INV_X1)
+   0.00000    0.10528 v N22 (out)
+              0.10528   data arrival time
 
    1.10000    1.10000   clock virt_clk (rise edge)
    0.00000    1.10000   clock network delay (ideal)
@@ -41,8 +41,8 @@ Path Type: max
               0.10000   data required time
 ---------------------------------------------------------------
               0.10000   data required time
-             -0.10416   data arrival time
+             -0.10528   data arrival time
 ---------------------------------------------------------------
-             -0.00416   slack (VIOLATED)
+             -0.00528   slack (VIOLATED)
 
 

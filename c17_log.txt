@@ -97,7 +97,7 @@ gate dimensionado 1
 #------------------------------#
 Transicao escolhida -> ['X1', 'X1', 'X1', 'X1', 'X2', 'X2']
 Delay -> 0.045704999999999996
-ID -> 6
+ID -> 7
 #------------------------------#
 
 RODADA 3
@@ -147,7 +147,7 @@ gate dimensionado 1
 #------------------------------#
 Transicao escolhida -> ['X1', 'X1', 'X1', 'X1', 'X2', 'X4']
 Delay -> 0.043715000000000004
-ID -> 7
+ID -> 8
 #------------------------------#
 
 RODADA 4
@@ -191,4 +191,4 @@ gate dimensionado 2
 FIM
 
 Current Lower 0.04445 maior que o anterior 0.043715000000000004
-TEMPO TOTAL 0.04110102256139119
+TEMPO TOTAL 0.04187736908594767

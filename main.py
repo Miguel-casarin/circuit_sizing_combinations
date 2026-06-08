@@ -20,7 +20,7 @@ def decoder_file_name(total_gates: int, size_list: list) -> int:
         raise ValueError("total_gates range dont match size_list")
         
     encoder = Decoder.Encoder(size_list, total_gates)
-    return encoder.base5_to_decimal()
+    return encoder.base6_to_decimal()
 
 def merge_size_id(drives_list: list, comb_list: list) -> list:
     merge_list = []
@@ -70,7 +70,7 @@ SIZE_ORDER = ["X1", "X2", "X4", "X8", "X16", "X32"]
 with open(json_file) as f:
     library = json.load(f)
 
-circuit = "c17"
+circuit = "teste1"
 circuit_to_start = f'./data/verilogs_base/{circuit}.v'
 base_verilog_path = "./data/verilogs_base"
 

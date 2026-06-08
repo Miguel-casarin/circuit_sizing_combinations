@@ -25,7 +25,8 @@ class Decoder:
             1: "X2",
             2: "X4",
             3: "X8",
-            4: "X16"
+            4: "X16",
+            5: "X32"
         }
 
         return [mapping[x] for x in string_to_decode]
@@ -42,16 +43,17 @@ class Encoder:
             "X2": 1,
             "X4": 2,
             "X8": 3,
-            "X16": 4
+            "X16": 4,
+            "X32": 5
         }
 
         return [mapping[x] for x in self.size_list]
 
-    def base5_to_decimal(self):
+    def base6_to_decimal(self):
         """Converte lista em base 5 para número decimal"""
         base5_list = self.encode_size()
         decimal = 0
         for digit in base5_list:
-            decimal = decimal * 5 + digit
+            decimal = decimal * 6 + digit
 
         return decimal
