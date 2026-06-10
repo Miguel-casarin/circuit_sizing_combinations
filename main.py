@@ -4,7 +4,6 @@ import json
 import time
 
 from scripts import readV
-from scripts import Decoder
 from scripts import extData
 from scripts import singleSTA
 from scripts import dir
@@ -13,43 +12,10 @@ from scripts import makeTransitions
 from scripts import getArea
 from scripts import makeCSV
 
+from scripts import utils
 
 
-def decoder_file_name(total_gates: int, size_list: list) -> int:
-    if len(size_list) != total_gates:
-        raise ValueError("total_gates range dont match size_list")
-        
-    encoder = Decoder.Encoder(size_list, total_gates)
-    return encoder.base6_to_decimal()
 
-def merge_size_id(drives_list: list, comb_list: list) -> list:
-    merge_list = []
-    try:
-        for drive, comb in zip(reversed(drives_list), comb_list):
-            d = f"{drive}_{comb}"
-            merge_list.append(d)
-    except Exception as error:
-        print(f"ERROR to merge drives {error}")
-
-    return merge_list
-
-def find_changed_index(original: list, modified: list) -> int:
-    for offset, (old, new) in enumerate(
-        zip(reversed(original), reversed(modified))
-    ):
-        if old != new:
-            return offset + 1
-    return -1
-
-def is_dir_empty(path):
-    return not any(os.scandir(path))
-
-def mean(values: list) -> float:
-    return np.mean(values)
-
-def create_csv(coluns_to_make, csv_dir, csv_path):
-    table = makeCSV.Create_table(coluns_to_make, csv_dir, csv_path)
-    table.make_csv()
 
 
 colunns_list = [
@@ -112,7 +78,7 @@ TOTAL_GATES = len(cells_id)
 count = 1
 
 curente_stage = ["X1"] * TOTAL_GATES
-id_file_sized = decoder_file_name(TOTAL_GATES, curente_stage)
+id_file_sized = utils.decoder_file_name(TOTAL_GATES, curente_stage)
 name_to_save = f"{id_file_sized}_{circuit}.v"
 
 mt = makeTransitions.Make_transitions(SIZE_ORDER)
@@ -140,7 +106,7 @@ try:
 
     arrivals_start = sta_data_sized.get_arrival_times()
     arrivals_start_sized = np.array(list(arrivals_start.values()))
-    previos_lower = mean(arrivals_start_sized)
+    previos_lower = utils.mean(arrivals_start_sized)
 
     power = sta_data_sized.get_power()
     log(f"Power: {power}")
@@ -151,13 +117,13 @@ except Exception as error:
 log(f"Total de gates: {TOTAL_GATES}")
 
 try:
-    create_csv(colunns_list, dir_csv, csv_path)
+    utils.create_csv(colunns_list, dir_csv, csv_path)
 except Exception as error:
     print(f"ERRPR to make CSV {error}")
 
 # Insere o estado inicial no CSV
 try:
-    initial_comb = merge_size_id(drives, curente_stage)
+    initial_comb = utils.merge_size_id(drives, curente_stage)
     initial_area = fa.return_total_area(initial_comb)
 
     initial_row = [
@@ -184,7 +150,7 @@ while True:
     log("Combinacoes possíveis")
 
     for comb in current_transitions:
-        id_file_sized = decoder_file_name(TOTAL_GATES, comb)
+        id_file_sized = utils.decoder_file_name(TOTAL_GATES, comb)
         name_to_save = f"{id_file_sized}_{circuit}.v"
 
         mean_arrivals_sized = None
@@ -209,7 +175,7 @@ while True:
 
             arrivals_sized = sta_data_sized.get_arrival_times()
             arrivals_values_sized = np.array(list(arrivals_sized.values()))
-            mean_arrivals_sized = mean(arrivals_values_sized)
+            mean_arrivals_sized = utils.mean(arrivals_values_sized)
 
             power = sta_data_sized.get_power()
             
@@ -220,14 +186,14 @@ while True:
 
         # calcula a direfença da area
         try:
-            previos_comb = merge_size_id(drives, curente_stage)
+            previos_comb = utils.merge_size_id(drives, curente_stage)
             previos_area = fa.return_total_area(previos_comb)
 
-            comb_drives = merge_size_id(drives, comb)
+            comb_drives = utils.merge_size_id(drives, comb)
             comb_area = fa.return_total_area(comb_drives)
 
             area_cost = fa.cost(comb_area, previos_area)
-            dim_gate = find_changed_index(curente_stage, comb)
+            dim_gate = utils.find_changed_index(curente_stage, comb)
             log(f"Combinacao anterior {previos_comb}")
             log(f"combinacoes {comb_drives}")
             log(f"area anterior {previos_area} area comb {comb_area} custo {area_cost}")
@@ -279,7 +245,7 @@ while True:
     else:
 
         log(f"#{'-'*30}#")
-        id_chosen = decoder_file_name(TOTAL_GATES, current_combination)
+        id_chosen = utils.decoder_file_name(TOTAL_GATES, current_combination)
         log(f"Transicao escolhida -> {current_combination}\nDelay -> {current_lower}\nID -> {id_chosen}")
         log(f"#{'-'*30}#\n")
 

@@ -143,4 +143,4 @@ gate dimensionado 2
 FIM
 
 Current Lower 0.1043 maior que o anterior 0.10416
-TEMPO TOTAL 0.027459545930226644
+TEMPO TOTAL 0.06855535904566447
