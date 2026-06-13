@@ -11,7 +11,6 @@ from scripts import setCombination
 from scripts import makeTransitions
 from scripts import getArea
 from scripts import makeCSV
-
 from scripts import utils
 
 
@@ -47,11 +46,12 @@ temp = "./output/temp"
 
 # diretorios dos csvs
 csv_name = f"{circuit}"
-dir_csv = "./output/base_line/tables"
+dir_csv = "./output/tables"
 csv_path = os.path.join(dir_csv, f'{csv_name}.csv')  
 
 # Escreve as saidas
-log_path = f"./{circuit}_log.txt"
+logs_dir = "./output/logs"
+log_path = f".{logs_dir}/{circuit}_log.txt"
 log_file = open(log_path, "w", encoding="utf-8")
 
 def log(msg):
