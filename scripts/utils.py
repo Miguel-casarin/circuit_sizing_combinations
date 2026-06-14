@@ -56,9 +56,22 @@ def clear_temp_dir(verilog_maintain: str, sta_maintain: str, dir_to_clear: str) 
         if file not in keep_files and extension in extensions_to_remove:
             os.remove(file_path)
 
-def clear_directory(directory: str):
+import os
+
+def clear_directory(directory: str) -> None:
+    extensions_to_delete = {
+        ".txt",
+        ".v",
+        ".tcl",
+    }
+
     for file in os.listdir(directory):
         file_path = os.path.join(directory, file)
 
-        if os.path.isfile(file_path):
+        if not os.path.isfile(file_path):
+            continue
+
+        _, extension = os.path.splitext(file)
+
+        if extension in extensions_to_delete:
             os.remove(file_path)
