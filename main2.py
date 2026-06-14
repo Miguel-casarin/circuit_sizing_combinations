@@ -20,6 +20,7 @@ MAX_WORKERS = 6
 
 colunns_list = [
     'COMBINATION',
+    'WEIGHT',
     'CHOSEN',
     'SIZED GATE',
     'COST AREA',
@@ -82,6 +83,11 @@ name_to_save = f"{id_file_sized}_{circuit}.v"
 mt = makeTransitions.Make_transitions(SIZE_ORDER)
 
 try:
+    sized_weight = utils.combination_weight(curente_stage)
+except Exception as error:
+    print(f"ERROR to gete weigth {error}")
+
+try:
     current_transitions = mt.get_base_transitions(TOTAL_GATES, drives, library)
 except Exception as error:
     print(f"ERROR to set base transitions {error}")
@@ -126,6 +132,7 @@ try:
 
     initial_row = [
         str(curente_stage),
+        sized_weight,
         1,  
         0,                   # SIZED GATE (estado inicial, nenhum gate dimensionado)
         0.0,                 # COST AREA (referência, custo zero)
@@ -149,6 +156,8 @@ sta_worker = worker.Worker_combinations(
     TOTAL_GATES=TOTAL_GATES,
     curente_stage=curente_stage
 )
+
+best_global = None
 
 while True:
     current_values = []
@@ -176,11 +185,15 @@ while True:
 
     current_lower       = min(current_values)
     best                = min(rows_buffer, key=lambda r: r["mean_arrivals_sized"])
-    current_combination = eval(best["comb"])
+    current_combination = best["comb"]
+
+    if best_global is None or best["mean_arrivals_sized"] < best_global["mean_arrivals_sized"]:
+        best_global = best
 
     if current_lower > previos_lower:
         for row in rows_buffer:
-            row_data = [row["comb"], 0, row["dim_gate"], row["area_cost"], row["mean_arrivals_sized"], row["power"]]
+            chosen   = 1 if row["comb"] == current_combination else 0
+            row_data = [str(row["comb"]), row["size_weight"], chosen, row["dim_gate"], row["area_cost"], row["mean_arrivals_sized"], row["power"]]
             makeCSV.Edit_csv(csv_path, row_data).insert_csv_data()
 
         log(f"FIM — arrival {current_lower} maior que {previos_lower}")
@@ -188,8 +201,8 @@ while True:
 
     else:
         for row in rows_buffer:
-            chosen   = 1 if row["comb"] == str(current_combination) else 0
-            row_data = [row["comb"], chosen, row["dim_gate"], row["area_cost"], row["mean_arrivals_sized"], row["power"]]
+            chosen = 1 if row["comb"] == current_combination else 0
+            row_data = [str(row["comb"]), row["size_weight"], chosen, row["dim_gate"], row["area_cost"], row["mean_arrivals_sized"], row["power"]]
             makeCSV.Edit_csv(csv_path, row_data).insert_csv_data()
 
         log(f"Transição escolhida → {current_combination} | delay={current_lower}")
@@ -206,7 +219,11 @@ while True:
         keep_sta = f"{utils.decoder_file_name(TOTAL_GATES, curente_stage)}_{circuit}.txt"
 
         utils.clear_temp_dir(keep_verilog, keep_sta, temp)
-
+try:
+    utils.update_chosen_csv(csv_path, str(best_global["comb"]), chosen_value=2)
+except Exception as error:
+    print(f"ERROR to get best delay {error}")
+    
 utils.clear_directory(temp)
 
 end_timer = time.time()

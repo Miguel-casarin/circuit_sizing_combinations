@@ -41,37 +41,56 @@ class Worker_combinations:
 
         return extData.Read_timing(sta_path)
 
+    def size_weight(self, comb) -> int:
+        return utils.combination_weight(comb)
+    
     def get_timing(self, sta_data) -> float:
         arrivals = sta_data.get_arrival_times()
 
         return utils.mean(np.array(list(arrivals.values())))
 
-    def get_area_cost(self, comb) -> tuple[float, int]:
-        prev_drives = utils.merge_size_id(self.drives, self.curente_stage)
-        prev_area = self.fa.return_total_area(prev_drives)
-        comb_drives = utils.merge_size_id(self.drives, comb)
-        comb_area = self.fa.return_total_area(comb_drives)
-        area_cost = self.fa.cost(comb_area, prev_area)
-        dim_gate    = utils.find_changed_index(self.curente_stage, comb)
+    def get_prev_drives(self) -> list:
+        return utils.merge_size_id(self.drives, self.curente_stage)
 
-        return area_cost, int(dim_gate)
+    def get_comb_drives(self, comb) -> list:
+        return utils.merge_size_id(self.drives, comb)
+
+    def get_prev_area(self) -> float:
+        prev_drives = self.get_prev_drives()
+        return self.fa.return_total_area(prev_drives)
+
+    def get_comb_area(self, comb) -> float:
+        comb_drives = self.get_comb_drives(comb)
+        return self.fa.return_total_area(comb_drives)
+
+    def get_area_cost(self, comb) -> float:
+        prev_area = self.get_prev_area()
+        comb_area = self.get_comb_area(comb)
+        return self.fa.cost(comb_area, prev_area)
+
+    def get_dim_gate(self, comb) -> int:
+        return utils.find_changed_index(self.curente_stage, comb)
 
     def update_stage(self, new_stage):
         self.curente_stage = new_stage
 
     def process(self, comb, worker_id: int) -> dict | None:
         try:
-            sta_data          = self.run_sta(comb, worker_id)
-            mean_arr          = self.get_timing(sta_data)
-            power             = sta_data.get_power()
-            area_cost, dim_gate = self.get_area_cost(comb)
+            sta_data  = self.run_sta(comb, worker_id)
+            mean_arr  = self.get_timing(sta_data)
+            power     = sta_data.get_power()
 
             return {
-                "comb":                str(comb),
+                "comb":                comb,
+                "size_weight":         self.size_weight(comb),
                 "mean_arrivals_sized": mean_arr,
                 "power":               power,
-                "area_cost":           area_cost,
-                "dim_gate":            dim_gate,
+                "area_cost":           self.get_area_cost(comb),
+                "dim_gate":            self.get_dim_gate(comb),
+                "prev_drives":         self.get_prev_drives(),
+                "comb_drives":         self.get_comb_drives(comb),
+                "prev_area":           self.get_prev_area(),
+                "comb_area":           self.get_comb_area(comb),
             }
         except Exception as e:
             print(f"[Worker {worker_id}] ERRO em {comb}: {e}")

@@ -1,8 +1,9 @@
 import os
+import csv
 import numpy as np
 
 from scripts import Decoder
-from scripts import  makeCSV
+from scripts import makeCSV
 
 def decoder_file_name(total_gates: int, size_list: list) -> int:
     if len(size_list) != total_gates:
@@ -56,8 +57,6 @@ def clear_temp_dir(verilog_maintain: str, sta_maintain: str, dir_to_clear: str) 
         if file not in keep_files and extension in extensions_to_remove:
             os.remove(file_path)
 
-import os
-
 def clear_directory(directory: str) -> None:
     extensions_to_delete = {
         ".txt",
@@ -75,3 +74,29 @@ def clear_directory(directory: str) -> None:
 
         if extension in extensions_to_delete:
             os.remove(file_path)
+
+def combination_weight(comb: list) -> int:
+    weight = 0
+    for gate in comb:
+        value = int(gate[1:])
+        weight += value
+
+    return weight
+
+def update_chosen_csv(csv_path: str, target_comb: str, chosen_value: int) -> None:
+    with open(csv_path, "r", encoding="utf-8") as f:
+        rows = list(csv.reader(f))
+
+    header = rows[0]
+    chosen_idx = header.index("CHOSEN")
+    comb_idx   = header.index("COMBINATION")
+
+    for row in rows[1:]:
+        if not row:
+            continue
+        if row[comb_idx] == target_comb:
+            row[chosen_idx] = str(chosen_value)
+            break  # apenas uma linha recebe chosen = 2
+
+    with open(csv_path, "w", encoding="utf-8", newline="") as f:
+        csv.writer(f).writerows(rows)
