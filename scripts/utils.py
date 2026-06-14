@@ -39,3 +39,6 @@ def is_dir_empty(path):
 
 def mean(values: list) -> float:
     return np.mean(values)
+
+def clear_temp_dir():
+    pass
