@@ -14,16 +14,22 @@ from scripts import getArea
 from scripts import makeCSV
 from scripts import utils
 from scripts import worker
+from scripts import getFeatures
 
 circuit = "c17"
-MAX_WORKERS = 6
+MAX_WORKERS = 8
+DELET_FILES = True
 
 colunns_list = [
     'COMBINATION',
     'WEIGHT',
     'CHOSEN',
     'SIZED GATE',
-    'COST AREA',
+    'FA-IN',
+    'FA-OUT',
+    'LOGIC-LEVEL',
+    'DEEP',
+    'COST-AREA',
     'ARRIVAL',
     'POWER'
 ]
@@ -37,6 +43,9 @@ circuit_to_start = f'./data/verilogs_base/{circuit}.v'
 base_verilog_path = "./data/verilogs_base"
 
 tcl_file = "tcl_scripts/t.tcl"
+
+lib = "ed_Nangate.lib"
+lib_path = "./data/cells_library"
 
 temp = "./output/temp"
 
@@ -57,6 +66,33 @@ start_timer = time.time()
 def log(msg):
     print(msg)
     log_file.write(msg + "\n")
+
+try:
+
+    features = getFeatures.Circuits_features(
+    f"{circuit}.v",   # apenas o nome do arquivo
+    base_verilog_path,
+    lib,
+    lib_path
+)
+
+    dict_fain = features.fan_in()
+    dict_faout = features.fan_out()
+    dict_logic_level = features.compute_logic_levels()
+    dict_deep = features.comput_deep()
+
+    fain_list = utils.dict_to_list(dict_fain)
+    faout_list = utils.dict_to_list(dict_faout)
+    logic_level_list = utils.dict_to_list(dict_logic_level)
+    deep_list = utils.dict_to_list(dict_deep)
+
+    log(f"FA-IN:\n{dict_fain}")
+    log(f"FA-OUT:\n{dict_faout}")
+    log(f"LOGIC-LEVELS:\n{dict_logic_level}")
+    log(f"DEEP:\n{dict_deep}")
+
+except Exception as error:
+    print(f"ERROR to get design features {error}")
 
 try:
     cells_drives = readV.Find_Drive_cells(f"{circuit}.v", base_verilog_path)
@@ -133,11 +169,14 @@ try:
     initial_row = [
         str(curente_stage),
         sized_weight,
-        1,  
-        0,                   # SIZED GATE (estado inicial, nenhum gate dimensionado)
-        0.0,                 # COST AREA (referência, custo zero)
-        previos_lower,       # ARRIVAL
-        power               # POWER                         
+        1,
+        0,
+        0,
+        0,
+        0,  
+        0,                   
+        0.0,                 
+        previos_lower,                                
     ]
 
     edit = makeCSV.Edit_csv(csv_path, initial_row)
@@ -154,7 +193,11 @@ sta_worker = worker.Worker_combinations(
     drives=drives,
     json_file=json_file,
     TOTAL_GATES=TOTAL_GATES,
-    curente_stage=curente_stage
+    curente_stage=curente_stage,
+    fain_list=fain_list,
+    faout_list=faout_list,
+    logic_level_list=logic_level_list,
+    deep_list=deep_list
 )
 
 best_global = None
@@ -178,6 +221,10 @@ while True:
                 rows_buffer.append(result)
                 current_values.append(result["mean_arrivals_sized"])
                 log(f"{result['comb']} → arrival={result['mean_arrivals_sized']:.5f} power={result['power']}")
+                log(f"Combinacao anterior: {result['prev_drives']}")
+                log(f"Combinacoes: {result['comb_drives']}")
+                log(f"Area anterior: {result['prev_area']} area comb: {result['comb_area']} custo: {result['area_cost']}")
+                log(f"Gate dimensionado: {result['dim_gate']}")
 
     if not current_values:
         log("Nenhum valor coletado. Encerrando.")
@@ -205,7 +252,12 @@ while True:
             row_data = [str(row["comb"]), row["size_weight"], chosen, row["dim_gate"], row["area_cost"], row["mean_arrivals_sized"], row["power"]]
             makeCSV.Edit_csv(csv_path, row_data).insert_csv_data()
 
-        log(f"Transição escolhida → {current_combination} | delay={current_lower}")
+        id_chosen = utils.decoder_file_name(TOTAL_GATES, current_combination)
+        log(f"#{'-'*30}#")
+        log(f"Transicao escolhida -> {current_combination}")
+        log(f"Delay -> {current_lower}")
+        log(f"ID -> {id_chosen}")
+        log(f"#{'-'*30}#\n")
 
         # atualiza o worker para a próxima rodada
         sta_worker.update_stage(current_combination)
@@ -215,16 +267,19 @@ while True:
         curente_stage       = current_combination
         count += 1
 
-        keep_verilog = f"{utils.decoder_file_name(TOTAL_GATES, curente_stage)}_{circuit}.v"
-        keep_sta = f"{utils.decoder_file_name(TOTAL_GATES, curente_stage)}_{circuit}.txt"
+        if DELET_FILES:
+            keep_verilog = f"{utils.decoder_file_name(TOTAL_GATES, curente_stage)}_{circuit}.v"
+            keep_sta = f"{utils.decoder_file_name(TOTAL_GATES, curente_stage)}_{circuit}.txt"
 
-        utils.clear_temp_dir(keep_verilog, keep_sta, temp)
+            utils.clear_temp_dir(keep_verilog, keep_sta, temp)
 try:
     utils.update_chosen_csv(csv_path, str(best_global["comb"]), chosen_value=2)
+    log(f"Melhor global -> {best_global['comb']} | arrival={best_global['mean_arrivals_sized']:.5f}")   
 except Exception as error:
     print(f"ERROR to get best delay {error}")
-    
-utils.clear_directory(temp)
+
+if DELET_FILES:
+    utils.clear_directory(temp)
 
 end_timer = time.time()
 log(f"TEMPO TOTAL {(end_timer - start_timer) / 60:.2f} min")

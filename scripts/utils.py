@@ -100,3 +100,15 @@ def update_chosen_csv(csv_path: str, target_comb: str, chosen_value: int) -> Non
 
     with open(csv_path, "w", encoding="utf-8", newline="") as f:
         csv.writer(f).writerows(rows)
+
+def order_dict(original_dict: dict) -> dict:
+    return dict(
+        sorted(
+            original_dict.items(),
+            key=lambda item: int(item[0].strip('_'))
+        )
+    )
+
+def dict_to_list(original_dict: dict) -> list:
+    sorted_dict = order_dict(original_dict)
+    return list(sorted_dict.values())

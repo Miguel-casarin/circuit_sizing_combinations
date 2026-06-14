@@ -11,7 +11,7 @@ from scripts import utils
 
 class Worker_combinations:
 
-    def __init__(self, circuit, circuit_to_start, temp_dir, base_tcl, drives, json_file, TOTAL_GATES, curente_stage):
+    def __init__(self, circuit, circuit_to_start, temp_dir, base_tcl, drives, json_file, TOTAL_GATES, curente_stage, fain_list, faout_list, logic_level_list, deep_list):
 
         self.circuit = circuit
         self.circuit_to_start = circuit_to_start
@@ -22,6 +22,10 @@ class Worker_combinations:
         self.TOTAL_GATES = TOTAL_GATES
         self.curente_stage = curente_stage
         self.fa = getArea.Get_Area(json_file)
+        self.fain_list        = fain_list
+        self.faout_list       = faout_list
+        self.logic_level_list = logic_level_list
+        self.deep_list        = deep_list
 
     def get_worker_tcl(self, worker_id: int) -> str:
         worker_tcl = os.path.join(self.temp_dir, f"t_worker_{worker_id}.tcl")
@@ -71,6 +75,18 @@ class Worker_combinations:
     def get_dim_gate(self, comb) -> int:
         return utils.find_changed_index(self.curente_stage, comb)
 
+    def fa_in(self, dim_gate: int) -> int:
+        return self.fain_list[dim_gate - 1]
+
+    def fa_out(self, dim_gate: int) -> int:
+        return self.faout_list[dim_gate - 1]
+
+    def logic_level(self, dim_gate: int) -> int:
+        return self.logic_level_list[dim_gate - 1]
+
+    def deep(self, dim_gate: int) -> int:
+        return self.deep_list[dim_gate - 1]
+    
     def update_stage(self, new_stage):
         self.curente_stage = new_stage
 
@@ -79,6 +95,7 @@ class Worker_combinations:
             sta_data  = self.run_sta(comb, worker_id)
             mean_arr  = self.get_timing(sta_data)
             power     = sta_data.get_power()
+            dim_gate  = self.get_dim_gate(comb)
 
             return {
                 "comb":                comb,
@@ -86,12 +103,16 @@ class Worker_combinations:
                 "mean_arrivals_sized": mean_arr,
                 "power":               power,
                 "area_cost":           self.get_area_cost(comb),
-                "dim_gate":            self.get_dim_gate(comb),
+                "dim_gate":            dim_gate,
                 "prev_drives":         self.get_prev_drives(),
                 "comb_drives":         self.get_comb_drives(comb),
                 "prev_area":           self.get_prev_area(),
                 "comb_area":           self.get_comb_area(comb),
+                "fa_in":               self.fa_in(dim_gate),
+                "fa_out":              self.fa_out(dim_gate),
+                "logic_level":         self.logic_level(dim_gate),
+                "deep":                self.deep(dim_gate),
             }
-        except Exception as e:
-            print(f"[Worker {worker_id}] ERRO em {comb}: {e}")
+        except Exception as error:
+            print(f"[Worker {worker_id}] ERRO em {comb}: {error}")
             return None

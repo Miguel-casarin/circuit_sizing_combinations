@@ -293,23 +293,28 @@ class Circuits_features:
 
         return fanout_counts
 
-"""
-file = f"c17.v"
-lib = f"ed_Nangate.lib"
-  
-def debug(file, lib):
-    info = Netlist_info(file, lib)
-    info.print_nets()
-    features = Circuits_features(file, lib)
-    fanin = features.fan_in()
-    fanout = features.fan_out()
-    logic_level = features.compute_logic_levels()
-    deep = features.comput_deep()
 
-    print(f"FAIN: {fanin}\n")
-    print(f"FAOUT: {fanout}\n")
-    print(f"LOGIC LEVEL: {logic_level}\n")
-    print(f"DEEP LEVEL: {deep}\n")
+base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+verilog_path = os.path.join(base_dir, "data", "verilogs_base") 
+verilog = "c17.v"
+lib_path = os.path.join(base_dir, "data", "cells_library") 
+lib = "ed_Nangate.lib"
 
-debug(file, lib)
-"""
+try:
+    f = Circuits_features(verilog, verilog_path, lib, lib_path)
+
+    fanin = f.fan_in()
+    faout = f.fan_out()
+    logic_level = f.compute_logic_levels()
+    deep = f.comput_deep()
+except Exception as error:
+    print(error)
+
+print("FAnin")
+print(fanin)
+print("FAout")
+print(faout)
+print("level")
+print(logic_level)
+print("DEEP")
+print(deep)
