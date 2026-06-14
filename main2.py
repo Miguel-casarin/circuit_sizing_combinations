@@ -202,6 +202,13 @@ while True:
         curente_stage       = current_combination
         count += 1
 
+        keep_verilog = f"{utils.decoder_file_name(TOTAL_GATES, curente_stage)}_{circuit}.v"
+        keep_sta = f"{utils.decoder_file_name(TOTAL_GATES, curente_stage)}_{circuit}.txt"
+
+        utils.clear_temp_dir(keep_verilog, keep_sta, temp)
+
+utils.clear_directory(temp)
+
 end_timer = time.time()
 log(f"TEMPO TOTAL {(end_timer - start_timer) / 60:.2f} min")
 log_file.close()
