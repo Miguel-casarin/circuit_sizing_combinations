@@ -16,7 +16,7 @@ from scripts import utils
 from scripts import worker
 from scripts import getFeatures
 
-circuit = "c17"
+circuit = "teste2"
 MAX_WORKERS = 8
 DELET_FILES = True
 
@@ -167,17 +167,18 @@ try:
     initial_area = fa.return_total_area(initial_comb)
 
     initial_row = [
-        str(curente_stage),
-        sized_weight,
-        1,
-        0,
-        0,
-        0,
-        0,  
-        0,                   
-        0.0,                 
-        previos_lower,                                
-    ]
+                str(curente_stage),
+                sized_weight,
+                1,
+                0,   # SIZED GATE
+                0,   # FA-IN
+                0,   # FA-OUT
+                0,   # LOGIC-LEVEL
+                0,   # DEEP
+                0.0, # COST-AREA
+                previos_lower,  # ARRIVAL
+                power           # POWER  <- estava faltando
+            ]
 
     edit = makeCSV.Edit_csv(csv_path, initial_row)
     edit.insert_csv_data()
@@ -240,7 +241,19 @@ while True:
     if current_lower > previos_lower:
         for row in rows_buffer:
             chosen   = 1 if row["comb"] == current_combination else 0
-            row_data = [str(row["comb"]), row["size_weight"], chosen, row["dim_gate"], row["area_cost"], row["mean_arrivals_sized"], row["power"]]
+            row_data = [
+                        str(row["comb"]),
+                        row["size_weight"],
+                        chosen,
+                        row["dim_gate"],
+                        row["fa_in"],
+                        row["fa_out"],
+                        row["logic_level"],
+                        row["deep"],
+                        row["area_cost"],
+                        row["mean_arrivals_sized"],
+                        row["power"]
+                        ]
             makeCSV.Edit_csv(csv_path, row_data).insert_csv_data()
 
         log(f"FIM — arrival {current_lower} maior que {previos_lower}")
@@ -249,7 +262,19 @@ while True:
     else:
         for row in rows_buffer:
             chosen = 1 if row["comb"] == current_combination else 0
-            row_data = [str(row["comb"]), row["size_weight"], chosen, row["dim_gate"], row["area_cost"], row["mean_arrivals_sized"], row["power"]]
+            row_data = [
+                        str(row["comb"]),
+                        row["size_weight"],
+                        chosen,
+                        row["dim_gate"],
+                        row["fa_in"],
+                        row["fa_out"],
+                        row["logic_level"],
+                        row["deep"],
+                        row["area_cost"],
+                        row["mean_arrivals_sized"],
+                        row["power"]
+                        ]
             makeCSV.Edit_csv(csv_path, row_data).insert_csv_data()
 
         id_chosen = utils.decoder_file_name(TOTAL_GATES, current_combination)
