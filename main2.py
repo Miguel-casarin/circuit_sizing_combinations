@@ -16,12 +16,14 @@ from scripts import utils
 from scripts import worker
 from scripts import getFeatures
 
-circuit = "teste2"
+circuit = "teste1"
 MAX_WORKERS = 8
 DELET_FILES = True
+SAVE_COMBINATION = True
 
 colunns_list = [
     'COMBINATION',
+    'SIZE',
     'WEIGHT',
     'CHOSEN',
     'SIZED GATE',
@@ -33,6 +35,9 @@ colunns_list = [
     'ARRIVAL',
     'POWER'
 ]
+
+if not SAVE_COMBINATION:
+    colunns_list.remove('COMBINATION')
 
 SIZE_ORDER = ["X1", "X2", "X4", "X8", "X16", "X32"]
 
@@ -70,7 +75,7 @@ def log(msg):
 try:
 
     features = getFeatures.Circuits_features(
-    f"{circuit}.v",   # apenas o nome do arquivo
+    f"{circuit}.v",   
     base_verilog_path,
     lib,
     lib_path
@@ -87,9 +92,13 @@ try:
     deep_list = utils.dict_to_list(dict_deep)
 
     log(f"FA-IN:\n{dict_fain}")
+    log(f"{fain_list}")
     log(f"FA-OUT:\n{dict_faout}")
+    log(f"{faout_list}")
     log(f"LOGIC-LEVELS:\n{dict_logic_level}")
+    log(f"{logic_level_list}")
     log(f"DEEP:\n{dict_deep}")
+    log(f"{deep_list}")
 
 except Exception as error:
     print(f"ERROR to get design features {error}")
@@ -167,7 +176,8 @@ try:
     initial_area = fa.return_total_area(initial_comb)
 
     initial_row = [
-                str(curente_stage),
+                *([str(curente_stage)] if SAVE_COMBINATION else []),
+                1,
                 sized_weight,
                 1,
                 0,   # SIZED GATE
@@ -242,7 +252,8 @@ while True:
         for row in rows_buffer:
             chosen   = 1 if row["comb"] == current_combination else 0
             row_data = [
-                        str(row["comb"]),
+                        *([str(row["comb"])] if SAVE_COMBINATION else []),
+                        row["size"],
                         row["size_weight"],
                         chosen,
                         row["dim_gate"],
@@ -263,7 +274,8 @@ while True:
         for row in rows_buffer:
             chosen = 1 if row["comb"] == current_combination else 0
             row_data = [
-                        str(row["comb"]),
+                        *([str(row["comb"])] if SAVE_COMBINATION else []),
+                        row["size"],
                         row["size_weight"],
                         chosen,
                         row["dim_gate"],

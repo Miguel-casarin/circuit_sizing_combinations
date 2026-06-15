@@ -112,3 +112,7 @@ def order_dict(original_dict: dict) -> dict:
 def dict_to_list(original_dict: dict) -> list:
     sorted_dict = order_dict(original_dict)
     return list(sorted_dict.values())
+
+def return_gate_size(combination: list, dim_gate: int) -> int:
+    gate = combination[-dim_gate]
+    return int(gate[1:])

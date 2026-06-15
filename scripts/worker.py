@@ -86,7 +86,10 @@ class Worker_combinations:
 
     def deep(self, dim_gate: int) -> int:
         return self.deep_list[dim_gate - 1]
-    
+
+    def size_dim(self, comb: list, dim_gate: int) -> int:
+        return utils.return_gate_size(comb, dim_gate)
+
     def update_stage(self, new_stage):
         self.curente_stage = new_stage
 
@@ -99,6 +102,7 @@ class Worker_combinations:
 
             return {
                 "comb":                comb,
+                "size":                self.size_dim(comb, dim_gate),
                 "size_weight":         self.size_weight(comb),
                 "mean_arrivals_sized": mean_arr,
                 "power":               power,
