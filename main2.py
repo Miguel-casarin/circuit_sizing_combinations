@@ -16,10 +16,10 @@ from scripts import utils
 from scripts import worker
 from scripts import getFeatures
 
-circuit = "c17"
+circuit = "c432"
 MAX_WORKERS = 8
 DELET_FILES = True
-SAVE_COMBINATION = True
+SAVE_COMBINATION = False
 
 colunns_list = [
     'COMBINATION',
