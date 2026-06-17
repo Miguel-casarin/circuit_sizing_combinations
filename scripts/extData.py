@@ -92,44 +92,19 @@ class Read_timing:
         else:
             return None
                 
-            
-    
-#file = f"000000.txt"
+try:           
+    file = "../output/temp/c432-1.txt"
 
-""""
-debug = Read_timing(file)
-cells = debug.get_cells()
-slack = debug.get_slack()
-arival = debug.get_arrival_times()
-start_point = debug.get_startpint()
-end_point = debug.get_endpoint()
-"""
+    r = Read_timing(file)
 
-"""""
-def debug(sta_file):
-    rt = Read_timing(sta_file)
+    paths = r.count_ocurence_path()
 
-    cells       = rt.get_cells()
-    arrivals    = rt.get_arrival_times()
-    
+    print(paths)
 
-    for cid in sorted(cells.keys()):
-        print(f"\n=== Caminho crítico {cid} ===")
-        arr = arrivals.get(cid, "-")
-        print(f"Arrival    : {arr}")
-        print("Células:")
-        for c in cells[cid]:
-            print(
-                f"  {c['cell_id']}  {c['type']}{c['size']}  "
-                f"delay={c['ac_delay']}  time={c['time']}"
-            )
-        print("-" * 40)
+except Exception as error:
+    print(error)
 
-for sta_file in files:
-    full_path = os.path.join(deigns_path, sta_file)
-    print("_" * 50)
-    print(f"{sta_file}")
-    print("_" * 50)
-    debug(full_path)
 
-"""""
+
+
+

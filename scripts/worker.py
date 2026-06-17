@@ -11,7 +11,7 @@ from scripts import utils
 
 class Worker_combinations:
 
-    def __init__(self, circuit, circuit_to_start, temp_dir, base_tcl, drives, json_file, TOTAL_GATES, curente_stage, fain_list, faout_list, logic_level_list, deep_list):
+    def __init__(self, circuit, circuit_to_start, temp_dir, base_tcl, drives, json_file, TOTAL_GATES, curente_stage, fain_list, faout_list, logic_level_list, deep_list, path_dict, cells_id):
 
         self.circuit = circuit
         self.circuit_to_start = circuit_to_start
@@ -26,6 +26,8 @@ class Worker_combinations:
         self.faout_list       = faout_list
         self.logic_level_list = logic_level_list
         self.deep_list        = deep_list
+        self.path_dict        = path_dict
+        self.cells_id         = cells_id
 
     def get_worker_tcl(self, worker_id: int) -> str:
         worker_tcl = os.path.join(self.temp_dir, f"t_worker_{worker_id}.tcl")
@@ -90,6 +92,15 @@ class Worker_combinations:
     def size_dim(self, comb: list, dim_gate: int) -> int:
         return utils.return_gate_size(comb, dim_gate)
 
+    # conta a ocorrencia por caminho crítico
+    def count_path_occurrence(self, dim_gate: int) -> int:
+        key = self.cells_id[dim_gate - 1]
+        value = self.path_dict.get(key)
+        print(f"GATE DIMENSIONADO {dim_gate}")
+        print(f"CHAVE {key}")
+        print(f"Ocorrencia {value}")
+        return value if value is not None else 0
+        
     def update_stage(self, new_stage):
         self.curente_stage = new_stage
 
@@ -108,6 +119,7 @@ class Worker_combinations:
                 "power":               power,
                 "area_cost":           self.get_area_cost(comb),
                 "dim_gate":            dim_gate,
+                "occurrence":          self.count_path_occurrence(dim_gate),
                 "prev_drives":         self.get_prev_drives(),
                 "comb_drives":         self.get_comb_drives(comb),
                 "prev_area":           self.get_prev_area(),

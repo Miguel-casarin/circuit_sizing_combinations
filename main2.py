@@ -16,7 +16,7 @@ from scripts import utils
 from scripts import worker
 from scripts import getFeatures
 
-circuit = "teste1"
+circuit = "c17"
 MAX_WORKERS = 8
 DELET_FILES = True
 SAVE_COMBINATION = True
@@ -27,6 +27,7 @@ colunns_list = [
     'WEIGHT',
     'CHOSEN',
     'SIZED GATE',
+    'PATH_OCURENCE',
     'FA-IN',
     'FA-OUT',
     'LOGIC-LEVEL',
@@ -116,6 +117,13 @@ try:
 except Exception as error:
     print(f"ERROR to get number cells {error}")
 
+# id das celulas para pesquisar ocorencia nos caminhos
+try:
+    cells_id = gio.get_cells_ids()
+    log(f"Cells ID:\n{cells_id}")
+except Exception as error:
+    print(f"Error to get cells id {error}")
+
 fa = getArea.Get_Area(json_file)
 
 TOTAL_GATES = len(cells_id)
@@ -181,6 +189,7 @@ try:
                 sized_weight,
                 1,
                 0,   # SIZED GATE
+                0,
                 0,   # FA-IN
                 0,   # FA-OUT
                 0,   # LOGIC-LEVEL
@@ -195,6 +204,18 @@ try:
 except Exception as error:
     print(f"ERROR to insert initial state in CSV {error}")
 
+# Pega a ocorencia por caminho crítico usando o base line
+dict_ocurence = {}
+try:
+    base_line = f"0_{circuit}.txt"
+    dir_base = f"./output/temp/{base_line}"
+    data_path = extData.Read_timing(dir_base)
+
+    dict_ocurence = data_path.count_ocurence_path()
+    log(f"PATHS:\n{dict_ocurence}")
+except Exception as error:
+    print(f"ERROR to get path ocurence {error}")
+
 # Roda as combinações subsequentes
 sta_worker = worker.Worker_combinations(
     circuit=circuit,
@@ -208,9 +229,12 @@ sta_worker = worker.Worker_combinations(
     fain_list=fain_list,
     faout_list=faout_list,
     logic_level_list=logic_level_list,
-    deep_list=deep_list
+    deep_list=deep_list,
+    path_dict=dict_ocurence,
+    cells_id=cells_id
 )
 
+# guarda o melhor valor das combinações 
 best_global = None
 
 while True:
@@ -257,6 +281,7 @@ while True:
                         row["size_weight"],
                         chosen,
                         row["dim_gate"],
+                        row["occurrence"],
                         row["fa_in"],
                         row["fa_out"],
                         row["logic_level"],
@@ -279,6 +304,7 @@ while True:
                         row["size_weight"],
                         chosen,
                         row["dim_gate"],
+                        row["occurrence"],
                         row["fa_in"],
                         row["fa_out"],
                         row["logic_level"],

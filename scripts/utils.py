@@ -116,3 +116,4 @@ def dict_to_list(original_dict: dict) -> list:
 def return_gate_size(combination: list, dim_gate: int) -> int:
     gate = combination[-dim_gate]
     return int(gate[1:])
+
