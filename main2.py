@@ -16,7 +16,7 @@ from scripts import utils
 from scripts import worker
 from scripts import getFeatures
 
-circuit = "c432"
+circuit = "c499"
 MAX_WORKERS = 8
 DELET_FILES = True
 SAVE_COMBINATION = False
@@ -236,6 +236,8 @@ sta_worker = worker.Worker_combinations(
 
 # guarda o melhor valor das combinações 
 best_global = None
+best_global_row_index = None
+csv_row_counter = 2 # começo em 2 para pular o cebeçalho e o baseline
 
 while True:
     current_values = []
@@ -271,6 +273,7 @@ while True:
 
     if best_global is None or best["mean_arrivals_sized"] < best_global["mean_arrivals_sized"]:
         best_global = best
+        best_global_row_index = csv_row_counter + rows_buffer.index(best)  # ← salva índice
 
     if current_lower > previos_lower:
         for row in rows_buffer:
@@ -294,6 +297,7 @@ while True:
 
         log(f"FIM — arrival {current_lower} maior que {previos_lower}")
         break
+
 
     else:
         for row in rows_buffer:
@@ -329,6 +333,7 @@ while True:
         current_transitions = mt.get_transitions(current_combination, drives, library)
         curente_stage       = current_combination
         count += 1
+        csv_row_counter += len(rows_buffer)
 
         if DELET_FILES:
             keep_verilog = f"{utils.decoder_file_name(TOTAL_GATES, curente_stage)}_{circuit}.v"
@@ -336,7 +341,7 @@ while True:
 
             utils.clear_temp_dir(keep_verilog, keep_sta, temp)
 try:
-    utils.update_chosen_csv(csv_path, str(best_global["comb"]), chosen_value=2)
+    utils.update_chosen_by_index(csv_path, best_global_row_index, chosen_value=2)
     log(f"Melhor global -> {best_global['comb']} | arrival={best_global['mean_arrivals_sized']:.5f}")   
 except Exception as error:
     print(f"ERROR to get best delay {error}")

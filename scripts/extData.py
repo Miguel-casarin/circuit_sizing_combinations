@@ -92,17 +92,6 @@ class Read_timing:
         else:
             return None
                 
-try:           
-    file = "../output/temp/c432-1.txt"
-
-    r = Read_timing(file)
-
-    paths = r.count_ocurence_path()
-
-    print(paths)
-
-except Exception as error:
-    print(error)
 
 
 

@@ -83,20 +83,18 @@ def combination_weight(comb: list) -> int:
 
     return weight
 
-def update_chosen_csv(csv_path: str, target_comb: str, chosen_value: int) -> None:
+def update_chosen_by_index(csv_path: str, row_index: int, chosen_value: int):
     with open(csv_path, "r", encoding="utf-8") as f:
         rows = list(csv.reader(f))
 
     header = rows[0]
     chosen_idx = header.index("CHOSEN")
-    comb_idx   = header.index("COMBINATION")
 
-    for row in rows[1:]:
-        if not row:
-            continue
-        if row[comb_idx] == target_comb:
-            row[chosen_idx] = str(chosen_value)
-            break  # apenas uma linha recebe chosen = 2
+    if row_index < 1 or row_index >= len(rows):
+        print(f"Índice {row_index} fora do range do CSV ({len(rows)-1} linhas).")
+        return
+
+    rows[row_index][chosen_idx] = str(chosen_value)
 
     with open(csv_path, "w", encoding="utf-8", newline="") as f:
         csv.writer(f).writerows(rows)

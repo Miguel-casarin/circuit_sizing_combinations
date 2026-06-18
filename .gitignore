@@ -14,4 +14,4 @@ output/tables/*
 
 # Arquivos temporários
 output/temp/*
-!output/temp/.gitkeep
+!output/temp/.gitkeepteste.txt
