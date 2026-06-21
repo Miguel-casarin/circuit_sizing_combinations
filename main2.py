@@ -2,6 +2,8 @@ import os
 import numpy as np 
 import json
 import time
+import traceback
+import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from scripts import readV
@@ -15,9 +17,11 @@ from scripts import makeCSV
 from scripts import utils
 from scripts import worker
 from scripts import getFeatures
+from scripts import errors
 
-circuit = "c499"
-MAX_WORKERS = 8
+circuit = "c3540"
+#MAX_WORKERS = max(1, os.cpu_count() - 1)
+MAX_WORKERS = 4
 DELET_FILES = True
 SAVE_COMBINATION = False
 
@@ -55,9 +59,13 @@ lib_path = "./data/cells_library"
 
 temp = "./output/temp"
 
-logs_dir = "./output/logs"
-log_path = f"{logs_dir}/{circuit}_log.txt"
-log_file = open(log_path, "w", encoding="utf-8")
+debug_dir = "./output/logs_debug"
+debug_path = f"{debug_dir}/{circuit}_log.txt"
+debug_file = open(debug_path, "w", encoding="utf-8")
+
+log_error_dir = "./output/logs_error"
+log_error_path = f"{log_error_dir}/{circuit}.log"
+error_file = open(log_error_path, "w", encoding="utf-8")
 
 csv_name = f"{circuit}"
 dir_csv = "./output/tables"
@@ -69,9 +77,11 @@ with open(json_file) as f:
 # Contabiliza o tempo de execução
 start_timer = time.time()
 
-def log(msg):
-    print(msg)
-    log_file.write(msg + "\n")
+def log_debug(msg: str):
+    debug_file.write(msg + "\n")
+
+def log_error(msg: str):
+    error_file.write(msg + "\n")
 
 try:
 
@@ -92,37 +102,39 @@ try:
     logic_level_list = utils.dict_to_list(dict_logic_level)
     deep_list = utils.dict_to_list(dict_deep)
 
-    log(f"FA-IN:\n{dict_fain}")
-    log(f"{fain_list}")
-    log(f"FA-OUT:\n{dict_faout}")
-    log(f"{faout_list}")
-    log(f"LOGIC-LEVELS:\n{dict_logic_level}")
-    log(f"{logic_level_list}")
-    log(f"DEEP:\n{dict_deep}")
-    log(f"{deep_list}")
+    log_debug(f"FA-IN:\n{dict_fain}")
+    log_debug(f"{fain_list}")
+    log_debug(f"FA-OUT:\n{dict_faout}")
+    log_debug(f"{faout_list}")
+    log_debug(f"LOGIC-LEVELS:\n{dict_logic_level}")
+    log_debug(f"{logic_level_list}")
+    log_debug(f"DEEP:\n{dict_deep}")
+    log_debug(f"{deep_list}")
 
 except Exception as error:
     print(f"ERROR to get design features {error}")
+    errors.fatal("ERROR to get design features", error, debug_file, error_file)
 
 try:
     cells_drives = readV.Find_Drive_cells(f"{circuit}.v", base_verilog_path)
     drives = cells_drives.parse_drives()
 except Exception as error:
     print(f"ERROR to find drive cells {error}")
+    errors.fatal("ERROR to find drive cells", error, debug_file, error_file)
 
 try:
     gio = readV.Get_IO(f"{circuit}.v", base_verilog_path)
-    cells_id = gio.get_cells_ids()
-    print(cells_id)
 except Exception as error:
-    print(f"ERROR to get number cells {error}")
+    print(f"ERROR read verilog {error}")
+    errors.fatal("ERROR to read verilog", error, debug_file, error_file)
 
 # id das celulas para pesquisar ocorencia nos caminhos
 try:
     cells_id = gio.get_cells_ids()
-    log(f"Cells ID:\n{cells_id}")
+    log_debug(f"Cells ID:\n{cells_id}")
 except Exception as error:
     print(f"Error to get cells id {error}")
+    errors.fatal("ERROR to get celols ID", error, debug_file, error_file)
 
 fa = getArea.Get_Area(json_file)
 
@@ -139,22 +151,26 @@ try:
     sized_weight = utils.combination_weight(curente_stage)
 except Exception as error:
     print(f"ERROR to gete weigth {error}")
+    errors.fatal("ERROR to gate weigth", error, debug_file, error_file)
 
 try:
     current_transitions = mt.get_base_transitions(TOTAL_GATES, drives, library)
 except Exception as error:
     print(f"ERROR to set base transitions {error}")
+    errors.fatal("ERROR to set base transitions", error, debug_file, error_file)
 
 # cria o verilog e roda STA para o estado inicial
 try:
     setCombination.apply_combination(circuit_to_start, temp, curente_stage, name_to_save)
 except Exception as error:
     print(f"ERROR to make single verilog {error}")
+    errors.fatal("ERROR to make single verilog", error, debug_file, error_file)
 
 try:
     singleSTA.run_single(tcl_file, name_to_save, temp, temp)
 except Exception as error:
     print(f"ERROR to make single STA {error}")
+    errors.fatal("ERROR to make single STA", error, debug_file, error_file)
 
 # pega os dados do estado inicial
 try:
@@ -166,17 +182,19 @@ try:
     previos_lower = utils.mean(arrivals_start_sized)
 
     power = sta_data_sized.get_power()
-    log(f"Power: {power}")
+    log_debug(f"Power: {power}")
     
 except Exception as error:
     print(f"ERROR to read sta files {error}")
+    errors.fatal("ERROR to read sta files", error, debug_file, error_file)
 
-log(f"Total de gates: {TOTAL_GATES}")
+log_debug(f"Total de gates: {TOTAL_GATES}")
 
 try:
     utils.create_csv(colunns_list, dir_csv, csv_path)
 except Exception as error:
     print(f"ERRPR to make CSV {error}")
+    errors.fatal("ERRPR to make CSV", error, debug_file, error_file)
 
 # Insere o estado inicial no CSV
 try:
@@ -203,6 +221,7 @@ try:
     edit.insert_csv_data()
 except Exception as error:
     print(f"ERROR to insert initial state in CSV {error}")
+    errors.fatal("ERROR to insert initial state in CSV", error, debug_file, error_file)
 
 # Pega a ocorencia por caminho crítico usando o base line
 dict_ocurence = {}
@@ -212,9 +231,10 @@ try:
     data_path = extData.Read_timing(dir_base)
 
     dict_ocurence = data_path.count_ocurence_path()
-    log(f"PATHS:\n{dict_ocurence}")
+    log_debug(f"PATHS:\n{dict_ocurence}")
 except Exception as error:
     print(f"ERROR to get path ocurence {error}")
+    log_error(f"ERROR to get path ocurence {error}")
 
 # Roda as combinações subsequentes
 sta_worker = worker.Worker_combinations(
@@ -243,8 +263,10 @@ while True:
     current_values = []
     rows_buffer = []
 
-    log(f"RODADA {count}")
-    log(f"ESTADO ATUAL:\n{curente_stage}\nARRIVAL:\n{previos_lower}\n")
+    log_debug(f"RODADA {count}")
+    log_debug(f"ESTADO ATUAL:\n{curente_stage}\nARRIVAL:\n{previos_lower}\n")
+
+    loop_error = None
 
     with ThreadPoolExecutor(MAX_WORKERS) as executor:
         futures = {
@@ -252,19 +274,44 @@ while True:
             for i, comb in enumerate(current_transitions)
         }
 
-        for future in as_completed(futures):
-            result = future.result()
-            if result:
-                rows_buffer.append(result)
-                current_values.append(result["mean_arrivals_sized"])
-                log(f"{result['comb']} → arrival={result['mean_arrivals_sized']:.5f} power={result['power']}")
-                log(f"Combinacao anterior: {result['prev_drives']}")
-                log(f"Combinacoes: {result['comb_drives']}")
-                log(f"Area anterior: {result['prev_area']} area comb: {result['comb_area']} custo: {result['area_cost']}")
-                log(f"Gate dimensionado: {result['dim_gate']}")
+        try:
+            for future in as_completed(futures):
+                result = future.result()
+                if result:
+                    rows_buffer.append(result)
+                    current_values.append(result["mean_arrivals_sized"])
+                    log_debug(f"{result['comb']} → arrival={result['mean_arrivals_sized']:.5f} power={result['power']}")
+                    log_debug(f"Combinacao anterior: {result['prev_drives']}")
+                    log_debug(f"Combinacoes: {result['comb_drives']}")
+                    log_debug(f"Area anterior: {result['prev_area']} area comb: {result['comb_area']} custo: {result['area_cost']}")
+                    log_debug(f"Gate dimensionado: {result['dim_gate']}")
+
+        except Exception as error:
+            comb_failed = futures.get(future, "desconhecida")
+            loop_error = error
+
+            log_error(f"\n{'#'*60}")
+            log_error(f"ERRO FATAL na rodada {count}, combinação {comb_failed}")
+            print(f"ERRO FATAL na rodada {count}, combinação {comb_failed}")
+            log_error(f"{error}")
+            log_error(traceback.format_exc())
+            log_error(f"{'#'*60}\n")
+
+            # cancela as tasks que ainda não começaram a rodar
+            for f in futures:
+                f.cancel()
+
+    if loop_error is not None:
+        log_error("Loop principal abortado por erro. Encerrando execução sem continuar para a próxima rodada.")
+        debug_file.flush()
+        error_file.flush()
+        debug_file.close()
+        error_file.close()
+        sys.exit(1)
+
 
     if not current_values:
-        log("Nenhum valor coletado. Encerrando.")
+        log_debug("Nenhum valor coletado. Encerrando.")
         break
 
     current_lower       = min(current_values)
@@ -295,7 +342,7 @@ while True:
                         ]
             makeCSV.Edit_csv(csv_path, row_data).insert_csv_data()
 
-        log(f"FIM — arrival {current_lower} maior que {previos_lower}")
+        log_debug(f"FIM — arrival {current_lower} maior que {previos_lower}")
         break
 
 
@@ -320,11 +367,11 @@ while True:
             makeCSV.Edit_csv(csv_path, row_data).insert_csv_data()
 
         id_chosen = utils.decoder_file_name(TOTAL_GATES, current_combination)
-        log(f"#{'-'*30}#")
-        log(f"Transicao escolhida -> {current_combination}")
-        log(f"Delay -> {current_lower}")
-        log(f"ID -> {id_chosen}")
-        log(f"#{'-'*30}#\n")
+        log_debug(f"#{'-'*30}#")
+        log_debug(f"Transicao escolhida -> {current_combination}")
+        log_debug(f"Delay -> {current_lower}")
+        log_debug(f"ID -> {id_chosen}")
+        log_debug(f"#{'-'*30}#\n")
 
         # atualiza o worker para a próxima rodada
         sta_worker.update_stage(current_combination)
@@ -342,14 +389,18 @@ while True:
             utils.clear_temp_dir(keep_verilog, keep_sta, temp)
 try:
     utils.update_chosen_by_index(csv_path, best_global_row_index, chosen_value=2)
-    log(f"Melhor global -> {best_global['comb']} | arrival={best_global['mean_arrivals_sized']:.5f}")   
+    log_debug(f"Melhor global -> {best_global['comb']} | arrival={best_global['mean_arrivals_sized']:.5f}")   
 except Exception as error:
     print(f"ERROR to get best delay {error}")
+    log_error(f"ERROR to get best delay {error}")
 
 if DELET_FILES:
     utils.clear_directory(temp)
 
 end_timer = time.time()
-log(f"TEMPO TOTAL {(end_timer - start_timer) / 60:.2f} min")
-log_file.close()
+log_debug(f"TEMPO TOTAL {(end_timer - start_timer) / 60:.2f} min")
+log_error(f"TEMPO TOTAL {(end_timer - start_timer) / 60:.2f} min")
+debug_file.close()
+error_file.close()
+
 

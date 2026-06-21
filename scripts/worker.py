@@ -1,6 +1,7 @@
 import os
 import numpy as np 
 import shutil
+import traceback
 
 from scripts import extData
 from scripts import singleSTA
@@ -131,4 +132,10 @@ class Worker_combinations:
             }
         except Exception as error:
             print(f"[Worker {worker_id}] ERRO em {comb}: {error}")
-            return None
+            # Não engolimos mais o erro aqui. Relançamos com contexto
+            # (combinação + worker) e preservando o traceback original,
+            # para que o loop principal capture e dê break imediatamente.
+            raise RuntimeError(
+                f"[Worker {worker_id}] Falha ao processar combinação {comb}: {error}\n"
+                f"{traceback.format_exc()}"
+            ) from error

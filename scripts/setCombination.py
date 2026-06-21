@@ -166,6 +166,6 @@ def apply_combination(verilog_file, output_dir, combination, output_name):
     for size, gids in size_groups.items():
         editor.upsize_selected_gates(new_file, gids, size)
 
-    print(f"Combination applied: {combination}")
+    #print(f"Combination applied: {combination}")
     print(f"Output: {new_file}")
     return new_file
