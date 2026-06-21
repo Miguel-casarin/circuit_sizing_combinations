@@ -1,16 +1,23 @@
 import os
 import csv
 import numpy as np
+import hashlib 
 
 from scripts import Decoder
 from scripts import makeCSV
 
-def decoder_file_name(total_gates: int, size_list: list) -> int:
+def decoder_file_name(total_gates: int, size_list: list) -> str:
     if len(size_list) != total_gates:
         raise ValueError("total_gates range dont match size_list")
-        
+ 
     encoder = Decoder.Encoder(size_list, total_gates)
-    return encoder.base6_to_decimal()
+    raw_id = encoder.base6_to_decimal()
+
+    if raw_id == 0:
+        return "0"
+    digest = hashlib.sha256(f"{raw_id}_{size_list}".encode()).hexdigest()
+    return digest[:32]
+
 
 def merge_size_id(drives_list: list, comb_list: list) -> list:
     merge_list = []

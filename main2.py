@@ -19,9 +19,8 @@ from scripts import worker
 from scripts import getFeatures
 from scripts import errors
 
-circuit = "c3540"
-#MAX_WORKERS = max(1, os.cpu_count() - 1)
-MAX_WORKERS = 4
+circuit = "c17"
+MAX_WORKERS = max(1, os.cpu_count() - 1)
 DELET_FILES = True
 SAVE_COMBINATION = False
 
@@ -234,7 +233,7 @@ try:
     log_debug(f"PATHS:\n{dict_ocurence}")
 except Exception as error:
     print(f"ERROR to get path ocurence {error}")
-    log_error(f"ERROR to get path ocurence {error}")
+    errors.fatal("ERROR to get path ocurence", error, debug_file, error_file)
 
 # Roda as combinações subsequentes
 sta_worker = worker.Worker_combinations(
