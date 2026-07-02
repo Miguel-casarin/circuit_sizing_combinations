@@ -19,7 +19,7 @@ from scripts import worker
 from scripts import getFeatures
 from scripts import errors
 
-circuit = "c17"
+circuit = "c1908"
 MAX_WORKERS = max(1, os.cpu_count() - 1)
 DELET_FILES = True
 SAVE_COMBINATION = False

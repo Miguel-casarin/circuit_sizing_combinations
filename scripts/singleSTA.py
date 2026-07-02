@@ -39,7 +39,7 @@ def run_single(file_tcl, circuit_process, dir_circuits, dir_to_save):
         file_tcl,        
         design_path,     
         module_design,   
-        number_paths,    
+        #number_paths,    
         inputs_sinals,   
         outputs_signals  
         )
@@ -48,14 +48,14 @@ def run_single(file_tcl, circuit_process, dir_circuits, dir_to_save):
         file_tcl,        
         design_path,     
         module_design,   
-        number_paths,    
+        #number_paths,    
         inputs_sinals,   
         outputs_signals  
     )
 
     script_sta.ed_device()
     script_sta.link_design()
-    script_sta.paths_total()
+    #script_sta.paths_total()
     script_sta.parse_inputs()
     script_sta.parse_outputs()
 

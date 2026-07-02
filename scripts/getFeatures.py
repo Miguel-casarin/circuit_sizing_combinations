@@ -293,7 +293,6 @@ class Circuits_features:
 
         return fanout_counts
 
-
 base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 verilog_path = os.path.join(base_dir, "data", "verilogs_base") 
 verilog = "c17.v"
