@@ -52,32 +52,34 @@ class Get_IO:
                     
         return outputs_list  
     
-    def get_cells_ids(self):
-        
-        gates_id = []
+    
 
-        with open(self.path, "r") as f:
-            for line in f:
-                line = line.strip()
-                
-                cat_str = re.match(r'\w+_X\d+\s+_(\d+)_\s*\(', line)
-
-                if cat_str:
-                    gates_id.append(int(cat_str.group(1)))
-            
-            return gates_id
-
-class Find_Drive_cells:
+class Gates_info:
     
     def __init__(self, file, dir_path):
         self.file = file
         self.dir_path = dir_path
         self.path = os.path.join(self.dir_path, self.file)
 
+    # nome que o yosys deu as células
+    def get_cells_ids(self) -> list:
+            
+            gates_id = []
+    
+            with open(self.path, "r") as f:
+                for line in f:
+                    line = line.strip()
+                    
+                    cat_str = re.match(r'\w+_X\d+\s+_(\d+)_\s*\(', line)
+    
+                    if cat_str:
+                        gates_id.append(int(cat_str.group(1)))
+                
+                return gates_id
+            
+    def lugic_cells_type(self) -> list:
 
-    def parse_drives(self) -> list:
-
-        cells_list = []
+        logic_type_list = []
 
         regex = re.compile(r"\b([A-Z0-9]+)_X\d+\b")
 
@@ -88,31 +90,9 @@ class Find_Drive_cells:
                 match = regex.search(line)
 
                 if match:
-                    cells_list.append(match.group(1))
+                    logic_type_list.append(match.group(1))
 
-        return cells_list
+        return logic_type_list
 
        
-def debug_Get_IO(file):
-    debug = Get_IO(file)
-
-    debug.verilog_module()
-
-    inputs = debug.get_inputs()
-    for i in inputs:
-        print(i)
-
-    outputs = debug.get_outputs()
-    for o in outputs:
-        print(o)
-
-    cells = debug.get_cells_ids()
-    print("Cells Ids \n")
-    for c in cells:
-        print(c)
-
-# Vai ser usado para automatizar o Decode em main 
-def number_gates(circuit_file, dir_files):
-    design = Get_IO(circuit_file, dir_files)
-    return len(design.get_cells_ids())  
 
