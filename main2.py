@@ -18,6 +18,7 @@ from scripts import utils
 from scripts import worker
 from scripts import getFeatures
 from scripts import errors
+from scripts import dict
 
 circuit = "c1908"
 MAX_WORKERS = max(1, os.cpu_count() - 1)
@@ -82,45 +83,37 @@ def log_debug(msg: str):
 def log_error(msg: str):
     error_file.write(msg + "\n")
 
-try:
+# try:
 
-    features = getFeatures.Circuits_features(
-    f"{circuit}.v",   
-    base_verilog_path,
-    lib,
-    lib_path
-)
+#     features = getFeatures.Circuits_features(
+#     f"{circuit}.v",   
+#     base_verilog_path,
+#     lib,
+#     lib_path
+# )
 
-    dict_fain = features.fan_in()
-    dict_faout = features.fan_out()
-    dict_logic_level = features.compute_logic_levels()
-    dict_deep = features.comput_deep()
+#     dict_fain = features.fan_in()
+#     dict_faout = features.fan_out()
+#     dict_logic_level = features.compute_logic_levels()
+#     dict_deep = features.comput_deep()
 
-    fain_list = utils.dict_to_list(dict_fain)
-    faout_list = utils.dict_to_list(dict_faout)
-    logic_level_list = utils.dict_to_list(dict_logic_level)
-    deep_list = utils.dict_to_list(dict_deep)
+#     fain_list = utils.dict_to_list(dict_fain)
+#     faout_list = utils.dict_to_list(dict_faout)
+#     logic_level_list = utils.dict_to_list(dict_logic_level)
+#     deep_list = utils.dict_to_list(dict_deep)
 
-    log_debug(f"FA-IN:\n{dict_fain}")
-    log_debug(f"{fain_list}")
-    log_debug(f"FA-OUT:\n{dict_faout}")
-    log_debug(f"{faout_list}")
-    log_debug(f"LOGIC-LEVELS:\n{dict_logic_level}")
-    log_debug(f"{logic_level_list}")
-    log_debug(f"DEEP:\n{dict_deep}")
-    log_debug(f"{deep_list}")
+#     log_debug(f"FA-IN:\n{dict_fain}")
+#     log_debug(f"{fain_list}")
+#     log_debug(f"FA-OUT:\n{dict_faout}")
+#     log_debug(f"{faout_list}")
+#     log_debug(f"LOGIC-LEVELS:\n{dict_logic_level}")
+#     log_debug(f"{logic_level_list}")
+#     log_debug(f"DEEP:\n{dict_deep}")
+#     log_debug(f"{deep_list}")
 
-except Exception as error:
-    print(f"ERROR to get design features {error}")
-    errors.fatal("ERROR to get design features", error, debug_file, error_file)
-
-try:
-    cells_logic_types_netlist = readV.Gates_info(f"{circuit}.v", base_verilog_path)
-
-    logic_types_netlist = cells_logic_types_netlist.lugic_cells_type()
-except Exception as error:
-    print(f"ERROR to find drive cells {error}")
-    errors.fatal("ERROR to find drive cells", error, debug_file, error_file)
+# except Exception as error:
+#     print(f"ERROR to get design features {error}")
+#     errors.fatal("ERROR to get design features", error, debug_file, error_file)
 
 try:
     gio = readV.Get_IO(f"{circuit}.v", base_verilog_path)
@@ -135,6 +128,21 @@ try:
 except Exception as error:
     print(f"Error to get cells id {error}")
     errors.fatal("ERROR to get celols ID", error, debug_file, error_file)
+
+try:
+    cells_logic_types_netlist = readV.Gates_info(f"{circuit}.v", base_verilog_path)
+
+    logic_types_netlist = cells_logic_types_netlist.lugic_cells_type()
+except Exception as error:
+    print(f"ERROR to find drive cells {error}")
+    errors.fatal("ERROR to find drive cells", error, debug_file, error_file)
+
+try:
+    features_dict = dict.Manipulet_dict()
+    features_dict.popular_dictionary(cells_id, cells_logic_types_netlist)
+except Exception as error:
+    print(f"ERROR to load dict {error}")
+    errors.fatal("ERROR to load dict", error, debug_file, error_file)
 
 fa = getArea.Get_Area(json_file)
 

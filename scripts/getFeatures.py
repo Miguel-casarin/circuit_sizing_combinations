@@ -2,6 +2,8 @@ from collections import deque
 import os 
 from najaeda import netlist, naja
 
+from scripts import dict
+
 #netlist.reset()
 #netlist.load_liberty(["Nangate45_typ.lib"])
 #top = netlist.load_verilog(["c17.v"])
@@ -92,7 +94,8 @@ class Circuits_features:
                     continue
                 net_drivers.setdefault(net, set()).add(inst)
 
-        levels = {}
+        #levels = {}
+        
         changed = True
 
         while changed:
