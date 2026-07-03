@@ -5,6 +5,7 @@ class Get_Area:
     def __init__(self, json_library):
         self.json_library = json_library
 
+    # retorna a area celula passando a string "LOGIC-TYPE_DRIVE-STANGE"
     def search_area(self, cell: str) -> float:
         with open(self.json_library, "r") as f:
             areas = json.load(f)
@@ -34,3 +35,6 @@ class Get_Area:
 
     def cost(self, current_value: float, previos_value: float) -> float:
         return current_value - previos_value
+    
+
+

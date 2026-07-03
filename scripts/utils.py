@@ -18,7 +18,7 @@ def decoder_file_name(total_gates: int, size_list: list) -> str:
     digest = hashlib.sha256(f"{raw_id}_{size_list}".encode()).hexdigest()
     return digest[:32]
 
-
+# retorna uma lista dos tipos logicos com os drives stanges
 def merge_size_id(drives_list: list, comb_list: list) -> list:
     merge_list = []
     try:
@@ -29,6 +29,12 @@ def merge_size_id(drives_list: list, comb_list: list) -> list:
         print(f"ERROR to merge drives {error}")
 
     return merge_list
+
+# Retorna a string TIPO_X(SIZE) individualmente do gate dimensionado 
+def logict_type_drive(logic_types_list: list, dim_gate: int, drive_stante: int) -> str:
+    logic_type = logic_types_list[dim_gate]
+    type_sized = f"{logic_type}_X{drive_stante}"
+    return type_sized
 
 def find_changed_index(original: list, modified: list) -> int:
     for offset, (old, new) in enumerate(

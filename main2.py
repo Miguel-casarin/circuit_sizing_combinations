@@ -115,8 +115,9 @@ except Exception as error:
     errors.fatal("ERROR to get design features", error, debug_file, error_file)
 
 try:
-    cells_drives = readV.Find_Drive_cells(f"{circuit}.v", base_verilog_path)
-    drives = cells_drives.parse_drives()
+    cells_logic_types_netlist = readV.Gates_info(f"{circuit}.v", base_verilog_path)
+
+    logic_types_netlist = cells_logic_types_netlist.lugic_cells_type()
 except Exception as error:
     print(f"ERROR to find drive cells {error}")
     errors.fatal("ERROR to find drive cells", error, debug_file, error_file)
@@ -153,7 +154,7 @@ except Exception as error:
     errors.fatal("ERROR to gate weigth", error, debug_file, error_file)
 
 try:
-    current_transitions = mt.get_base_transitions(TOTAL_GATES, drives, library)
+    current_transitions = mt.get_base_transitions(TOTAL_GATES, logic_types_netlist, library)
 except Exception as error:
     print(f"ERROR to set base transitions {error}")
     errors.fatal("ERROR to set base transitions", error, debug_file, error_file)
@@ -197,7 +198,7 @@ except Exception as error:
 
 # Insere o estado inicial no CSV
 try:
-    initial_comb = utils.merge_size_id(drives, curente_stage)
+    initial_comb = utils.merge_size_id(logic_types_netlist, curente_stage)
     initial_area = fa.return_total_area(initial_comb)
 
     initial_row = [
@@ -241,7 +242,7 @@ sta_worker = worker.Worker_combinations(
     circuit_to_start=circuit_to_start,
     temp_dir=temp,
     base_tcl=tcl_file,
-    drives=drives,
+    logic_types_netlist=logic_types_netlist,
     json_file=json_file,
     TOTAL_GATES=TOTAL_GATES,
     curente_stage=curente_stage,
@@ -280,8 +281,8 @@ while True:
                     rows_buffer.append(result)
                     current_values.append(result["mean_arrivals_sized"])
                     log_debug(f"{result['comb']} → arrival={result['mean_arrivals_sized']:.5f} power={result['power']}")
-                    log_debug(f"Combinacao anterior: {result['prev_drives']}")
-                    log_debug(f"Combinacoes: {result['comb_drives']}")
+                    log_debug(f"Combinacao anterior: {result['prev_logic_types_netlist']}")
+                    log_debug(f"Combinacoes: {result['comb_logic_types_netlist']}")
                     log_debug(f"Area anterior: {result['prev_area']} area comb: {result['comb_area']} custo: {result['area_cost']}")
                     log_debug(f"Gate dimensionado: {result['dim_gate']}")
 
@@ -376,7 +377,7 @@ while True:
         sta_worker.update_stage(current_combination)
 
         previos_lower       = current_lower
-        current_transitions = mt.get_transitions(current_combination, drives, library)
+        current_transitions = mt.get_transitions(current_combination, logic_types_netlist, library)
         curente_stage       = current_combination
         count += 1
         csv_row_counter += len(rows_buffer)
