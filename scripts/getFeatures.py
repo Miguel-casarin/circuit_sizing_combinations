@@ -2,8 +2,6 @@ from collections import deque
 import os 
 from najaeda import netlist, naja
 
-from scripts import dict
-
 #netlist.reset()
 #netlist.load_liberty(["Nangate45_typ.lib"])
 #top = netlist.load_verilog(["c17.v"])
@@ -38,7 +36,7 @@ class Netlist_info:
                 
     
 class Circuits_features:
-    def __init__(self, verilog, verilog_path,  libray, libraey_path):
+    def __init__(self, verilog, verilog_path,  libray, libraey_path, features_dict=None):
         self.verilog = verilog
         self.verilog_path = verilog_path
         self.path_v = os.path.join(self.verilog_path, self.verilog)
@@ -47,14 +45,24 @@ class Circuits_features:
         self.libray_path = libraey_path
         self.path_lib = os.path.join(self.libray_path, self.libray)
 
-    def compute_logic_levels(self):
+        self.features_dict = features_dict
+
         netlist.reset()
         netlist.load_liberty([self.path_lib])
         netlist.load_verilog([self.path_v])
 
-        # Usa a API NL/SNL da versão atual do najaeda
-        universe = naja.NLUniverse.get()
-        top = universe.getTopDesign()
+        self.universe = naja.NLUniverse.get()
+        self.top = self.universe.getTopDesign()
+
+    def extract_key(self, inst_name):
+        try:
+            k = inst_name.strip('_')
+            return int(k) if k.isdigit() else None
+        except ValueError:
+            return None
+
+    def compute_logic_levels(self):
+        top = self.top
 
         # mapeia:
         #  - inst_name -> instância
@@ -94,7 +102,7 @@ class Circuits_features:
                     continue
                 net_drivers.setdefault(net, set()).add(inst)
 
-        #levels = {}
+        levels = {}
         
         changed = True
 
@@ -141,15 +149,13 @@ class Circuits_features:
 
                 changed = True
 
-        return levels
+        for inst_name, level in levels.items():
+            key = self.extract_key(inst_name)
+            if key is not None and self.features_dict and (key in self.features_dict.nets_and_path):
+                self.features_dict.ad_logic_level(key, level)
 
     def comput_deep(self):
-        netlist.reset()
-        netlist.load_liberty([self.path_lib])
-        netlist.load_verilog([self.path_v])
-
-        universe = naja.NLUniverse.get()
-        top = universe.getTopDesign()
+        top = self.top
 
         # mapeia instâncias e suas nets de saída
         inst_outputs = {}
@@ -228,17 +234,13 @@ class Circuits_features:
                 deep[inst_name] = max(fanout_deeps) + 1
                 changed = True
 
-        return deep
+        for inst_name, dp in deep.items():
+            key = self.extract_key(inst_name)
+            if key is not None and self.features_dict and (key in self.features_dict.nets_and_path):
+                self.features_dict.ad_deep(key, dp)
 
     def fan_in(self):
-        netlist.reset()
-        netlist.load_liberty([self.path_lib])
-        netlist.load_verilog([self.path_v])
-
-        universe = naja.NLUniverse.get()
-        top = universe.getTopDesign()
-
-        fanin_counts = {}
+        top = self.top
 
         # para cada instância, conta quantos pinos de entrada ela possui
         for inst in top.getInstances():
@@ -247,18 +249,13 @@ class Circuits_features:
             for term in inst.getInstTerms():
                 if term.getDirection() == naja.SNLTerm.Direction.Input:
                     count += 1
-            fanin_counts[name] = count
-
-        return fanin_counts
-
+            
+            key = self.extract_key(name)
+            if key is not None and self.features_dict and (key in self.features_dict.nets_and_path):
+                self.features_dict.ad_fanin(key, count)
 
     def fan_out(self):
-        netlist.reset()
-        netlist.load_liberty([self.path_lib])
-        netlist.load_verilog([self.path_v])
-
-        universe = naja.NLUniverse.get()
-        top = universe.getTopDesign()
+        top = self.top
 
         # mapeia, para cada instância, quais nets ela dirige (saídas)
         inst_outputs = {}
@@ -285,38 +282,15 @@ class Circuits_features:
                 net_users.setdefault(net, set()).add(inst.getName())
 
         # fan-out em número de gates: quantos gates recebem essa saída
-        fanout_counts = {}
         for inst_name, out_nets in inst_outputs.items():
             destinations = set()
             for net in out_nets:
                 for user_name in net_users.get(net, set()):
                     if user_name != inst_name:  # evita contar auto-loop estranho
                         destinations.add(user_name)
-            fanout_counts[inst_name] = len(destinations)
+            
+            key = self.extract_key(inst_name)
+            if key is not None and self.features_dict and (key in self.features_dict.nets_and_path):
+                self.features_dict.ad_fanout(key, len(destinations))
 
-        return fanout_counts
 
-base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-verilog_path = os.path.join(base_dir, "data", "verilogs_base") 
-verilog = "c17.v"
-lib_path = os.path.join(base_dir, "data", "cells_library") 
-lib = "ed_Nangate.lib"
-
-try:
-    f = Circuits_features(verilog, verilog_path, lib, lib_path)
-
-    fanin = f.fan_in()
-    faout = f.fan_out()
-    logic_level = f.compute_logic_levels()
-    deep = f.comput_deep()
-except Exception as error:
-    print(error)
-
-print("FAnin")
-print(fanin)
-print("FAout")
-print(faout)
-print("level")
-print(logic_level)
-print("DEEP")
-print(deep)

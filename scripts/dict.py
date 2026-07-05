@@ -18,13 +18,13 @@ class Manipulet_dict(Netlist_and_path):
     def __init__(self):
         super().__init__()
 
-    def popular_dictionary(self, cells_id_list: list, logic_type_list: list) -> None:
+    def fild_dictionary(self, cells_id_list: list, logic_type_list: list) -> None:
         for key, logic_type in zip(cells_id_list, logic_type_list):
             self.add_values(key)
             self.nets_and_path[key]["LOGIC-TYPE"] = logic_type
 
-    def ad_fain(self, key: int, fain: int) -> None:
-        self.nets_and_path[key]["FA-IN"] = fain
+    def ad_fanin(self, key: int, fanin: int) -> None:
+            self.nets_and_path[key]["FA-IN"] = fanin
 
     def ad_fanout(self, key: int, fanout: int) -> None:
         self.nets_and_path[key]["FA-OUT"] = fanout

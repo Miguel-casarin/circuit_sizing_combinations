@@ -32,7 +32,7 @@ def merge_size_id(drives_list: list, comb_list: list) -> list:
 
 # Retorna a string TIPO_X(SIZE) individualmente do gate dimensionado 
 def logict_type_drive(logic_types_list: list, dim_gate: int, drive_stante: int) -> str:
-    logic_type = logic_types_list[dim_gate]
+    logic_type = logic_types_list[dim_gate -1]
     type_sized = f"{logic_type}_X{drive_stante}"
     return type_sized
 
@@ -128,3 +128,17 @@ def return_gate_size(combination: list, dim_gate: int) -> int:
     gate = combination[-dim_gate]
     return int(gate[1:])
 
+# recebe o valor do gate e retorna a chave do dicionario de features equivalente
+def return_dict_key(dict_keys_list: list, dim_gate) -> int:
+    indice = dim_gate - 1
+    return dict_keys_list[indice]
+
+def merge_dicts(dict_base: dict, field_base: str, dict_update: dict, field_update: str = None) -> None:
+    for key, update_entry in dict_update.items():
+        if key in dict_base:
+            if field_update:
+                dict_base[key][field_base] = update_entry[field_update]
+            else:
+                dict_base[key][field_base] = update_entry
+        else:
+            print(f"ERROR to merge path ocurence in base dict")

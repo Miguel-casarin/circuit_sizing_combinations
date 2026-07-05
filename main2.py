@@ -20,7 +20,7 @@ from scripts import getFeatures
 from scripts import errors
 from scripts import dict
 
-circuit = "c1908"
+circuit = "c17"
 MAX_WORKERS = max(1, os.cpu_count() - 1)
 DELET_FILES = True
 SAVE_COMBINATION = False
@@ -116,7 +116,7 @@ def log_error(msg: str):
 #     errors.fatal("ERROR to get design features", error, debug_file, error_file)
 
 try:
-    gio = readV.Get_IO(f"{circuit}.v", base_verilog_path)
+    gio = readV.Gates_info(f"{circuit}.v", base_verilog_path)
 except Exception as error:
     print(f"ERROR read verilog {error}")
     errors.fatal("ERROR to read verilog", error, debug_file, error_file)
@@ -139,10 +139,44 @@ except Exception as error:
 
 try:
     features_dict = dict.Manipulet_dict()
-    features_dict.popular_dictionary(cells_id, cells_logic_types_netlist)
+    features_dict.fild_dictionary(cells_id, logic_types_netlist)
 except Exception as error:
     print(f"ERROR to load dict {error}")
-    errors.fatal("ERROR to load dict", error, debug_file, error_file)
+    errors.fatal("ERROR to fild dict", error, debug_file, error_file)
+    debug_file.flush()
+    error_file.flush()
+    debug_file.close()
+    error_file.close()
+    sys.exit(1)
+
+if len(features_dict.nets_and_path) == 0:
+    print(f"Unfilled dictionary")
+    errors.fatal("dictionary keys not load", error, debug_file, error_file)
+    debug_file.flush()
+    error_file.flush()
+    debug_file.close()
+    error_file.close()
+    sys.exit(1)
+
+else:
+    try:
+        extactor_features = getFeatures.Circuits_features(f"{circuit}.v", base_verilog_path, lib, lib_path, features_dict)
+
+        extactor_features.compute_logic_levels()
+        extactor_features.comput_deep()
+        extactor_features.fan_in()
+        extactor_features.fan_out()
+
+    except Exception as error:
+        print(f"ERROR to load circuit features to dict")
+        errors.fatal("ERROR to load netlist features to dict", error, debug_file, error_file)
+
+
+
+
+
+
+features_dict_keys = list(features_dict.nets_and_path)
 
 fa = getArea.Get_Area(json_file)
 
@@ -196,6 +230,31 @@ except Exception as error:
     print(f"ERROR to read sta files {error}")
     errors.fatal("ERROR to read sta files", error, debug_file, error_file)
 
+# Pega a ocorencia por caminho crítico usando o base line
+dict_ocurence = {}
+try:
+    base_line = f"0_{circuit}.txt"
+    dir_base = f"./output/temp/{base_line}"
+    data_path = extData.Read_timing(dir_base)
+
+    dict_ocurence = data_path.count_ocurence_path()
+    log_debug(f"PATHS:\n{dict_ocurence}")
+
+    # Preenche as ocorrências no dicionário principal
+    utils.merge_dicts(features_dict.nets_and_path, "PATH-OCURENCE", dict_ocurence)
+
+except Exception as error:
+    print(f"ERROR to get path ocurence {error}")
+    errors.fatal("ERROR to get path ocurence", error, debug_file, error_file)
+
+print("\n--- Dicionário de Features ---")
+for cell_id, info in features_dict.nets_and_path.items():
+    print(f"ID da Célula: {cell_id}")
+    for chave, valor in info.items():
+        print(f"  {chave}: {valor}")
+    print("-" * 30)
+
+
 log_debug(f"Total de gates: {TOTAL_GATES}")
 
 try:
@@ -231,18 +290,6 @@ except Exception as error:
     print(f"ERROR to insert initial state in CSV {error}")
     errors.fatal("ERROR to insert initial state in CSV", error, debug_file, error_file)
 
-# Pega a ocorencia por caminho crítico usando o base line
-dict_ocurence = {}
-try:
-    base_line = f"0_{circuit}.txt"
-    dir_base = f"./output/temp/{base_line}"
-    data_path = extData.Read_timing(dir_base)
-
-    dict_ocurence = data_path.count_ocurence_path()
-    log_debug(f"PATHS:\n{dict_ocurence}")
-except Exception as error:
-    print(f"ERROR to get path ocurence {error}")
-    errors.fatal("ERROR to get path ocurence", error, debug_file, error_file)
 
 # Roda as combinações subsequentes
 sta_worker = worker.Worker_combinations(
@@ -254,11 +301,11 @@ sta_worker = worker.Worker_combinations(
     json_file=json_file,
     TOTAL_GATES=TOTAL_GATES,
     curente_stage=curente_stage,
-    fain_list=fain_list,
-    faout_list=faout_list,
-    logic_level_list=logic_level_list,
-    deep_list=deep_list,
-    path_dict=dict_ocurence,
+    #fain_list=fain_list,
+    #faout_list=faout_list,
+    #logic_level_list=logic_level_list,
+    #deep_list=deep_list,
+    #path_dict=dict_ocurence,
     cells_id=cells_id
 )
 
