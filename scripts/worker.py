@@ -12,7 +12,7 @@ from scripts import utils
 
 class Worker_combinations:
 
-    def __init__(self, circuit, circuit_to_start, temp_dir, base_tcl, drives, json_file, TOTAL_GATES, curente_stage, features_dict):
+    def __init__(self, circuit, circuit_to_start, temp_dir, base_tcl, drives, json_file, TOTAL_GATES, curente_stage, logic_types, features_dict):
 
         self.circuit = circuit
         self.circuit_to_start = circuit_to_start
@@ -23,6 +23,7 @@ class Worker_combinations:
         self.TOTAL_GATES = TOTAL_GATES
         self.curente_stage = curente_stage
         self.fa = getArea.Get_Area(json_file)
+        self.logic_types = logic_types
         self.features_dict = features_dict
 
     def get_worker_tcl(self, worker_id: int) -> str:
@@ -101,6 +102,11 @@ class Worker_combinations:
     def update_stage(self, new_stage):
         self.curente_stage = new_stage
 
+    def get_cell_area(self, comb: list, dim_gate: int) -> float:
+        drive = self.size_dim(comb, dim_gate)
+        size_type = utils.logict_type_drive(self.logic_types, dim_gate, drive)
+        return size_type
+
     def process(self, comb, worker_id: int) -> dict | None:
         try:
             sta_data  = self.run_sta(comb, worker_id)
@@ -116,6 +122,7 @@ class Worker_combinations:
                 "power":               power,
                 "area_cost":           self.get_area_cost(comb),
                 "dim_gate":            utils.return_dict_key(dim_gate),
+                "cell-area":           self.get_cell_area(comb, dim_gate),
                 "occurrence":          self.count_path_occurrence(dim_gate),
                 "prev_drives":         self.get_prev_drives(),
                 "comb_drives":         self.get_comb_drives(comb),

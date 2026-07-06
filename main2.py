@@ -27,11 +27,13 @@ SAVE_COMBINATION = False
 
 colunns_list = [
     'COMBINATION',
+    'SIZED-GATE',
     'SIZE',
+    'LOGIC-TYPE',
+    'CELL-AREA',
     'WEIGHT',
     'CHOSEN',
-    'SIZED GATE',
-    'PATH_OCURENCE',
+    'PATH-OCURENCE',
     'FA-IN',
     'FA-OUT',
     'LOGIC-LEVEL',
@@ -133,6 +135,7 @@ try:
     cells_logic_types_netlist = readV.Gates_info(f"{circuit}.v", base_verilog_path)
 
     logic_types_netlist = cells_logic_types_netlist.lugic_cells_type()
+    print(logic_types_netlist)
 except Exception as error:
     print(f"ERROR to find drive cells {error}")
     errors.fatal("ERROR to find drive cells", error, debug_file, error_file)
@@ -270,16 +273,18 @@ try:
 
     initial_row = [
                 *([str(curente_stage)] if SAVE_COMBINATION else []),
-                1,
-                sized_weight,
-                1,
-                0,   # SIZED GATE
                 0,
-                0,   # FA-IN
-                0,   # FA-OUT
-                0,   # LOGIC-LEVEL
-                0,   # DEEP
-                0.0, # COST-AREA
+                0,
+                None,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
                 previos_lower,  # ARRIVAL
                 power           # POWER  <- estava faltando
             ]
@@ -301,12 +306,8 @@ sta_worker = worker.Worker_combinations(
     json_file=json_file,
     TOTAL_GATES=TOTAL_GATES,
     curente_stage=curente_stage,
-    #fain_list=fain_list,
-    #faout_list=faout_list,
-    #logic_level_list=logic_level_list,
-    #deep_list=deep_list,
-    #path_dict=dict_ocurence,
-    cells_id=cells_id
+    logic_types=logic_types_netlist,
+    features_dict=features_dict.nets_and_path()
 )
 
 # guarda o melhor valor das combinações 
