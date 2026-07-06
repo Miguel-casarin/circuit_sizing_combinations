@@ -75,37 +75,46 @@ class Worker_combinations:
         return utils.find_changed_index(self.curente_stage, comb)
 
     def fa_in(self, dim_gate: int) -> int:
-        key = utils.return_dict_key(dim_gate)
+        key = utils.return_dict_key(list(self.features_dict.keys()), dim_gate)
         return self.features_dict[key]["FA-IN"]
 
     def fa_out(self, dim_gate: int) -> int:
-        key = utils.return_dict_key(dim_gate)
+        key = utils.return_dict_key(list(self.features_dict.keys()), dim_gate)
         return self.features_dict[key]["FA-OUT"]
 
     def logic_level(self, dim_gate: int) -> int:
-        key = utils.return_dict_key(dim_gate)
+        key = utils.return_dict_key(list(self.features_dict.keys()), dim_gate)
         return self.features_dict[key]["LOGIC-LEVEL"]
 
     def deep(self, dim_gate: int) -> int:
-        key = utils.return_dict_key(dim_gate)
+        key = utils.return_dict_key(list(self.features_dict.keys()), dim_gate)
         return self.features_dict[key]["DEEP"]
 
     def size_dim(self, comb: list, dim_gate: int) -> int:
         return utils.return_gate_size(comb, dim_gate)
 
     # conta a ocorrencia por caminho crítico
+    # conta a ocorrencia por caminho crítico
     def count_path_occurrence(self, dim_gate: int) -> int:
-        key = utils.return_dict_key(dim_gate)
-        value = self.features_dict[key].get("PATH-OCURENCE", 0)
-        return value if value is not None else 0
-        
+        key = utils.return_dict_key(list(self.features_dict.keys()), dim_gate)
+            
+            # Se a chave não existir no dicionário da porta ou for None, adicionamos o valor 0 a ela
+        if "PATH-OCURENCE" not in self.features_dict[key] or self.features_dict[key]["PATH-OCURENCE"] is None:
+            self.features_dict[key]["PATH-OCURENCE"] = 0
+                
+        return self.features_dict[key]["PATH-OCURENCE"]
+    
     def update_stage(self, new_stage):
         self.curente_stage = new_stage
 
     def get_cell_area(self, comb: list, dim_gate: int) -> float:
         drive = self.size_dim(comb, dim_gate)
         size_type = utils.logict_type_drive(self.logic_types, dim_gate, drive)
-        return size_type
+        return self.fa.search_area(size_type)
+
+    def get_logic_type(self, dim_gate: int) -> str:
+        key = utils.return_dict_key(list(self.features_dict.keys()), dim_gate)
+        return self.features_dict[key]["LOGIC-TYPE"]
 
     def process(self, comb, worker_id: int) -> dict | None:
         try:
@@ -121,8 +130,9 @@ class Worker_combinations:
                 "mean_arrivals_sized": mean_arr,
                 "power":               power,
                 "area_cost":           self.get_area_cost(comb),
-                "dim_gate":            utils.return_dict_key(dim_gate),
+                "dim_gate":            utils.return_dict_key(list(self.features_dict.keys()), dim_gate),
                 "cell-area":           self.get_cell_area(comb, dim_gate),
+                "logic_type":          self.get_logic_type(dim_gate),
                 "occurrence":          self.count_path_occurrence(dim_gate),
                 "prev_drives":         self.get_prev_drives(),
                 "comb_drives":         self.get_comb_drives(comb),

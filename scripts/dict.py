@@ -5,12 +5,12 @@ class Netlist_and_path:
 
     def add_values(self, key) -> None:
         self.nets_and_path[key] = {
-            "LOGIC-TYPE": str,
-            "PATH-OCURENCE": int,
-            "FA-IN": int,
-            "FA-OUT": int,
-            "LOGIC-LEVEL": int,
-            "DEEP": int,
+            "LOGIC-TYPE": "",
+            "PATH-OCURENCE": 0,
+            "FA-IN": 0,
+            "FA-OUT": 0,
+            "LOGIC-LEVEL": 0,
+            "DEEP": 0,
         }
 
 class Manipulet_dict(Netlist_and_path):

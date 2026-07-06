@@ -4,6 +4,7 @@ import json
 import time
 import traceback
 import sys
+import json
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from scripts import readV
@@ -20,7 +21,7 @@ from scripts import getFeatures
 from scripts import errors
 from scripts import dict
 
-circuit = "c17"
+circuit = "c499"
 MAX_WORKERS = max(1, os.cpu_count() - 1)
 DELET_FILES = True
 SAVE_COMBINATION = False
@@ -55,6 +56,8 @@ circuit_to_start = f'./data/verilogs_base/{circuit}.v'
 base_verilog_path = "./data/verilogs_base"
 
 tcl_file = "tcl_scripts/t.tcl"
+
+dict_joson = f"{circuit}_features.json"
 
 lib = "ed_Nangate.lib"
 lib_path = "./data/cells_library"
@@ -250,12 +253,6 @@ except Exception as error:
     print(f"ERROR to get path ocurence {error}")
     errors.fatal("ERROR to get path ocurence", error, debug_file, error_file)
 
-print("\n--- Dicionário de Features ---")
-for cell_id, info in features_dict.nets_and_path.items():
-    print(f"ID da Célula: {cell_id}")
-    for chave, valor in info.items():
-        print(f"  {chave}: {valor}")
-    print("-" * 30)
 
 
 log_debug(f"Total de gates: {TOTAL_GATES}")
@@ -302,12 +299,12 @@ sta_worker = worker.Worker_combinations(
     circuit_to_start=circuit_to_start,
     temp_dir=temp,
     base_tcl=tcl_file,
-    logic_types_netlist=logic_types_netlist,
+    drives=logic_types_netlist,
     json_file=json_file,
     TOTAL_GATES=TOTAL_GATES,
     curente_stage=curente_stage,
     logic_types=logic_types_netlist,
-    features_dict=features_dict.nets_and_path()
+    features_dict=features_dict.nets_and_path
 )
 
 # guarda o melhor valor das combinações 
@@ -337,8 +334,8 @@ while True:
                     rows_buffer.append(result)
                     current_values.append(result["mean_arrivals_sized"])
                     log_debug(f"{result['comb']} → arrival={result['mean_arrivals_sized']:.5f} power={result['power']}")
-                    log_debug(f"Combinacao anterior: {result['prev_logic_types_netlist']}")
-                    log_debug(f"Combinacoes: {result['comb_logic_types_netlist']}")
+                    log_debug(f"Combinacao anterior: {result['prev_drives']}")
+                    log_debug(f"Combinacoes: {result['comb_drives']}")
                     log_debug(f"Area anterior: {result['prev_area']} area comb: {result['comb_area']} custo: {result['area_cost']}")
                     log_debug(f"Gate dimensionado: {result['dim_gate']}")
 
@@ -383,10 +380,12 @@ while True:
             chosen   = 1 if row["comb"] == current_combination else 0
             row_data = [
                         *([str(row["comb"])] if SAVE_COMBINATION else []),
+                        row["dim_gate"],
                         row["size"],
+                        row["logic_type"],
+                        row["cell-area"],
                         row["size_weight"],
                         chosen,
-                        row["dim_gate"],
                         row["occurrence"],
                         row["fa_in"],
                         row["fa_out"],
@@ -407,10 +406,12 @@ while True:
             chosen = 1 if row["comb"] == current_combination else 0
             row_data = [
                         *([str(row["comb"])] if SAVE_COMBINATION else []),
+                        row["dim_gate"],
                         row["size"],
+                        row["logic_type"],
+                        row["cell-area"],
                         row["size_weight"],
                         chosen,
-                        row["dim_gate"],
                         row["occurrence"],
                         row["fa_in"],
                         row["fa_out"],
@@ -452,6 +453,15 @@ except Exception as error:
 
 if DELET_FILES:
     utils.clear_directory(temp)
+
+try:
+    json_path = os.path.join(debug_dir, dict_joson)
+    with open(json_path, 'w') as f:
+        json.dump(features_dict.nets_and_path, f, indent=4)
+    log_debug(f"Dicionário de features salvo em {json_path}")
+except Exception as error:
+    print(f"ERROR to save JSON {error}")
+    log_error(f"ERROR to save JSON {error}")
 
 end_timer = time.time()
 log_debug(f"TEMPO TOTAL {(end_timer - start_timer) / 60:.2f} min")
