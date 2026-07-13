@@ -1,11 +1,11 @@
 import re
 
 class Edit_tcl:
-    def __init__(self, tcl_file, design, link_device,  inputs_list, outputs_list):
+    def __init__(self, tcl_file, design, link_device, number_paths,  inputs_list, outputs_list):
         self.tcl_file = tcl_file
         self.design = design # Nome do arquivo
         self.link_device = link_device # Modulo do verilog
-        #self.number_paths = number_paths # Quantidade de caminhps criticos 
+        self.number_paths = number_paths # Quantidade de caminhps criticos 
         self.inputs_list = inputs_list
         self.outputs_list = outputs_list
 
@@ -34,7 +34,7 @@ class Edit_tcl:
 
         with open(self.tcl_file, "w") as f:
             f.write(content)
-    """
+    
     def paths_total(self):
 
         with open(self.tcl_file, "r") as f:
@@ -46,7 +46,7 @@ class Edit_tcl:
 
         with open(self.tcl_file, "w") as f:
             f.write(content)
-    """
+    
     def parse_inputs(self):
         inputs_str = " ".join(self.inputs_list)
         new_set_inputs = f"set_input_delay 0 -clock virt_clk [get_ports {{{inputs_str}}}]"

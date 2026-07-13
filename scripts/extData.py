@@ -56,7 +56,7 @@ class Read_timing:
 
         return result
 
-    # Retorna a ocorência das células por caminho 
+    # Retorna a ocorência das células apenas do primeiro caminho crítico
     def count_ocurence_path(self):
         result = {}
 
@@ -74,6 +74,11 @@ class Read_timing:
                         result[cell_id] = 0
 
                     result[cell_id] += 1
+                
+                # A primeira aparição de "data arrival time" marca o fim
+                # da listagem de portas do primeiro caminho crítico.
+                if "data arrival time" in line:
+                    break
 
         return result
     

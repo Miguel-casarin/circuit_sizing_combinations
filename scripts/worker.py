@@ -12,11 +12,14 @@ from scripts import utils
 
 class Worker_combinations:
 
-    def __init__(self, circuit, circuit_to_start, temp_dir, base_tcl, drives, json_file, TOTAL_GATES, curente_stage, logic_types, features_dict):
+    def __init__(self, circuit, circuit_to_start, temp_dir, design_module, design_inputs, design_outputs, base_tcl, drives, json_file, TOTAL_GATES, curente_stage, logic_types, features_dict):
 
         self.circuit = circuit
         self.circuit_to_start = circuit_to_start
         self.temp_dir = temp_dir
+        self.design_module = design_module
+        self.design_inputs = design_inputs
+        self.design_outputs = design_outputs
         self.base_tcl = base_tcl
         self.drives = drives
         self.json_file = json_file
@@ -38,7 +41,7 @@ class Worker_combinations:
         name_to_save  = f"{id_file_sized}_{self.circuit}.v"
 
         setCombination.apply_combination(self.circuit_to_start, self.temp_dir, comb, name_to_save)
-        singleSTA.run_single(worker_tcl, name_to_save, self.temp_dir, self.temp_dir)
+        singleSTA.run_single(worker_tcl, name_to_save, self.temp_dir, self.temp_dir, self.design_module, self.design_inputs, self.design_outputs)
 
         sta_path = dir.search_file(f"{id_file_sized}_{self.circuit}.txt", self.temp_dir)
 

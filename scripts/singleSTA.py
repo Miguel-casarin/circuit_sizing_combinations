@@ -3,7 +3,6 @@ import subprocess
 import os
 
 from scripts import edTCL
-from scripts import readV
 
 def rename(string):
     id = re.match(r'^(.*)\.v$', string)
@@ -23,14 +22,9 @@ def open_sta(tcl_script, name_to_save: str, out_dir):
         text=True
         )
 
-def run_single(file_tcl, circuit_process, dir_circuits, dir_to_save):
+def run_single(file_tcl, circuit_process, dir_circuits, dir_to_save, module_design, inputs_sinals, outputs_signals):
 
-    verilog_reader = readV.Get_IO(circuit_process, dir_circuits)
-
-    module_design = verilog_reader.verilog_module()
-    inputs_sinals = verilog_reader.get_inputs()
-    outputs_signals = verilog_reader.get_outputs()
-
+    
     number_paths = edTCL.number_outputs(outputs_signals)
 
     design_path = f"{dir_circuits}/{circuit_process}"
@@ -39,23 +33,14 @@ def run_single(file_tcl, circuit_process, dir_circuits, dir_to_save):
         file_tcl,        
         design_path,     
         module_design,   
-        #number_paths,    
+        number_paths,    
         inputs_sinals,   
         outputs_signals  
         )
     
-    script_sta = edTCL.Edit_tcl(
-        file_tcl,        
-        design_path,     
-        module_design,   
-        #number_paths,    
-        inputs_sinals,   
-        outputs_signals  
-    )
-
     script_sta.ed_device()
     script_sta.link_design()
-    #script_sta.paths_total()
+    script_sta.paths_total()
     script_sta.parse_inputs()
     script_sta.parse_outputs()
 
