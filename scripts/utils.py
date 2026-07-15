@@ -142,3 +142,4 @@ def merge_dicts(dict_base: dict, field_base: str, dict_update: dict, field_updat
                 dict_base[key][field_base] = update_entry
         else:
             print(f"ERROR to merge path ocurence in base dict")
+

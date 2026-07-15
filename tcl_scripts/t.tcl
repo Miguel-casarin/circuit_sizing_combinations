@@ -1,4 +1,4 @@
-read_liberty ./data/cells_library/ed_Nangate.lib
+read_liberty ./data/cells_library/Nangate45_typ.lib
 read_verilog ./output/temp/0_c17.v
 link_design c17
 

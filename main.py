@@ -23,7 +23,7 @@ from scripts import dict
 
 circuit = "c17"
 MAX_WORKERS = max(1, os.cpu_count() - 1)
-DELET_FILES = False
+DELET_FILES = True
 SAVE_COMBINATION = False
 
 colunns_list = [
@@ -41,16 +41,17 @@ colunns_list = [
     'DEEP',
     'COST-AREA',
     'ARRIVAL',
+    'ARRIVAL-DIFF',
     'POWER'
 ]
 
 if not SAVE_COMBINATION:
     colunns_list.remove('COMBINATION')
 
-SIZE_ORDER = ["X1", "X2", "X4", "X8", "X16", "X32"]
+SIZE_ORDER = ["X1", "X2"]
 
 # diretórios
-json_file = "./data/area_json/areas_nangate.json"
+json_file = "./data/area_json/areas.json"
 
 circuit_to_start = f'./data/verilogs_base/{circuit}.v'
 base_verilog_path = "./data/verilogs_base"
@@ -59,7 +60,7 @@ tcl_file = "tcl_scripts/t.tcl"
 
 dict_joson = f"{circuit}_features.json"
 
-lib = "ed_Nangate.lib"
+lib = "Nangate45_typ.lib"
 lib_path = "./data/cells_library"
 
 temp = "./output/temp"
@@ -88,37 +89,6 @@ def log_debug(msg: str):
 def log_error(msg: str):
     error_file.write(msg + "\n")
 
-# try:
-
-#     features = getFeatures.Circuits_features(
-#     f"{circuit}.v",   
-#     base_verilog_path,
-#     lib,
-#     lib_path
-# )
-
-#     dict_fain = features.fan_in()
-#     dict_faout = features.fan_out()
-#     dict_logic_level = features.compute_logic_levels()
-#     dict_deep = features.comput_deep()
-
-#     fain_list = utils.dict_to_list(dict_fain)
-#     faout_list = utils.dict_to_list(dict_faout)
-#     logic_level_list = utils.dict_to_list(dict_logic_level)
-#     deep_list = utils.dict_to_list(dict_deep)
-
-#     log_debug(f"FA-IN:\n{dict_fain}")
-#     log_debug(f"{fain_list}")
-#     log_debug(f"FA-OUT:\n{dict_faout}")
-#     log_debug(f"{faout_list}")
-#     log_debug(f"LOGIC-LEVELS:\n{dict_logic_level}")
-#     log_debug(f"{logic_level_list}")
-#     log_debug(f"DEEP:\n{dict_deep}")
-#     log_debug(f"{deep_list}")
-
-# except Exception as error:
-#     print(f"ERROR to get design features {error}")
-#     errors.fatal("ERROR to get design features", error, debug_file, error_file)
 try:
     design = readV.Get_IO(f"{circuit}.v", base_verilog_path)
     design_module = design.verilog_module()
@@ -201,6 +171,7 @@ curente_stage = ["X1"] * TOTAL_GATES
 id_file_sized = utils.decoder_file_name(TOTAL_GATES, curente_stage)
 name_to_save = f"{id_file_sized}_{circuit}.v"
 
+
 mt = makeTransitions.Make_transitions(SIZE_ORDER)
 
 try:
@@ -271,6 +242,7 @@ except Exception as error:
     print(f"ERRPR to make CSV {error}")
     errors.fatal("ERRPR to make CSV", error, debug_file, error_file)
 
+currente_arrival = previos_lower
 # Insere o estado inicial no CSV
 try:
     initial_comb = utils.merge_size_id(logic_types_netlist, curente_stage)
@@ -291,6 +263,7 @@ try:
                 0,
                 0,
                 previos_lower,  # ARRIVAL
+                currente_arrival,
                 power           # POWER  <- estava faltando
             ]
 
@@ -299,7 +272,6 @@ try:
 except Exception as error:
     print(f"ERROR to insert initial state in CSV {error}")
     errors.fatal("ERROR to insert initial state in CSV", error, debug_file, error_file)
-
 
 # Roda as combinações subsequentes
 sta_worker = worker.Worker_combinations(
@@ -322,6 +294,8 @@ sta_worker = worker.Worker_combinations(
 best_global = None
 best_global_row_index = None
 csv_row_counter = 2 # começo em 2 para pular o cebeçalho e o baseline
+
+
 
 while True:
     current_values = []
@@ -382,6 +356,8 @@ while True:
     best                = min(rows_buffer, key=lambda r: r["mean_arrivals_sized"])
     current_combination = best["comb"]
 
+    currente_arrival = current_lower
+
     if best_global is None or best["mean_arrivals_sized"] < best_global["mean_arrivals_sized"]:
         best_global = best
         best_global_row_index = csv_row_counter + rows_buffer.index(best)  # ← salva índice
@@ -389,6 +365,9 @@ while True:
     if current_lower > previos_lower:
         for row in rows_buffer:
             chosen   = 1 if row["comb"] == current_combination else 0
+
+            arrival_diff = previos_lower - row["mean_arrivals_sized"] 
+
             row_data = [
                         *([str(row["comb"])] if SAVE_COMBINATION else []),
                         row["dim_gate"],
@@ -404,6 +383,7 @@ while True:
                         row["deep"],
                         row["area_cost"],
                         row["mean_arrivals_sized"],
+                        arrival_diff,
                         row["power"]
                         ]
             makeCSV.Edit_csv(csv_path, row_data).insert_csv_data()
@@ -415,6 +395,9 @@ while True:
     else:
         for row in rows_buffer:
             chosen = 1 if row["comb"] == current_combination else 0
+
+            arrival_diff = previos_lower - row["mean_arrivals_sized"] 
+
             row_data = [
                         *([str(row["comb"])] if SAVE_COMBINATION else []),
                         row["dim_gate"],
@@ -430,6 +413,7 @@ while True:
                         row["deep"],
                         row["area_cost"],
                         row["mean_arrivals_sized"],
+                        arrival_diff,
                         row["power"]
                         ]
             makeCSV.Edit_csv(csv_path, row_data).insert_csv_data()

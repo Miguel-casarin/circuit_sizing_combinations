@@ -54,7 +54,7 @@ class Worker_combinations:
         arrivals = sta_data.get_arrival_times()
 
         return utils.mean(np.array(list(arrivals.values())))
-
+    
     def get_prev_drives(self) -> list:
         return utils.merge_size_id(self.drives, self.curente_stage)
 
