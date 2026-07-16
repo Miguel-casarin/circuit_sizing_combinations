@@ -21,7 +21,7 @@ from scripts import getFeatures
 from scripts import errors
 from scripts import dict
 
-circuit = "c17"
+circuit = "b01_C"
 MAX_WORKERS = max(1, os.cpu_count() - 1)
 DELET_FILES = True
 SAVE_COMBINATION = False
