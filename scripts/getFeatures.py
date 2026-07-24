@@ -1,6 +1,7 @@
 from collections import deque
 import os 
 from najaeda import netlist, naja
+import re
 
 #netlist.reset()
 #netlist.load_liberty(["Nangate45_typ.lib"])
@@ -292,5 +293,131 @@ class Circuits_features:
             key = self.extract_key(inst_name)
             if key is not None and self.features_dict and (key in self.features_dict.nets_and_path):
                 self.features_dict.ad_fanout(key, len(destinations))
+    
+    # Retorna a quantidade de células que cada gate carrega no output
+    def loaded_cells(self):
+        top = self.top
+        total_loaded = 0
+        
+        for gate in top.get_output_terms():
+            visited = ()
+            queue = deque([gate])
 
+            while queue:
+                inst = queue.popleft()
 
+                for out_term in inst.get_output_terms():
+                    for bit_term in out_term.get_bits():
+                        equipotential = bit_term.get_equipotential()
+                        for reader in equipotential.get_leaf_readers():
+                            next_inst = reader.get_instance()
+                            inst_name = next_inst.get_name()
+                            key = self.extract_key(inst_name)
+                            self.features_dict.ad_loaded(key, total_loaded)
+class sized_ocupation:
+    def __init__(self, verilog, library):
+        self.verilog = verilog
+        self.library = library
+
+        netlist.reset()
+        netlist.load_liberty([self.library])
+        netlist.load_verilog([self.verilog])
+
+        self.universe = naja.NLUniverse.get()
+        self.top = self.universe.getTopDesign()
+
+        # Eu não estou exluindo assigns nem black box's, issso pode dar problema no futuro se o verilog de entrada não estiver limpo
+
+        self.circuit_gates = list(self.top.get_leaf_children())
+
+    def faout_sized_ocurence(self) -> dict:
+
+        faout_sized_ocurence = {}
+        for gate in self.circuit_gates:
+            visited = ()
+            queue = deque([gate])
+
+            total_x2 = 0
+            total_x4 = 0
+            total_x8 = 0
+            total_x16 = 0
+            total_x32 = 0
+
+            while queue:
+                inst = queue.popleft()
+
+                for out_term in inst.get_output_terms():
+                    for bit_term in out_term.get_bits():
+                        equipotential = bit_term.get_equipotential()
+                        for reader in equipotential.get_leaf_readers():
+                            next_inst = reader.get_instance()
+
+                            key = next_inst.get_name()  # ou algum id estável
+                            if key not in visited:
+                                visited.add(key)
+                                queue.append(next_inst)
+                                
+                                match = re.search(r'_X(\d+)$', key)
+
+                                if match == "X2":
+                                    total_x2 +=1
+                                elif match == "X4":
+                                    total_x4 +=1
+                                elif match == "X8":
+                                    total_x8 +=1
+                                elif match == "X16":
+                                    total_x16 +=1
+                                elif match == "X32":
+                                    total_x32 +=1
+
+            faout_sized_ocurence[gate]["TOTAL-X2"] = total_x2
+            faout_sized_ocurence[gate]["TOTAL-X4"] = total_x4
+            faout_sized_ocurence[gate]["TOTAL-X8"] = total_x8
+            faout_sized_ocurence[gate]["TOTAL-X16"] = total_x16
+            faout_sized_ocurence[gate]["TOTAL-X32"] = total_x32
+    
+    def fain_sized_ocurence(self) -> dict:
+
+        fain_sized_ocurence = {}
+        for gate in self.circuit_gates:
+            visited = ()
+            queue = deque([gate])
+
+            total_x2 = 0
+            total_x4 = 0
+            total_x8 = 0
+            total_x16 = 0
+            total_x32 = 0
+
+            while queue:
+                inst = queue.popleft()
+
+                for out_term in inst.get_input_terms():
+                    for bit_term in out_term.get_bits():
+                        equipotential = bit_term.get_equipotential()
+                        for reader in equipotential.get_leaf_drivers():
+                            next_inst = reader.get_instance()
+
+                            key = next_inst.get_name()  # ou algum id estável
+                            if key not in visited:
+                                visited.add(key)
+                                queue.append(next_inst)
+                                
+                                match = re.search(r'_X(\d+)$', key)
+
+                                if match == "X2":
+                                    total_x2 +=1
+                                elif match == "X4":
+                                    total_x4 +=1
+                                elif match == "X8":
+                                    total_x8 +=1
+                                elif match == "X16":
+                                    total_x16 +=1
+                                elif match == "X32":
+                                    total_x32 +=1
+            
+            fain_sized_ocurence[gate]["TOTAL-X2"] = total_x2
+            fain_sized_ocurence[gate]["TOTAL-X4"] = total_x4
+            fain_sized_ocurence[gate]["TOTAL-X8"] = total_x8
+            fain_sized_ocurence[gate]["TOTAL-X16"] = total_x16
+            fain_sized_ocurence[gate]["TOTAL-X32"] = total_x32

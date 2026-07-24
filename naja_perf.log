@@ -1,15 +1,12 @@
 ################################################################################
-# Thu Jul 16 17:29:26 2026
+# Fri Jul 17 02:42:49 2026
 # Naja Performance Report
 # naja version: 0.6.6
 # Git hash: 6d7199d
 ################################################################################
 
-<naja_python>                    total:   0.000s rss:   46.39Mb peak: 1386.21Mb
-  <Liberty construct>            total:   0.016s rss:   48.82Mb peak: 1386.80Mb
-  </Liberty construct>           total:   0.175s scope:   0.159s rss:   66.03Mb peak: 1403.81Mb drss:  +17.21Mb dpeak:  +17.02Mb
-  <Verilog construct>            total:   0.176s rss:   66.16Mb peak: 1403.81Mb
-  </Verilog construct>           total:   0.177s scope:   0.001s rss:   66.41Mb peak: 1403.81Mb drss:   +0.25Mb dpeak:   +0.00Mb
-</naja_python>                   total:  24.140s scope:  24.140s rss:   67.30Mb peak: 1971.93Mb drss:  +20.91Mb dpeak: +585.72Mb
---------------------------------------------------------------------------------
-Summary total:  24.140s max rss:   67.30Mb max peak: 1971.93Mb
+<naja_python>                    total:   0.000s rss:   46.58Mb peak: 1386.21Mb
+  <Liberty construct>            total:   0.030s rss:   49.19Mb peak: 1386.95Mb
+  </Liberty construct>           total:   0.182s scope:   0.151s rss:   66.35Mb peak: 1403.84Mb drss:  +17.16Mb dpeak:  +16.89Mb
+  <Verilog construct>            total:   0.182s rss:   66.48Mb peak: 1403.84Mb
+  </Verilog construct>           total:   0.199s scope:   0.016s rss:   66.73Mb peak: 1403.84Mb drss:   +0.25Mb dpeak:   +0.00Mb

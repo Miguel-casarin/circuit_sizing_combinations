@@ -11,6 +11,7 @@ class Netlist_and_path:
             "FA-OUT": 0,
             "LOGIC-LEVEL": 0,
             "DEEP": 0,
+            "LOADED-CELLS": 0
         }
 
 class Manipulet_dict(Netlist_and_path):
@@ -37,3 +38,6 @@ class Manipulet_dict(Netlist_and_path):
 
     def ad_path_occurrence(self, key: int, occurrence: int) -> None:
         self.nets_and_path[key]["PATH-OCURENCE"] = occurrence
+    
+    def ad_loaded(self, key: int, loaded: int) -> None:
+        self.nets_and_path[key]["LOADED-CELLS"] = loaded
