@@ -150,6 +150,7 @@ else:
         extactor_features.comput_deep()
         extactor_features.fan_in()
         extactor_features.fan_out()
+        extactor_features.loaded_cells()
 
     except Exception as error:
         print(f"ERROR to load circuit features to dict")
@@ -217,16 +218,22 @@ except Exception as error:
 
 # Pega a ocorencia por caminho crítico usando o base line
 dict_ocurence = {}
+dict_paths = {}
+
 try:
     base_line = f"0_{circuit}.txt"
     dir_base = f"./output/temp/{base_line}"
     data_path = extData.Read_timing(dir_base)
 
     dict_ocurence = data_path.count_ocurence_path()
-    log_debug(f"PATHS:\n{dict_ocurence}")
+    log_debug(f"PATH:\n{dict_ocurence}")
+
+    dict_paths = data_path.ocurence_by_paths()
+    log_debug(f"PATHS:\n{dict_paths}")
 
     # Preenche as ocorrências no dicionário principal
     utils.merge_dicts(features_dict.nets_and_path, "PATH-OCURENCE", dict_ocurence)
+    utils.merge_dicts(features_dict.nets_and_path, "PATHS-OCURENCE", dict_paths)
 
 except Exception as error:
     print(f"ERROR to get path ocurence {error}")

@@ -7,6 +7,7 @@ class Netlist_and_path:
         self.nets_and_path[key] = {
             "LOGIC-TYPE": "",
             "PATH-OCURENCE": 0,
+            "PATHS-OCURENCE": 0,
             "FA-IN": 0,
             "FA-OUT": 0,
             "LOGIC-LEVEL": 0,

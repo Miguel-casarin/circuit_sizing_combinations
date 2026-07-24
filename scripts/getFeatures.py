@@ -330,9 +330,9 @@ class sized_ocupation:
 
         self.circuit_gates = list(self.top.get_leaf_children())
 
-    def faout_sized_ocurence(self) -> dict:
+    def faout_sized_ocupation(self) -> dict:
 
-        faout_sized_ocurence = {}
+        faout_ocupation = {}
         for gate in self.circuit_gates:
             visited = ()
             queue = deque([gate])
@@ -370,15 +370,15 @@ class sized_ocupation:
                                 elif match == "X32":
                                     total_x32 +=1
 
-            faout_sized_ocurence[gate]["TOTAL-X2"] = total_x2
-            faout_sized_ocurence[gate]["TOTAL-X4"] = total_x4
-            faout_sized_ocurence[gate]["TOTAL-X8"] = total_x8
-            faout_sized_ocurence[gate]["TOTAL-X16"] = total_x16
-            faout_sized_ocurence[gate]["TOTAL-X32"] = total_x32
+            faout_ocupation[gate]["TOTAL-X2"] = total_x2
+            faout_ocupation[gate]["TOTAL-X4"] = total_x4
+            faout_ocupation[gate]["TOTAL-X8"] = total_x8
+            faout_ocupation[gate]["TOTAL-X16"] = total_x16
+            faout_ocupation[gate]["TOTAL-X32"] = total_x32
     
-    def fain_sized_ocurence(self) -> dict:
+    def fain_sized_ocupation(self) -> dict:
 
-        fain_sized_ocurence = {}
+        fain_ocupation = {}
         for gate in self.circuit_gates:
             visited = ()
             queue = deque([gate])
@@ -416,8 +416,8 @@ class sized_ocupation:
                                 elif match == "X32":
                                     total_x32 +=1
             
-            fain_sized_ocurence[gate]["TOTAL-X2"] = total_x2
-            fain_sized_ocurence[gate]["TOTAL-X4"] = total_x4
-            fain_sized_ocurence[gate]["TOTAL-X8"] = total_x8
-            fain_sized_ocurence[gate]["TOTAL-X16"] = total_x16
-            fain_sized_ocurence[gate]["TOTAL-X32"] = total_x32
+            fain_ocupation[gate]["TOTAL-X2"] = total_x2
+            fain_ocupation[gate]["TOTAL-X4"] = total_x4
+            fain_ocupation[gate]["TOTAL-X8"] = total_x8
+            fain_ocupation[gate]["TOTAL-X16"] = total_x16
+            fain_ocupation[gate]["TOTAL-X32"] = total_x32
