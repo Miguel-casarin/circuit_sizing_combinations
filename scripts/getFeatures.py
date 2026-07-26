@@ -50,7 +50,7 @@ class Circuits_features:
 
         netlist.reset()
         netlist.load_liberty([self.path_lib])
-        netlist.load_verilog([self.path_v])
+        self.top_najaeda = netlist.load_verilog([self.path_v])
 
         self.universe = naja.NLUniverse.get()
         self.top = self.universe.getTopDesign()
@@ -294,14 +294,14 @@ class Circuits_features:
             if key is not None and self.features_dict and (key in self.features_dict.nets_and_path):
                 self.features_dict.ad_fanout(key, len(destinations))
     
-    # Retorna a quantidade de células que cada gate carrega no output
+    # Retorna a quantidade de células subsequentes (cone de fanout) que cada gate carrega no output
     def loaded_cells(self):
-        top = self.top
-        total_loaded = 0
-        
-        for gate in top.get_output_terms():
-            visited = ()
+        top = self.top_najaeda
+
+        for gate in top.get_leaf_children():
+            visited = set()
             queue = deque([gate])
+            total_loaded = 0
 
             while queue:
                 inst = queue.popleft()
@@ -311,9 +311,14 @@ class Circuits_features:
                         equipotential = bit_term.get_equipotential()
                         for reader in equipotential.get_leaf_readers():
                             next_inst = reader.get_instance()
-                            inst_name = next_inst.get_name()
-                            key = self.extract_key(inst_name)
-                            self.features_dict.ad_loaded(key, total_loaded)
+                            if next_inst not in visited:
+                                visited.add(next_inst)
+                                queue.append(next_inst)
+                                total_loaded += 1
+            
+            key = self.extract_key(gate.get_name())
+            if key is not None and self.features_dict and (key in self.features_dict.nets_and_path):
+                self.features_dict.ad_loaded(key, total_loaded)
 class sized_ocupation:
     def __init__(self, verilog, library):
         self.verilog = verilog
@@ -321,22 +326,24 @@ class sized_ocupation:
 
         netlist.reset()
         netlist.load_liberty([self.library])
-        netlist.load_verilog([self.verilog])
+        self.top_najaeda = netlist.load_verilog([self.verilog])
 
         self.universe = naja.NLUniverse.get()
         self.top = self.universe.getTopDesign()
 
         # Eu não estou exluindo assigns nem black box's, issso pode dar problema no futuro se o verilog de entrada não estiver limpo
 
-        self.circuit_gates = list(self.top.get_leaf_children())
+        self.circuit_gates = list(self.top_najaeda.get_leaf_children())
 
     def faout_sized_ocupation(self) -> dict:
 
         faout_ocupation = {}
         for gate in self.circuit_gates:
-            visited = ()
+            gate_name = gate.get_name()
+            visited = set()
             queue = deque([gate])
 
+            faout_ocupation[gate_name] = {}
             total_x2 = 0
             total_x4 = 0
             total_x8 = 0
@@ -352,37 +359,44 @@ class sized_ocupation:
                         for reader in equipotential.get_leaf_readers():
                             next_inst = reader.get_instance()
 
-                            key = next_inst.get_name()  # ou algum id estável
+                            key = next_inst.get_name()  # nome da instância, ex: _123_
                             if key not in visited:
                                 visited.add(key)
                                 queue.append(next_inst)
                                 
-                                match = re.search(r'_X(\d+)$', key)
+                                model_name = next_inst.get_model_name() # nome da célula, ex: NAND2_X4
+                                match = re.search(r'_X(\d+)$', model_name)
 
-                                if match == "X2":
-                                    total_x2 +=1
-                                elif match == "X4":
-                                    total_x4 +=1
-                                elif match == "X8":
-                                    total_x8 +=1
-                                elif match == "X16":
-                                    total_x16 +=1
-                                elif match == "X32":
-                                    total_x32 +=1
+                                if match:
+                                    match_str = match.group(1)
+                                    if match_str == "2":
+                                        total_x2 +=1
+                                    elif match_str == "4":
+                                        total_x4 +=1
+                                    elif match_str == "8":
+                                        total_x8 +=1
+                                    elif match_str == "16":
+                                        total_x16 +=1
+                                    elif match_str == "32":
+                                        total_x32 +=1
 
-            faout_ocupation[gate]["TOTAL-X2"] = total_x2
-            faout_ocupation[gate]["TOTAL-X4"] = total_x4
-            faout_ocupation[gate]["TOTAL-X8"] = total_x8
-            faout_ocupation[gate]["TOTAL-X16"] = total_x16
-            faout_ocupation[gate]["TOTAL-X32"] = total_x32
+            faout_ocupation[gate_name]["TOTAL-X2"] = total_x2
+            faout_ocupation[gate_name]["TOTAL-X4"] = total_x4
+            faout_ocupation[gate_name]["TOTAL-X8"] = total_x8
+            faout_ocupation[gate_name]["TOTAL-X16"] = total_x16
+            faout_ocupation[gate_name]["TOTAL-X32"] = total_x32
+            
+        return faout_ocupation
     
     def fain_sized_ocupation(self) -> dict:
 
         fain_ocupation = {}
         for gate in self.circuit_gates:
-            visited = ()
+            gate_name = gate.get_name()
+            visited = set()
             queue = deque([gate])
 
+            fain_ocupation[gate_name] = {}
             total_x2 = 0
             total_x4 = 0
             total_x8 = 0
@@ -398,26 +412,31 @@ class sized_ocupation:
                         for reader in equipotential.get_leaf_drivers():
                             next_inst = reader.get_instance()
 
-                            key = next_inst.get_name()  # ou algum id estável
+                            key = next_inst.get_name()  # nome da instância, ex: _123_
                             if key not in visited:
                                 visited.add(key)
                                 queue.append(next_inst)
                                 
-                                match = re.search(r'_X(\d+)$', key)
+                                model_name = next_inst.get_model_name() # nome da célula, ex: NAND2_X4
+                                match = re.search(r'_X(\d+)$', model_name)
 
-                                if match == "X2":
-                                    total_x2 +=1
-                                elif match == "X4":
-                                    total_x4 +=1
-                                elif match == "X8":
-                                    total_x8 +=1
-                                elif match == "X16":
-                                    total_x16 +=1
-                                elif match == "X32":
-                                    total_x32 +=1
+                                if match:
+                                    match_str = match.group(1)
+                                    if match_str == "2":
+                                        total_x2 +=1
+                                    elif match_str == "4":
+                                        total_x4 +=1
+                                    elif match_str == "8":
+                                        total_x8 +=1
+                                    elif match_str == "16":
+                                        total_x16 +=1
+                                    elif match_str == "32":
+                                        total_x32 +=1
             
-            fain_ocupation[gate]["TOTAL-X2"] = total_x2
-            fain_ocupation[gate]["TOTAL-X4"] = total_x4
-            fain_ocupation[gate]["TOTAL-X8"] = total_x8
-            fain_ocupation[gate]["TOTAL-X16"] = total_x16
-            fain_ocupation[gate]["TOTAL-X32"] = total_x32
+            fain_ocupation[gate_name]["TOTAL-X2"] = total_x2
+            fain_ocupation[gate_name]["TOTAL-X4"] = total_x4
+            fain_ocupation[gate_name]["TOTAL-X8"] = total_x8
+            fain_ocupation[gate_name]["TOTAL-X16"] = total_x16
+            fain_ocupation[gate_name]["TOTAL-X32"] = total_x32
+            
+        return fain_ocupation
