@@ -21,7 +21,7 @@ from scripts import getFeatures
 from scripts import errors
 from scripts import dict
 
-circuit = "b11_C"
+circuit = "b01_C"
 MAX_WORKERS = max(1, os.cpu_count() - 1)
 DELET_FILES = True
 SAVE_COMBINATION = False
@@ -35,6 +35,7 @@ colunns_list = [
     'WEIGHT',
     'CHOSEN',
     'PATH-OCURENCE',
+    'PATHS-OCURENCE',
     'FA-IN',
     'FA-OUT',
     'LOGIC-LEVEL',
@@ -260,6 +261,7 @@ try:
                 0,
                 0,
                 None,
+                0,
                 0,
                 0,
                 0,

@@ -3,9 +3,9 @@ from najaeda import netlist, naja
 
 class Circuite_topology:
 
-    def __init__(self, verilog, libray):
+    def __init__(self, verilog, library):
         self.verilog = verilog
-        self.libray = libray
+        self.library = library
 
         # Dicionarios da topologia do circuito 
         self.fain_gates = {}
@@ -35,7 +35,7 @@ class Circuite_topology:
 
             while queue:
                 inst = queue.popleft()
-                for out_term in inst.get_inputs_terms():
+                for out_term in inst.get_input_terms():
                     for bit_term in out_term.get_bits():
                         equipotential = bit_term.get_equipotential()
                         for reader in equipotential.get_leaf_drivers():
@@ -80,4 +80,25 @@ class Circuite_topology:
 
         return self.faout_gates
 
-                            
+
+
+
+
+# file = "../data/verilogs_base/debug.v"
+# lib = "../data/cells_library/Nangate45_typ.lib"
+
+# topology = Circuite_topology(file, lib)
+# fain = topology.fain_sized_ocupation()
+# faout = topology.faout_sized_ocupation()
+
+# print("FAIN")
+# for gate, fanin in topology.fain_gates.items():
+#     print(f"{gate}:")
+#     for inst in fanin:
+#         print(f"  {inst.get_name()}")
+
+# print("FAOUT")
+# for gate, fanout in topology.faout_gates.items():
+#     print(f"{gate}:")
+#     for inst in fanout:
+#         print(f"  {inst.get_name()}")

@@ -106,6 +106,81 @@ class Worker_combinations:
             self.features_dict[key]["PATH-OCURENCE"] = 0
                 
         return self.features_dict[key]["PATH-OCURENCE"]
+
+    def paths_occurrence(self, dim_gate: int) -> int:
+        key = utils.return_dict_key(list(self.features_dict.keys()), dim_gate)
+                    
+        # Se a chave não existir no dicionário da porta ou for None, adicionamos o valor 0 a ela
+        if "PATHS-OCURENCE" not in self.features_dict[key] or self.features_dict[key]["PATHS-OCURENCE"] is None:
+            self.features_dict[key]["PATHS-OCURENCE"] = 0
+                
+        return self.features_dict[key]["PATHS-OCURENCE"]
+
+    def fain_ocupation(self, comb, dim_gate: int, fain_ocupation_dict: dict):
+
+        ocupation_list = []
+
+        TOTAL_X2 = 0
+        TOTAL_X4 = 0
+        TOTAL_X8 = 0
+        TOTAL_X16 = 0
+        TOTAL_X32 = 0
+
+        fain_list = fain_ocupation_dict[dim_gate]
+        if fain_list:
+            for gate in fain_list:
+                size_gate = reversed(comb[gate -1])
+                if size_gate == "X2":
+                    TOTAL_X2 += 1
+                if size_gate == "X4":
+                    TOTAL_X4 += 1
+                if size_gate == "X8":
+                    TOTAL_X8 += 1
+                if size_gate == "X16":
+                    TOTAL_X16 +=1
+                if size_gate == "X32":
+                    TOTAL_X32 += 1
+
+        ocupation_list.append("X2", TOTAL_X2)
+        ocupation_list.append("X4", TOTAL_X4)
+        ocupation_list.append("X8", TOTAL_X8)
+        ocupation_list.append("X16", TOTAL_X16)
+        ocupation_list.append("X32", TOTAL_X32)
+
+        return ocupation_list
+
+    def faout_ocupation(self, comb, dim_gate: int, faout_ocupation_dict: dict):
+    
+            ocupation_list = []
+    
+            TOTAL_X2 = 0
+            TOTAL_X4 = 0
+            TOTAL_X8 = 0
+            TOTAL_X16 = 0
+            TOTAL_X32 = 0
+    
+            fain_list = faout_ocupation_dict[dim_gate]
+            if fain_list:
+                for gate in fain_list:
+                    size_gate = reversed(comb[gate -1])
+                    if size_gate == "X2":
+                        TOTAL_X2 += 1
+                    if size_gate == "X4":
+                        TOTAL_X4 += 1
+                    if size_gate == "X8":
+                        TOTAL_X8 += 1
+                    if size_gate == "X16":
+                        TOTAL_X16 +=1
+                    if size_gate == "X32":
+                        TOTAL_X32 += 1
+    
+            ocupation_list.append("X2", TOTAL_X2)
+            ocupation_list.append("X4", TOTAL_X4)
+            ocupation_list.append("X8", TOTAL_X8)
+            ocupation_list.append("X16", TOTAL_X16)
+            ocupation_list.append("X32", TOTAL_X32)
+    
+            return ocupation_list
     
     def update_stage(self, new_stage):
         self.curente_stage = new_stage
@@ -137,6 +212,7 @@ class Worker_combinations:
                 "cell-area":           self.get_cell_area(comb, dim_gate),
                 "logic_type":          self.get_logic_type(dim_gate),
                 "occurrence":          self.count_path_occurrence(dim_gate),
+                "frequence_paths":     self.paths_occurrence(dim_gate),
                 "prev_drives":         self.get_prev_drives(),
                 "comb_drives":         self.get_comb_drives(comb),
                 "prev_area":           self.get_prev_area(),
