@@ -1,15 +1,19 @@
 ################################################################################
-# Sun Jul 26 15:48:43 2026
+# Thu Jul 30 22:36:07 2026
 # Naja Performance Report
 # naja version: 0.6.6
 # Git hash: 6d7199d
 ################################################################################
 
-<naja_python>                    total:   0.002s rss:   46.72Mb peak: 1386.58Mb
-  <Liberty construct>            total:   0.023s rss:   49.02Mb peak: 1387.94Mb
-  </Liberty construct>           total:   0.195s scope:   0.171s rss:   66.22Mb peak: 1404.82Mb drss:  +17.21Mb dpeak:  +16.89Mb
-  <Verilog construct>            total:   0.195s rss:   66.35Mb peak: 1404.82Mb
-  </Verilog construct>           total:   0.197s scope:   0.001s rss:   66.54Mb peak: 1404.82Mb drss:   +0.19Mb dpeak:   +0.00Mb
-</naja_python>                   total:  26.634s scope:  26.632s rss:   67.05Mb peak: 1972.95Mb drss:  +20.33Mb dpeak: +586.36Mb
+<naja_python>                    total:   0.000s rss:   46.63Mb peak: 1386.28Mb
+  <Liberty construct>            total:   0.032s rss:   49.12Mb peak: 1386.87Mb
+  </Liberty construct>           total:   0.202s scope:   0.169s rss:   66.35Mb peak: 1403.89Mb drss:  +17.23Mb dpeak:  +17.02Mb
+  <Verilog construct>            total:   0.202s rss:   66.47Mb peak: 1403.89Mb
+  </Verilog construct>           total:   0.213s scope:   0.010s rss:   66.72Mb peak: 1403.89Mb drss:   +0.25Mb dpeak:   +0.00Mb
+  <Liberty construct>            total:   0.654s rss:   67.34Mb peak: 1404.89Mb
+  </Liberty construct>           total:   0.794s scope:   0.140s rss:   67.34Mb peak: 1404.89Mb drss:   +0.00Mb dpeak:   +0.00Mb
+  <Verilog construct>            total:   0.795s rss:   67.34Mb peak: 1404.89Mb
+  </Verilog construct>           total:   0.805s scope:   0.010s rss:   67.34Mb peak: 1404.89Mb drss:   +0.00Mb dpeak:   +0.00Mb
+</naja_python>                   total:2532.616s scope:2532.616s rss:   31.13Mb peak: 1977.01Mb drss:  -15.50Mb dpeak: +590.73Mb
 --------------------------------------------------------------------------------
-Summary total:  26.635s max rss:   67.05Mb max peak: 1972.95Mb
+Summary total:2532.618s max rss:   67.34Mb max peak: 1977.01Mb

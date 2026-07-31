@@ -12,7 +12,7 @@ from scripts import utils
 
 class Worker_combinations:
 
-    def __init__(self, circuit, circuit_to_start, temp_dir, design_module, design_inputs, design_outputs, base_tcl, drives, json_file, TOTAL_GATES, curente_stage, logic_types, features_dict):
+    def __init__(self, circuit, circuit_to_start, temp_dir, design_module, design_inputs, design_outputs, base_tcl, drives, json_file, TOTAL_GATES, curente_stage, logic_types, features_dict, fain_gates, faout_gates):
 
         self.circuit = circuit
         self.circuit_to_start = circuit_to_start
@@ -28,6 +28,8 @@ class Worker_combinations:
         self.fa = getArea.Get_Area(json_file)
         self.logic_types = logic_types
         self.features_dict = features_dict
+        self.fain_gates = fain_gates
+        self.faout_gates = faout_gates
 
     def get_worker_tcl(self, worker_id: int) -> str:
         worker_tcl = os.path.join(self.temp_dir, f"t_worker_{worker_id}.tcl")
@@ -118,51 +120,24 @@ class Worker_combinations:
 
     def fain_ocupation(self, comb, dim_gate: int, fain_ocupation_dict: dict):
 
-        ocupation_list = []
-
         TOTAL_X2 = 0
         TOTAL_X4 = 0
         TOTAL_X8 = 0
         TOTAL_X16 = 0
         TOTAL_X32 = 0
 
-        fain_list = fain_ocupation_dict[dim_gate]
+        keys_list = list(self.features_dict.keys())
+        index = utils.return_dict_key(keys_list, dim_gate)
+        
+        fain_list = fain_ocupation_dict.get(index, [])
         if fain_list:
             for gate in fain_list:
-                size_gate = reversed(comb[gate -1])
-                if size_gate == "X2":
-                    TOTAL_X2 += 1
-                if size_gate == "X4":
-                    TOTAL_X4 += 1
-                if size_gate == "X8":
-                    TOTAL_X8 += 1
-                if size_gate == "X16":
-                    TOTAL_X16 +=1
-                if size_gate == "X32":
-                    TOTAL_X32 += 1
-
-        ocupation_list.append("X2", TOTAL_X2)
-        ocupation_list.append("X4", TOTAL_X4)
-        ocupation_list.append("X8", TOTAL_X8)
-        ocupation_list.append("X16", TOTAL_X16)
-        ocupation_list.append("X32", TOTAL_X32)
-
-        return ocupation_list
-
-    def faout_ocupation(self, comb, dim_gate: int, faout_ocupation_dict: dict):
-    
-            ocupation_list = []
-    
-            TOTAL_X2 = 0
-            TOTAL_X4 = 0
-            TOTAL_X8 = 0
-            TOTAL_X16 = 0
-            TOTAL_X32 = 0
-    
-            fain_list = faout_ocupation_dict[dim_gate]
-            if fain_list:
-                for gate in fain_list:
-                    size_gate = reversed(comb[gate -1])
+                gate_name = gate.get_name()
+                
+                if gate_name in keys_list:
+                    gate_idx = keys_list.index(gate_name)
+                    size_gate = comb[-(gate_idx + 1)]
+                    
                     if size_gate == "X2":
                         TOTAL_X2 += 1
                     if size_gate == "X4":
@@ -170,17 +145,44 @@ class Worker_combinations:
                     if size_gate == "X8":
                         TOTAL_X8 += 1
                     if size_gate == "X16":
-                        TOTAL_X16 +=1
+                        TOTAL_X16 += 1
                     if size_gate == "X32":
                         TOTAL_X32 += 1
+
+        return [("X2", TOTAL_X2), ("X4", TOTAL_X4), ("X8", TOTAL_X8), ("X16", TOTAL_X16), ("X32", TOTAL_X32)]
+
+    def faout_ocupation(self, comb, dim_gate: int, faout_ocupation_dict: dict):
     
-            ocupation_list.append("X2", TOTAL_X2)
-            ocupation_list.append("X4", TOTAL_X4)
-            ocupation_list.append("X8", TOTAL_X8)
-            ocupation_list.append("X16", TOTAL_X16)
-            ocupation_list.append("X32", TOTAL_X32)
-    
-            return ocupation_list
+        TOTAL_X2 = 0
+        TOTAL_X4 = 0
+        TOTAL_X8 = 0
+        TOTAL_X16 = 0
+        TOTAL_X32 = 0
+
+        keys_list = list(self.features_dict.keys())
+        index = utils.return_dict_key(keys_list, dim_gate)
+        
+        faout_list = faout_ocupation_dict.get(index, [])
+        if faout_list:
+            for gate in faout_list:
+                gate_name = gate.get_name()
+                
+                if gate_name in keys_list:
+                    gate_idx = keys_list.index(gate_name)
+                    size_gate = comb[-(gate_idx + 1)]
+                    
+                    if size_gate == "X2":
+                        TOTAL_X2 += 1
+                    if size_gate == "X4":
+                        TOTAL_X4 += 1
+                    if size_gate == "X8":
+                        TOTAL_X8 += 1
+                    if size_gate == "X16":
+                        TOTAL_X16 += 1
+                    if size_gate == "X32":
+                        TOTAL_X32 += 1
+
+        return [("X2", TOTAL_X2), ("X4", TOTAL_X4), ("X8", TOTAL_X8), ("X16", TOTAL_X16), ("X32", TOTAL_X32)]
     
     def update_stage(self, new_stage):
         self.curente_stage = new_stage
@@ -211,17 +213,20 @@ class Worker_combinations:
                 "dim_gate":            utils.return_dict_key(list(self.features_dict.keys()), dim_gate),
                 "cell-area":           self.get_cell_area(comb, dim_gate),
                 "logic_type":          self.get_logic_type(dim_gate),
-                "occurrence":          self.count_path_occurrence(dim_gate),
-                "frequence_paths":     self.paths_occurrence(dim_gate),
                 "prev_drives":         self.get_prev_drives(),
                 "comb_drives":         self.get_comb_drives(comb),
                 "prev_area":           self.get_prev_area(),
                 "comb_area":           self.get_comb_area(comb),
+                "occurrence":          self.count_path_occurrence(dim_gate),
+                "occurrence_paths":    self.paths_occurrence(dim_gate),
                 "fa_in":               self.fa_in(dim_gate),
                 "fa_out":              self.fa_out(dim_gate),
                 "logic_level":         self.logic_level(dim_gate),
                 "deep":                self.deep(dim_gate),
+                "fain_ocup":           self.fain_ocupation(comb, dim_gate, self.fain_gates),
+                "faout_ocup":          self.faout_ocupation(comb, dim_gate, self.faout_gates)
             }
+        
         except Exception as error:
             print(f"[Worker {worker_id}] ERRO em {comb}: {error}")
             # Não engolimos mais o erro aqui. Relançamos com contexto

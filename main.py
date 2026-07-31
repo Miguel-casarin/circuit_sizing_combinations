@@ -20,8 +20,9 @@ from scripts import worker
 from scripts import getFeatures
 from scripts import errors
 from scripts import dict
+from scripts import circuitTopology
 
-circuit = "b01_C"
+circuit = "c499"
 MAX_WORKERS = max(1, os.cpu_count() - 1)
 DELET_FILES = True
 SAVE_COMBINATION = False
@@ -43,7 +44,17 @@ colunns_list = [
     'COST-AREA',
     'ARRIVAL',
     'ARRIVAL-DIFF',
-    'POWER'
+    'POWER',
+    'FAIN-X2',
+    'FAIN-X4',
+    'FAIN-X8',
+    'FAIN-X16',
+    'FAIN-X32',
+    'FAOUT-X2',
+    'FAOUT-X4',
+    'FAOUT-X8',
+    'FAOUT-X16',
+    'FAOUT-X32'
 ]
 
 if not SAVE_COMBINATION:
@@ -157,7 +168,14 @@ else:
         print(f"ERROR to load circuit features to dict")
         errors.fatal("ERROR to load netlist features to dict", error, debug_file, error_file)
 
-
+# Topologia do circuito
+try:
+    topology = circuitTopology.Circuite_topology(circuit_to_start, f"{lib_path}/{lib}")
+    fain_gates = topology.fain_sized_ocupation()
+    faout_gates = topology.faout_sized_ocupation()
+except Exception as error:
+    print(f"ERROR to get topology {error}")
+    errors.fatal("ERROR to get topology", error, debug_file, error_file)
 
 
 
@@ -273,7 +291,17 @@ try:
                 0,
                 previos_lower,  # ARRIVAL
                 currente_arrival,
-                power           # POWER  <- estava faltando
+                power,           # POWER  <- estava faltando
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
             ]
 
     edit = makeCSV.Edit_csv(csv_path, initial_row)
@@ -296,7 +324,9 @@ sta_worker = worker.Worker_combinations(
     TOTAL_GATES=TOTAL_GATES,
     curente_stage=curente_stage,
     logic_types=logic_types_netlist,
-    features_dict=features_dict.nets_and_path
+    features_dict=features_dict.nets_and_path,
+    fain_gates=fain_gates,
+    faout_gates=faout_gates
 )
 
 # guarda o melhor valor das combinações 
@@ -386,6 +416,7 @@ while True:
                         row["size_weight"],
                         chosen,
                         row["occurrence"],
+                        row["occurrence_paths"],
                         row["fa_in"],
                         row["fa_out"],
                         row["logic_level"],
@@ -393,7 +424,9 @@ while True:
                         row["area_cost"],
                         row["mean_arrivals_sized"],
                         arrival_diff,
-                        row["power"]
+                        row["power"],
+                        *[valor for tamanho, valor in row["fain_ocup"]],
+                        *[valor for tamanho, valor in row["faout_ocup"]]
                         ]
             makeCSV.Edit_csv(csv_path, row_data).insert_csv_data()
 
@@ -416,6 +449,7 @@ while True:
                         row["size_weight"],
                         chosen,
                         row["occurrence"],
+                        row["occurrence_paths"],
                         row["fa_in"],
                         row["fa_out"],
                         row["logic_level"],
@@ -423,7 +457,9 @@ while True:
                         row["area_cost"],
                         row["mean_arrivals_sized"],
                         arrival_diff,
-                        row["power"]
+                        row["power"],
+                        *[valor for tamanho, valor in row["fain_ocup"]],
+                        *[valor for tamanho, valor in row["faout_ocup"]]
                         ]
             makeCSV.Edit_csv(csv_path, row_data).insert_csv_data()
 

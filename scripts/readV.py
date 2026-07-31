@@ -70,10 +70,10 @@ class Gates_info:
                 for line in f:
                     line = line.strip()
                     
-                    cat_str = re.match(r'\w+_X\d+\s+_(\d+)_\s*\(', line)
+                    cat_str = re.match(r'\w+_X\d+\s+(_\d+_)\s*\(', line)
     
                     if cat_str:
-                        gates_id.append(int(cat_str.group(1)))
+                        gates_id.append(cat_str.group(1))
                 
                 return gates_id
             

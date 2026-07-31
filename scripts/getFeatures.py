@@ -56,11 +56,8 @@ class Circuits_features:
         self.top = self.universe.getTopDesign()
 
     def extract_key(self, inst_name):
-        try:
-            k = inst_name.strip('_')
-            return int(k) if k.isdigit() else None
-        except ValueError:
-            return None
+        match = re.search(r'_\d+_', inst_name)
+        return match.group(0) if match else None
 
     def compute_logic_levels(self):
         top = self.top
