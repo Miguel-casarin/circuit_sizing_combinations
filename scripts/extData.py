@@ -60,7 +60,7 @@ class Read_timing:
     def count_ocurence_path(self):
         result = {}
 
-        pattern_cells = re.compile(r"_(\d+)_")
+        pattern_cells = re.compile(r"(_\d+_)")
 
         with open(self.sta_file, "r") as f:
             for line in f:
@@ -68,7 +68,7 @@ class Read_timing:
 
                 match = pattern_cells.search(line)
                 if match:
-                    cell_id = int(match.group(1))
+                    cell_id = match.group(1)
 
                     if cell_id not in result:
                         result[cell_id] = 0
@@ -85,7 +85,7 @@ class Read_timing:
     # retorna a ocorência de um dado gate em todos os caminhos críticos do sta
     def ocurence_by_paths(self):
         result = {}
-        pattern_cells = re.compile(r"_(\d+)_")
+        pattern_cells = re.compile(r"(_\d+_)")
 
         with open(self.sta_file, "r") as f:
             for line in f:
@@ -93,7 +93,7 @@ class Read_timing:
 
                 match = pattern_cells.search(line)
                 if match:
-                    cell_id = int(match.group(1))
+                    cell_id = match.group(1)
 
                     if cell_id not in result:
                         result[cell_id] = 0

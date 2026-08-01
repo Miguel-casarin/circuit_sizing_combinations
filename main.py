@@ -22,7 +22,7 @@ from scripts import errors
 from scripts import dict
 from scripts import circuitTopology
 
-circuit = "c499"
+circuit = "debug"
 MAX_WORKERS = max(1, os.cpu_count() - 1)
 DELET_FILES = True
 SAVE_COMBINATION = False
