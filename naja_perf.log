@@ -1,19 +1,19 @@
 ################################################################################
-# Sat Aug  1 01:30:18 2026
+# Sat Aug  1 17:11:46 2026
 # Naja Performance Report
 # naja version: 0.6.6
 # Git hash: 6d7199d
 ################################################################################
 
-<naja_python>                    total:   0.000s rss:   46.57Mb peak: 1386.28Mb
-  <Liberty construct>            total:   0.018s rss:   49.05Mb peak: 1386.87Mb
-  </Liberty construct>           total:   0.185s scope:   0.166s rss:   66.27Mb peak: 1403.88Mb drss:  +17.21Mb dpeak:  +17.02Mb
-  <Verilog construct>            total:   0.185s rss:   66.39Mb peak: 1403.88Mb
-  </Verilog construct>           total:   0.186s scope:   0.000s rss:   66.58Mb peak: 1403.88Mb drss:   +0.19Mb dpeak:   +0.00Mb
-  <Liberty construct>            total:   0.189s rss:   66.88Mb peak: 1403.88Mb
-  </Liberty construct>           total:   0.328s scope:   0.139s rss:   66.88Mb peak: 1403.88Mb drss:   +0.00Mb dpeak:   +0.00Mb
-  <Verilog construct>            total:   0.328s rss:   66.88Mb peak: 1403.88Mb
-  </Verilog construct>           total:   0.329s scope:   0.000s rss:   66.88Mb peak: 1403.88Mb drss:   +0.00Mb dpeak:   +0.00Mb
-</naja_python>                   total:   2.720s scope:   2.720s rss:   67.18Mb peak: 1900.98Mb drss:  +20.61Mb dpeak: +514.70Mb
+<naja_python>                    total:   0.000s rss:   46.65Mb peak: 1386.27Mb
+  <Liberty construct>            total:   0.112s rss:   49.36Mb peak: 1388.04Mb
+  </Liberty construct>           total:   0.265s scope:   0.153s rss:   66.50Mb peak: 1404.80Mb drss:  +17.13Mb dpeak:  +16.76Mb
+  <Verilog construct>            total:   0.266s rss:   66.62Mb peak: 1404.80Mb
+  </Verilog construct>           total:   0.297s scope:   0.031s rss:   66.81Mb peak: 1404.80Mb drss:   +0.19Mb dpeak:   +0.00Mb
+  <Liberty construct>            total:   2.144s rss:   67.54Mb peak: 1404.80Mb
+  </Liberty construct>           total:   2.280s scope:   0.135s rss:   67.54Mb peak: 1404.80Mb drss:   +0.00Mb dpeak:   +0.00Mb
+  <Verilog construct>            total:   2.280s rss:   67.54Mb peak: 1404.80Mb
+  </Verilog construct>           total:   2.310s scope:   0.030s rss:   67.54Mb peak: 1404.80Mb drss:   +0.00Mb dpeak:   +0.00Mb
+</naja_python>                   total:41108.196s scope:41108.196s rss:   35.81Mb peak: 2000.81Mb drss:  -10.84Mb dpeak: +614.54Mb
 --------------------------------------------------------------------------------
-Summary total:   2.721s max rss:   67.18Mb max peak: 1900.98Mb
+Summary total:41108.199s max rss:   67.54Mb max peak: 2000.81Mb

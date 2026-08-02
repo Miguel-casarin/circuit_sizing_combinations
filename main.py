@@ -22,7 +22,7 @@ from scripts import errors
 from scripts import dict
 from scripts import circuitTopology
 
-circuit = "debug"
+circuit = "c3540"
 MAX_WORKERS = max(1, os.cpu_count() - 1)
 DELET_FILES = True
 SAVE_COMBINATION = False
@@ -60,7 +60,7 @@ colunns_list = [
 if not SAVE_COMBINATION:
     colunns_list.remove('COMBINATION')
 
-SIZE_ORDER = ["X1", "X2"]
+SIZE_ORDER = ["X1", "X2", "X4", "X8", "X16", "X32"]
 
 # diretórios
 json_file = "./data/area_json/areas.json"
